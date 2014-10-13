@@ -12,7 +12,9 @@ public class Main{
 		cfg.title = Game.TITLE;
 		cfg.width = Game.WIDTH * Game.SCALE;
 		cfg.height = Game.HEIGHT * Game.SCALE;
-		int harryvar2;
+		
+		int mivar;
+		
 		new LwjglApplication(new Game(), cfg);
 	}
 }
