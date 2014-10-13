@@ -23,7 +23,7 @@ public class WorldManager {
 		
 		elements.add(new Element(new Texture(Gdx.files.classpath("resources/green button.png")), 500, 500, 0, 0, 6, false));
 	}
-
+	
 	public static WorldManager getInstance() {
       if(instance == null) {
          instance = new WorldManager();
@@ -31,6 +31,13 @@ public class WorldManager {
       return instance;
    }
 
+	public void checkCollisions(){
+		for(Projectile pjt: player.getProjectiles())
+			for(Unit unit:AI.getUnits()){
+				if(pjt.getCollisionPoint())
+			}
+	}
+	
 	public void updateUnitsObjectives(){
 		for(Unit unit:player.getUnits()){
 			unit.updateAttackObjective();
