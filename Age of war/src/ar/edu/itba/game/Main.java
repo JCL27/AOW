@@ -13,6 +13,8 @@ public class Main{
 		cfg.width = Game.WIDTH * Game.SCALE;
 		cfg.height = Game.HEIGHT * Game.SCALE;
 		
+		int estotienequeandar;
+		
 		new LwjglApplication(new Game(), cfg);
 	}
 }
