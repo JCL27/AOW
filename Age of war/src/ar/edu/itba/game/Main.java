@@ -8,7 +8,7 @@ public class Main{
 	public static void main(String args[]) {
 		
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-		//comentario
+		
 		cfg.title = Game.TITLE;
 		cfg.width = Game.WIDTH * Game.SCALE;
 		cfg.height = Game.HEIGHT * Game.SCALE;

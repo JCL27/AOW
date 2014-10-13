@@ -32,10 +32,22 @@ public class WorldManager {
    }
 
 	public void checkCollisions(){
+		ArrayList<Collision> cols = new ArrayList<Collision>();
 		for(Projectile pjt: player.getProjectiles())
 			for(Unit unit:AI.getUnits()){
-				if(pjt.getCollisionPoint())
+				if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
+					cols.add(new Collision(pjt, unit));
+				}
 			}
+		for(Projectile pjt: AI.getProjectiles())
+			for(Unit unit:player.getUnits()){
+				if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
+					cols.add(new Collision(pjt, unit));
+				}
+			}
+		for(Collision col:cols){
+			col.Collide();
+		}
 	}
 	
 	public void updateUnitsObjectives(){
@@ -45,6 +57,12 @@ public class WorldManager {
 		for(Unit unit:AI.getUnits()){
 			unit.updateAttackObjective();
 		}			
+	}
+	
+	public void disposeProjectile(Projectile pjt){
+		this.elements.remove(pjt.getElement());
+		this.player.getProjectiles().remove(pjt);
+		this.AI.getProjectiles().remove(pjt);
 	}
 	
 	public void killUnit(Unit thisUnit){

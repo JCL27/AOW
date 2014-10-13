@@ -10,6 +10,7 @@ public class Player {
 	private int experience;
 	private Base base;
 	private ArrayList<Unit> units;
+	private ArrayList<Projectile> projectiles;
 	private Tower tower;
 	private WorldManager WM;
 	
@@ -19,6 +20,10 @@ public class Player {
 		this.base = new Base();
 		this.units = new ArrayList<Unit>();
 		this.WM = WM;
+	}
+	
+	public ArrayList<Projectile> getProjectiles(){
+		return this.projectiles;
 	}
 	
 	public ArrayList<Unit> getUnits(){
