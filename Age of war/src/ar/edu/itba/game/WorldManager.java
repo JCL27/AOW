@@ -33,16 +33,19 @@ public class WorldManager {
 
 	public void checkCollisions(){
 		ArrayList<Collision> cols = new ArrayList<Collision>();
-		for(Projectile pjt: player.getProjectiles())
+		for(Projectile pjt: player.getProjectiles()){
 			for(Unit unit:AI.getUnits()){
 				if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
 					cols.add(new Collision(pjt, unit));
+					System.out.println("Added1");
 				}
 			}
+		}
 		for(Projectile pjt: AI.getProjectiles())
 			for(Unit unit:player.getUnits()){
 				if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
 					cols.add(new Collision(pjt, unit));
+					System.out.println("Added2");
 				}
 			}
 		for(Collision col:cols){

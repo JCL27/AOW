@@ -27,13 +27,15 @@ public class Projectile {
 	}
 	
 	public Point2D.Double getCollisionPoint(){
-		return new Point2D.Double(this.getMiddleX(), this.element.getY() + this.element.getHeight());
+		return new Point2D.Double(this.getMiddleX(), this.element.getY() + this.element.getHeight()/this.element.getScale());
 	}
 	
-	public Projectile(double X, double Y, double velX, double velY, boolean gravity){
+	public Projectile(double X, double Y, double velX, double velY, boolean gravity, int damage){
 		Texture texture = new Texture(Gdx.files.classpath("resources/verde.png"));
 		this.element = new Element(texture , (float)(X-texture.getWidth()/24)  , (float)Y, (float)velX, (float)velY, 12 , true);
+		this.damage = damage;
 		WorldManager.getInstance().getElements().add(this.element);
+		
 	}
 
 }

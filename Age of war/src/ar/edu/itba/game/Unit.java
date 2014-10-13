@@ -24,12 +24,10 @@ public class Unit implements CanAttack, Attackable{
 				velX = -velY;
 			else
 				velX = velY;
-			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(), this.getElement().getMiddleY(), velX , velY , true));
+			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(), this.getElement().getMiddleY(), velX , velY , true, this.damage));
 			
 			System.out.println("attack!");
-			
-			this.objective = null;
-			
+
 			this.cooldown = (int)(1000/this.attackSpeed);		
 
 		}
@@ -80,7 +78,7 @@ public class Unit implements CanAttack, Attackable{
 	}
 	
 	public void updateAttackObjective(){
-		if (this.objective == null){
+		if (this.objective == null || !WorldManager.getInstance().getElements().contains(this.objective.getElement())){
 			this.objective = WorldManager.getInstance().isInRange(this);
 		}
 		if(this.objective != null){
