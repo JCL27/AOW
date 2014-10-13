@@ -65,6 +65,7 @@ public class Game implements ApplicationListener {
 		SB.begin();
 		WorldManager.getInstance().updateUnitsSpeed();
 		WorldManager.getInstance().updateUnitsObjectives();
+		WorldManager.getInstance().checkCollisions();
 		for(Element elem:WorldManager.getInstance().getElements()){
 			SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getWidth()/elem.getScale(), elem.getHeight()/elem.getScale(), 0, 0, 600, 600, false, false);
 			elem.setX(elem.getX()+elem.getVelX());

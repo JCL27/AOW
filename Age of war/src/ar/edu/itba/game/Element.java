@@ -1,7 +1,5 @@
 package ar.edu.itba.game;
 
-import org.lwjgl.util.Point;
-
 import com.badlogic.gdx.graphics.Texture;
 
 public class Element {

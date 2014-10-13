@@ -1,9 +1,5 @@
 package ar.edu.itba.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.physics.box2d.Fixture;
-
 import exceptions.DeadUnitException;
 
 public class Unit implements CanAttack, Attackable{
@@ -13,9 +9,9 @@ public class Unit implements CanAttack, Attackable{
 	private int attackRange;
 	private int movementSpeed;
 	private int damage;
+	private Player player;
 	private Side dir;
 	private Attackable objective;
-	private Projectile pro;
 	
 	private int cooldown;
 	private Element element;
@@ -28,16 +24,14 @@ public class Unit implements CanAttack, Attackable{
 				velX = -velY;
 			else
 				velX = velY;
-			pro = new Projectile(this.getElement().getMiddleX(), this.getElement().getMiddleY(), velX , velY , true);
+			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(), this.getElement().getMiddleY(), velX , velY , true));
+			
 			System.out.println("attack!");
-			try {
-				objective.receiveDamage(this.damage);
-			} catch (DeadUnitException e) {
-				WorldManager.getInstance().killUnit(e.getUnit());
-				this.objective = null;
-			} finally{
+			
+			this.objective = null;
+			
 			this.cooldown = (int)(1000/this.attackSpeed);		
-			}
+
 		}
 		else{
 			this.cooldown--;
@@ -66,7 +60,7 @@ public class Unit implements CanAttack, Attackable{
 		this.dir = 	Side.LEFT;
 	}
 	
-	public Unit(int maxHp, double attackSpeed, int attackRange, int movementSpeed, int damage, Element element, Side dir){
+	public Unit(int maxHp, double attackSpeed, int attackRange, int movementSpeed, int damage, Element element, Side dir, Player player){
 		this.maxHp = maxHp;
 		this.hp = maxHp;
 		this.attackSpeed = attackSpeed;
@@ -78,6 +72,7 @@ public class Unit implements CanAttack, Attackable{
 		this.dir = dir;
 		this.objective = null;
 		this.cooldown = 0;
+		this.player = player;
 	}
 	
 	public void removeElement(){
