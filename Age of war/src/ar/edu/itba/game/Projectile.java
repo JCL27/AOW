@@ -1,10 +1,6 @@
 package ar.edu.itba.game;
 
 import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Double;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 
 public class Projectile {
 	private Element element;

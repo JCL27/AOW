@@ -2,9 +2,6 @@ package ar.edu.itba.game;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-
 public class Player {
 	private int gold;
 	private int experience;
