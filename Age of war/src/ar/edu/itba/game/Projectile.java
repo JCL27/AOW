@@ -31,8 +31,7 @@ public class Projectile {
 	}
 	
 	public Projectile(double X, double Y, double velX, double velY, boolean gravity, int damage){
-		Texture texture = new Texture(Gdx.files.classpath("resources/verde.png"));
-		this.element = new Element(texture , (float)(X-texture.getWidth()/24)  , (float)Y, (float)velX, (float)velY, 12 , true);
+		this.element = new Element(Textures.GREEN_BUTTON , (float)(X-Textures.GREEN_BUTTON.getWidth()/24)  , (float)Y, (float)velX, (float)velY, 12 , true);
 		this.damage = damage;
 		WorldManager.getInstance().getElements().add(this.element);
 		

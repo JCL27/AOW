@@ -32,10 +32,9 @@ public class Player {
 	}
 	
 	public void createUnit(){
-		Texture texture = new Texture(Gdx.files.classpath("resources/green button.png"));
-		Element elem = new Element(texture, 0, 0, 3, 0, 6, false);
+		Element elem = new Element(Textures.BLUE_BALL, 0, 0, 3, 0, 6, false);
 		units.add(new Unit(500, 5.4, 200, 2, 120, elem, Side.LEFT, this));
-		elem = new Element(texture, 1000, 0, 3, 0, 6, false);
+		elem = new Element(Textures.RED_BALL, 1000, 0, 3, 0, 6, false);
 		WorldManager.getInstance().getAI().getUnits().add(new Unit(500, 4.0, 200, -1, 160, elem, Side.RIGHT, WorldManager.getInstance().getAI()));
 
 	}

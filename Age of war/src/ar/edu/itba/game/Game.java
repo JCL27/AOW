@@ -67,7 +67,7 @@ public class Game implements ApplicationListener {
 		WorldManager.getInstance().updateUnitsObjectives();
 		WorldManager.getInstance().checkCollisions();
 		for(Element elem:WorldManager.getInstance().getElements()){
-			SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getWidth()/elem.getScale(), elem.getHeight()/elem.getScale(), 0, 0, 600, 600, false, false);
+			SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getWidth()/elem.getScale(), elem.getHeight()/elem.getScale(), 0, 0, elem.getWidth(), elem.getHeight(), false, false);
 			elem.setX(elem.getX()+elem.getVelX());
 			elem.setY(elem.getY()+elem.getVelY());
 			if(elem.isGravity())
