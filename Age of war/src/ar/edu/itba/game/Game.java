@@ -1,5 +1,7 @@
 package ar.edu.itba.game;
 
+import Buttons.Button;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -72,6 +74,9 @@ public class Game implements ApplicationListener {
 			elem.setY(elem.getY()+elem.getVelY());
 			if(elem.isGravity())
 				elem.setVelY(elem.getVelY()-0.1);
+		}
+		for(Button button:WorldManager.getInstance().getButtons()){
+			SB.draw(button.getTexture(), (float)button.getX(),(float) button.getY(), button.getWidth()/button.getScale(), button.getHeight()/button.getScale(), 0, 0, button.getWidth(), button.getHeight(), false, false);
 		}
 		SB.end();
 		b2dr.render(world, cam.combined);

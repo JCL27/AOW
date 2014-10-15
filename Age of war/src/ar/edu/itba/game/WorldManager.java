@@ -2,9 +2,7 @@ package ar.edu.itba.game;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-
+import Buttons.*;
 
 enum Side{LEFT, RIGHT};
 
@@ -15,13 +13,49 @@ public class WorldManager {
 	private Player player;
 	private Player AI;
 	private ArrayList<Element> elements = new ArrayList<Element>();	
+	private ArrayList<Button> buttons = new ArrayList<Button>();
 	private static WorldManager instance = null;
    
+	public ArrayList<Button> getButtons() {
+		return buttons;
+	}
+
 	private WorldManager() {
 		player = new Player(this);
 		AI = new Player(this);
+		this.setUI();
+		this.setUnitsStats();
+	}
+	
+	private void setUnitsStats() {
+		//MeleeUnitStats
+		MeleeUnit.getATTACK_RANGE().add(300);
+		MeleeUnit.getATTACK_RANGE().add(350);
+		MeleeUnit.getATTACK_RANGE().add(400);
 		
-		elements.add(new Element(new Texture(Gdx.files.classpath("resources/green button.png")), 500, 500, 0, 0, 6, false));
+		MeleeUnit.getATTACK_SPEED().add(4.2);
+		MeleeUnit.getATTACK_SPEED().add(4.5);
+		MeleeUnit.getATTACK_SPEED().add(4.8);
+		MeleeUnit.getATTACK_SPEED().add(5.2);
+		
+		MeleeUnit.getMAX_HP().add(400);
+		MeleeUnit.getMAX_HP().add(500);
+		MeleeUnit.getMAX_HP().add(600);
+		
+		MeleeUnit.getDAMAGE().add(60);
+		MeleeUnit.getDAMAGE().add(80);
+		MeleeUnit.getDAMAGE().add(100);
+		MeleeUnit.getDAMAGE().add(120);
+		
+		MeleeUnit.getMOVEMENT_SPEED().add(1);
+		MeleeUnit.getMOVEMENT_SPEED().add(2);
+		MeleeUnit.getMOVEMENT_SPEED().add(3);
+		
+	}
+
+	private void setUI(){
+		buttons.add(new Button(Textures.BUTTON, 500, 500, 6));
+		buttons.add(new UpgradeMeleeUnitDamage(Textures.BUTTON, 700, 550, 10));
 	}
 	
 	public static WorldManager getInstance() {

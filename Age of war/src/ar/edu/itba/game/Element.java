@@ -28,10 +28,6 @@ public class Element {
 		return false;	
 	}
 	
-	public void click(){
-		WorldManager.getInstance().getPlayer().createUnit();
-	}
-	
 	public int getScale(){
 		return this.scale;
 	}
