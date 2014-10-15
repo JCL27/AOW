@@ -2,19 +2,20 @@ package ar.edu.itba.game;
 
 import exceptions.DeadUnitException;
 
-public class Unit implements CanAttack, Attackable{
-	private int hp;
-	private int maxHp;
-	private double attackSpeed;
-	private int attackRange;
-	private int movementSpeed;
-	private int damage;
-	private Player player;
-	private Side dir;
-	private Attackable objective;
+public abstract class Unit implements CanAttack, Attackable{
 	
-	private int cooldown;
-	private Element element;
+	protected int hp;
+	protected int maxHp;
+	protected double attackSpeed;
+	protected int attackRange;
+	protected int movementSpeed;
+	protected int damage;
+	protected Player player;
+	protected Side dir;
+	protected Attackable objective;
+	
+	protected int cooldown;
+	protected Element element;
 	
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
