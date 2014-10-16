@@ -2,6 +2,8 @@ package ar.edu.itba.game;
 
 import java.awt.geom.Point2D;
 
+import UserInterface.Textures;
+
 public class Projectile {
 	private Element element;
 	private int damage;

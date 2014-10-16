@@ -1,0 +1,5 @@
+package UserInterface;
+
+public enum UIState {
+	DEFAULT, CREATE_UNIT, TERRAIN_UNITS, FLYING_UNITS, UNDERGROUND_UNITS, UPGRADES;
+}

@@ -13,17 +13,12 @@ public class WorldManager {
 	private Player player;
 	private Player AI;
 	private ArrayList<Element> elements = new ArrayList<Element>();	
-	private ArrayList<Button> buttons = new ArrayList<Button>();
 	private static WorldManager instance = null;
-   
-	public ArrayList<Button> getButtons() {
-		return buttons;
-	}
 
 	private WorldManager() {
 		player = new Player(this);
 		AI = new Player(this);
-		this.setUI();
+		//llamar a UIManager
 		this.setUnitsStats();
 	}
 	
@@ -51,11 +46,6 @@ public class WorldManager {
 		MeleeUnit.getMOVEMENT_SPEED().add(2);
 		MeleeUnit.getMOVEMENT_SPEED().add(3);
 		
-	}
-
-	private void setUI(){
-		buttons.add(new Button(Textures.BUTTON, 500, 500, 6));
-		buttons.add(new UpgradeMeleeUnitDamage(Textures.BUTTON, 700, 550, 10));
 	}
 	
 	public static WorldManager getInstance() {

@@ -36,8 +36,16 @@ public class Element {
 		return this.texture.getHeight();
 	}
 	
+	public int getScreenHeight(){
+		return this.getHeight()/this.scale;
+	}
+	
 	public int getWidth(){
 		return this.texture.getWidth();
+	}
+	
+	public int getScreenWidth(){
+		return this.getWidth()/(this.scale);
 	}
 	
 	public Texture getTexture() {

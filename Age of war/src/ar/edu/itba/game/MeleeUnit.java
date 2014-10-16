@@ -2,6 +2,8 @@ package ar.edu.itba.game;
 
 import java.util.ArrayList;
 
+import UserInterface.Textures;
+
 public class MeleeUnit extends Unit {
 	private static ArrayList<Integer> MAX_HP = new ArrayList<Integer>();
 	private static ArrayList<Double> ATTACK_SPEED = new ArrayList<Double>();

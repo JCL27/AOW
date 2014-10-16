@@ -1,4 +1,4 @@
-package ar.edu.itba.game;
+package UserInterface;
 
 public interface Clickable {
 	public void Click();

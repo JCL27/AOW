@@ -1,6 +1,8 @@
 package ar.edu.itba.game;
 
 import Buttons.Button;
+import UserInterface.MyInputProcessor;
+import UserInterface.UIManager;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -42,6 +44,9 @@ public class Game implements ApplicationListener {
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, WIDTH, HEIGHT);
 		System.out.println(cam.getPickRay(400, 600));
+		
+		UIManager.getInstance().setSpriteBatch(SB);
+		UIManager.getInstance().updateUI();
 	}
 	
 	public OrthographicCamera getCam(){
@@ -50,24 +55,24 @@ public class Game implements ApplicationListener {
 	
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
 		Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		SB.begin();
+		
 		WorldManager.getInstance().updateUnitsSpeed();
 		WorldManager.getInstance().updateUnitsObjectives();
 		WorldManager.getInstance().checkCollisions();
+		SB.begin();
+		
 		for(Element elem:WorldManager.getInstance().getElements()){
 			SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getWidth()/elem.getScale(), elem.getHeight()/elem.getScale(), 0, 0, elem.getWidth(), elem.getHeight(), false, false);
 			elem.setX(elem.getX()+elem.getVelX());
@@ -75,10 +80,12 @@ public class Game implements ApplicationListener {
 			if(elem.isGravity())
 				elem.setVelY(elem.getVelY()-0.1);
 		}
-		for(Button button:WorldManager.getInstance().getButtons()){
+		/*for(Button button:WorldManager.getInstance().getButtons()){
 			SB.draw(button.getTexture(), (float)button.getX(),(float) button.getY(), button.getWidth()/button.getScale(), button.getHeight()/button.getScale(), 0, 0, button.getWidth(), button.getHeight(), false, false);
-		}
+		}*/
+		UIManager.getInstance().drawButtons();
 		SB.end();
+		
 		b2dr.render(world, cam.combined);
 		
 	}

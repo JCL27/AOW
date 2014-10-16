@@ -1,8 +1,9 @@
-package ar.edu.itba.game;
+package UserInterface;
 
 import java.util.ArrayList;
 
 import Buttons.Button;
+import ar.edu.itba.game.Game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -44,7 +45,7 @@ public class MyInputProcessor implements InputProcessor{
 	@Override
 	public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
 		// TODO Auto-generated method stub
-		ArrayList<Button> buttons = WorldManager.getInstance().getButtons();
+		ArrayList<Button> buttons = UIManager.getInstance().getButtons();
 		double scaledX = arg0 * (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth();
 		double scaledY = Game.HEIGHT * Game.SCALE - arg1 * (Game.HEIGHT * Game.SCALE)/ Gdx.graphics.getHeight();
 		Button buttonClicked = null;
