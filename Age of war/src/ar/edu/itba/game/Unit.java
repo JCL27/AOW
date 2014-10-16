@@ -17,6 +17,35 @@ public abstract class Unit implements CanAttack, Attackable{
 	protected int cooldown;
 	protected Element element;
 	
+	protected int gold;
+	protected int exp;
+	protected int cost;
+
+	public int getGold() {
+		return this.gold;
+	}
+
+	public void setGold(int gold) {
+		this.gold = gold;
+	}
+
+	public void setExp(int exp) {
+		this.exp = exp;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+
+	public int getExp() {
+		return this.exp;
+	}
+
+	public int getCost() {
+		return this.cost;
+	}
+
+	
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
 			double velX;

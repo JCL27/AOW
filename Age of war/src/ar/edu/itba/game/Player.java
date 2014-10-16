@@ -31,7 +31,22 @@ public class Player {
 	public void createUnit(){
 		this.units.add(new MeleeUnit(this));
 		WorldManager.getInstance().getAI().getUnits().add(new MeleeUnit(WorldManager.getInstance().getAI()));
-
+	}
+	
+	public void addGold(int gold){
+		this.gold += gold;
+	}
+	
+	public void addExp(int exp){
+		this.experience += exp;
+	}
+	
+	public int getGold(){
+		return this.gold;
+	}
+	
+	public int getExp(){
+		return this.experience;
 	}
 	//	public Unit(int maxHp, double attackSpeed, int attackRange, int movementSpeed, int damage, Element element, Direction dir){
 

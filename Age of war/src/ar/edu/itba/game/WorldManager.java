@@ -104,16 +104,24 @@ public class WorldManager {
 	
 	public void killUnit(Unit thisUnit){
 		//thisUnit.removeElement();
+		
+		
 		this.elements.remove(thisUnit.getElement());
 		
 		if(thisUnit.getSide()==Side.LEFT){
+			AI.addGold(thisUnit.getGold());
+			AI.addExp(thisUnit.getExp());
 			player.getUnits().remove(thisUnit);
+			System.out.println("AI gold is: " + AI.getGold());
 //			for(Unit unit: player.getUnits())
 //				if (unit.equals(thisUnit))
 //					player.getUnits().iterator().remove();
 		}
 		else{
+			player.addGold(thisUnit.getGold());
+			player.addExp(thisUnit.getExp());
 			AI.getUnits().remove(thisUnit);
+			System.out.println("player gold is: " + player.getGold());
 //			for(Unit unit: AI.getUnits())
 //				if (unit.equals(thisUnit))
 //					AI.getUnits().iterator().remove();	

@@ -9,6 +9,12 @@ public class MeleeUnit extends Unit {
 	private static ArrayList<Integer> MOVEMENT_SPEED = new ArrayList<Integer>();
 	private static ArrayList<Integer> DAMAGE = new ArrayList<Integer>();
 	private static Element ELEMENT;
+	private static int GOLD = 300;
+	private static int COST = 250;
+	private static int EXP = 70;
+	
+	private static UpgradeStatus playerUS = new UpgradeStatus();
+	private static UpgradeStatus AIUS = new UpgradeStatus();
 	
 	public static ArrayList<Integer> getMAX_HP() {
 		return MAX_HP;
@@ -34,9 +40,6 @@ public class MeleeUnit extends Unit {
 		return ELEMENT;
 	}
 	
-	private static UpgradeStatus playerUS = new UpgradeStatus();
-	private static UpgradeStatus AIUS = new UpgradeStatus() ;
-	
 	public static UpgradeStatus getPlayerUS() {
 		return playerUS;
 	}
@@ -50,6 +53,10 @@ public class MeleeUnit extends Unit {
 		this.player = player;
 		this.objective = null;
 		this.cooldown = 0;
+		this.gold = GOLD;
+		this.cost = COST;
+		this.exp = EXP;
+		
 		if (this.player.equals(WorldManager.getInstance().getPlayer())){
 			this.maxHp = MAX_HP.get((playerUS.getMaxHpIndex()));
 			this.hp = this.maxHp;
