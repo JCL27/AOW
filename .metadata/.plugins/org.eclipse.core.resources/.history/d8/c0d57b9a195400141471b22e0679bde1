@@ -1,0 +1,16 @@
+package ar.edu.itba.game;
+
+public class MeleeUnit extends Unit {
+	
+	
+	public MeleeUnit(){
+		this.maxHp = 500;
+		this.hp = 500;
+		this.attackSpeed = 1.0;
+		this.attackRange = 300;
+		this.movementSpeed = 100;
+		this.damage = 50;
+		this.element = WorldManager.getInstance().newElement(new Texture(Gdx.files.classpath("resources/verde.png")));
+		this.dir = 	Side.LEFT;
+	}
+}

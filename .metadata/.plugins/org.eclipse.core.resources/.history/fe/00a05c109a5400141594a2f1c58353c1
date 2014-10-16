@@ -1,0 +1,56 @@
+package ar.edu.itba.game;
+
+public class UpgradeStatus {
+	private int maxHpIndex;
+	private int attackSpeedIndex;
+	private int attackRangeIndex;
+	private int movementSpeedIndex;
+	private int damageIndex;
+	private int skillCooldownIndex;
+	
+	public UpgradeStatus(){
+		this.maxHpIndex = 0;
+		this.attackRangeIndex = 0;
+		this.attackSpeedIndex = 0;
+		this.movementSpeedIndex = 0;
+		this.damageIndex = 0;
+		this.skillCooldownIndex = 0;
+	}
+	
+	public int getMaxHpIndex() {
+		return maxHpIndex;
+	}
+	public void setMaxHpIndex(int maxHpIndex) {
+		this.maxHpIndex = maxHpIndex;
+	}
+	public int getAttackSpeedIndex() {
+		return attackSpeedIndex;
+	}
+	public void setAttackSpeedIndex(int attackSpeedIndex) {
+		this.attackSpeedIndex = attackSpeedIndex;
+	}
+	public int getAttackRangeIndex() {
+		return attackRangeIndex;
+	}
+	public void setAttackRangeIndex(int attackRangeIndex) {
+		this.attackRangeIndex = attackRangeIndex;
+	}
+	public int getMovementSpeedIndex() {
+		return movementSpeedIndex;
+	}
+	public void setMovementSpeedIndex(int movementSpeedIndex) {
+		this.movementSpeedIndex = movementSpeedIndex;
+	}
+	public int getDamageIndex() {
+		return damageIndex;
+	}
+	public void setDamageIndex(int damageIndex) {
+		this.damageIndex = damageIndex;
+	}
+	public int getSkillCooldownIndex() {
+		return skillCooldownIndex;
+	}
+	public void setSkillCooldownIndex(int skillCooldownIndex) {
+		this.skillCooldownIndex = skillCooldownIndex;
+	}
+}

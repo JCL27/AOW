@@ -1,0 +1,19 @@
+package ar.edu.itba.game;
+
+import java.util.ArrayList;
+
+public class Upgrade {
+	protected ArrayList<Upgrade> needs;
+	protected ArrayList<Upgrade> allows;
+	
+	protected boolean applied;
+	protected boolean available;
+	
+	public void applyUpgrade(){
+		
+	}
+	
+	public void checkNewUpgrades(){
+		
+	}
+}

@@ -1,0 +1,52 @@
+package ar.edu.itba.game;
+
+import java.util.ArrayList;
+import Buttons.Button;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class UIManager {
+	
+	private static UIManager instance = null;
+	
+	private SpriteBatch SB;
+	private ArrayList<Button> buttons = new ArrayList<Button>();
+
+	public static UIManager getInstance() {
+	      if(instance == null) {
+	         instance = new UIManager();
+	      }
+	      return instance;
+	   }
+	
+	private UIState State = UIState.DEFAULT;
+	
+	public UIManager(){
+	}
+	
+	public void setSpriteBatch(SpriteBatch SB){
+		this.SB = SB;
+	}
+	
+	public void drawUI(){
+		SB.begin();
+		switch(State){
+		case DEFAULT: 
+			SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getWidth()/elem.getScale(), elem.getHeight()/elem.getScale(), 0, 0, elem.getWidth(), elem.getHeight(), false, false);
+		case CREATE_UNIT:
+		case TERRAIN_UNITS:
+		case FLYING_UNITS:
+		case UNDERGROUND_UNITS:
+		case UPGRADES:
+		}
+	}
+
+	public ArrayList<Button> getButtons() {
+		return this.buttons;
+	}
+	
+	private void drawButton(Button button){
+		SB.draw(button.getTexture(), (float)button.getX(),(float) button.getY(), button.getWidth()/button.getScale(),button.getHeight()/button.getScale(), false, false);
+	}
+	
+	
+}
