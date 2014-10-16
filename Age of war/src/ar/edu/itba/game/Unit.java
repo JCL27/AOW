@@ -2,6 +2,7 @@ package ar.edu.itba.game;
 
 import exceptions.DeadUnitException;
 
+
 public abstract class Unit implements CanAttack, Attackable{
 	
 	protected int hp;
@@ -13,6 +14,7 @@ public abstract class Unit implements CanAttack, Attackable{
 	protected Player player;
 	protected Side dir;
 	protected Attackable objective;
+	protected HealthBar healthbar;
 	
 	protected int cooldown;
 	protected Element element;
@@ -67,15 +69,6 @@ public abstract class Unit implements CanAttack, Attackable{
 			
 	}
 	
-	@Override
-	public void receiveDamage(int damage) throws DeadUnitException{
-		// TODO Auto-generated method stub
-		this.hp-= damage;
-		System.out.println(this.hp + " " + this.getSide());
-		if(this.hp <= 0){
-			throw new DeadUnitException(this);
-		}
-	}
 	
 	public Unit(){
 		this.maxHp = 500;
@@ -103,6 +96,18 @@ public abstract class Unit implements CanAttack, Attackable{
 		this.player = player;
 	}
 	
+	
+	@Override
+	public void receiveDamage(int damage) throws DeadUnitException{
+		// TODO Auto-generated method stub
+		this.hp-= damage;
+		this.healthbar.reduceHp(damage);
+		System.out.println(this.hp + " " + this.getSide());
+		if(this.hp <= 0){
+			throw new DeadUnitException(this);
+		}
+	}
+	
 	public void removeElement(){
 		this.element = null;
 	}
@@ -119,10 +124,14 @@ public abstract class Unit implements CanAttack, Attackable{
 	
 	public void updateSpeed(){
 		if(WorldManager.getInstance().canAdvance(this)){
-			this.element.setVelX(this.movementSpeed);		
+			this.element.setVelX(this.movementSpeed);
+			//BORRARR
+			this.healthbar.setVelX(this.movementSpeed);
 		}
 		else{
 			this.element.setVelX(0);
+			//BORRARR
+			this.healthbar.setVelX(0);
 		}
 	}
 	
@@ -134,6 +143,11 @@ public abstract class Unit implements CanAttack, Attackable{
 		return this.element.getScale();
 	}
 	
+	
+	public HealthBar getHealthbar() {
+		return healthbar;
+	}
+
 	public Side getSide(){
 		return this.dir;
 	}

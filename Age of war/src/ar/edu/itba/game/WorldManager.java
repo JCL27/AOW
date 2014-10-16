@@ -107,7 +107,7 @@ public class WorldManager {
 		
 		
 		this.elements.remove(thisUnit.getElement());
-		
+		this.elements.remove(thisUnit.getHealthbar());
 		if(thisUnit.getSide()==Side.LEFT){
 			AI.addGold(thisUnit.getGold());
 			AI.addExp(thisUnit.getExp());

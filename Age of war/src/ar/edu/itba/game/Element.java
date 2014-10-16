@@ -8,7 +8,7 @@ public class Element {
 	private double Y;
 	private double velX;
 	private double velY;
-	private int scale;
+	protected int scale;
 	private boolean gravity;
 	
 	public Element(Texture texture, float X, float Y, float velX, float velY, int scale, boolean gravity){
@@ -28,6 +28,13 @@ public class Element {
 		return false;	
 	}
 	
+	public int getScreenWidth(){
+		return this.getWidth()/this.scale;
+	}
+	
+	public int getScreenHeight(){
+		return this.getHeight()/this.scale;
+	}
 	public int getScale(){
 		return this.scale;
 	}

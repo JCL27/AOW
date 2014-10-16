@@ -28,13 +28,14 @@ public class Game implements ApplicationListener {
 	private Sprite sp;
 	private Label label;
 	
+	
 	public void create() {
 		// TODO Auto-generated method stub
 		Texture.setEnforcePotImages(false);
 		Gdx.input.setInputProcessor(new MyInputProcessor());
 		SB = new SpriteBatch();
-		
-	//	label = new Label("hola");
+	
+		//	label = new Label("hola");
 		
 		b2dr = new Box2DDebugRenderer();
 		this.world = new World(new Vector2(0,0),true);
@@ -59,7 +60,7 @@ public class Game implements ApplicationListener {
 		// TODO Auto-generated method stub
 		
 	}
-
+	 
 	@Override
 	public void render() {
 		// TODO Auto-generated method stub
@@ -68,10 +69,21 @@ public class Game implements ApplicationListener {
 		WorldManager.getInstance().updateUnitsSpeed();
 		WorldManager.getInstance().updateUnitsObjectives();
 		WorldManager.getInstance().checkCollisions();
+		//BORRARRRR
+		/*for(Unit unit : WorldManager.getInstance().getPlayer().getUnits()){
+			//SB.draw(unit.getHealthbar().getElement().getTexture(), unit.getElement().getX(), unit.getElement().getVelY(), 
+				//	unit.getHealthbar().getElement().getWidth(), unit.getHealthbar().getElement().getHeighet());
+			SB.draw(Textures.HEALTH_BAR, (int)unit.getElement().getX() - 25, (int)unit.getElement().getY() + 40, unit.healthbar.getHp()/4, 100);
+		}
+		for(Unit unit : WorldManager.getInstance().getAI().getUnits()){
+			SB.draw(Textures.HEALTH_BAR, (int)unit.getElement().getX() +85, (int)unit.getElement().getY() + 40, -unit.healthbar.getHp()/4, 100);
+		}*/
+		
 		for(Element elem:WorldManager.getInstance().getElements()){
-			SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getWidth()/elem.getScale(), elem.getHeight()/elem.getScale(), 0, 0, elem.getWidth(), elem.getHeight(), false, false);
+			SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getScreenWidth(), elem.getScreenHeight(), 0, 0, elem.getWidth(), elem.getHeight(), false, false);
 			elem.setX(elem.getX()+elem.getVelX());
 			elem.setY(elem.getY()+elem.getVelY());
+			
 			if(elem.isGravity())
 				elem.setVelY(elem.getVelY()-0.1);
 		}

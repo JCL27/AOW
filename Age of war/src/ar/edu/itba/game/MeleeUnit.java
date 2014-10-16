@@ -1,5 +1,7 @@
 package ar.edu.itba.game;
 
+
+
 import java.util.ArrayList;
 
 public class MeleeUnit extends Unit {
@@ -66,6 +68,9 @@ public class MeleeUnit extends Unit {
 			this.element = new Element(Textures.BLUE_BALL, 100, 0, 3, 0, 6, false);
 			this.movementSpeed = MOVEMENT_SPEED.get(playerUS.getMovementSpeedIndex());
 			this.dir = Side.LEFT;
+			this.healthbar = new HealthBar(maxHp, (float)element.getX(), (float)element.getY(), element.getWidth(), element.getHeight(),
+					(float)element.getVelX(), (float)element.getVelY(),element.getScale(), this.dir);
+			//BORRAR
 			System.out.println("instancio player");
 		}else{
 			this.maxHp = MAX_HP.get((AIUS.getMaxHpIndex()));
@@ -76,9 +81,13 @@ public class MeleeUnit extends Unit {
 			this.element = new Element(Textures.RED_BALL, 1000, 0, 3, 0, 6, false);
 			this.movementSpeed = MOVEMENT_SPEED.get(AIUS.getMovementSpeedIndex()) * (-1);
 			this.dir = Side.RIGHT;
+			this.healthbar = new HealthBar(maxHp, (float)element.getX(), (float)element.getY(),element.getWidth(), element.getHeight(),
+					(float)element.getVelX(), (float)element.getVelY(), element.getScale(), this.dir);
 			System.out.println("instancio AI");
 		}
+		
 		WorldManager.getInstance().getElements().add(this.element);
+		WorldManager.getInstance().getElements().add(this.healthbar);
 
 	}
 }
