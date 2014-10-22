@@ -5,7 +5,11 @@ import java.util.ArrayList;
 import Buttons.Button;
 import Buttons.CreateMeleeUnit;
 import Buttons.UpgradeMeleeUnitDamage;
+import Draws.Drawable;
+import Draws.GroundDraw;
+import ar.edu.itba.game.Game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class UIManager {
@@ -14,7 +18,9 @@ public class UIManager {
 	
 	private SpriteBatch SB;
 	private ArrayList<Button> buttons = new ArrayList<Button>();
-
+	private ArrayList<Drawable> drawables = new ArrayList<Drawable>();
+	private UIState State = UIState.DEFAULT;
+	
 	public static UIManager getInstance() {
 	      if(instance == null) {
 	         instance = new UIManager();
@@ -22,16 +28,19 @@ public class UIManager {
 	      return instance;
 	   }
 	
-	private UIState State = UIState.DEFAULT;
-	
 	public UIManager(){
+		drawables.add(new GroundDraw(0,0));
 	}
 	
 	public void setSpriteBatch(SpriteBatch SB){
 		this.SB = SB;
 	}
 	
-	public void updateUI(){
+	public void setState(UIState State){
+		this.State = State;
+	}
+	
+	public void updateButtons(){
 		int count = 0;
 		this.buttons.clear();
 		switch(State){
@@ -46,8 +55,20 @@ public class UIManager {
 		}
 	}
 
+	public ArrayList<Drawable> getDraws(){
+		return this.drawables;
+	}
+	
 	public ArrayList<Button> getButtons() {
 		return this.buttons;
+	}
+	
+	public void drawTextures(){
+		for(Drawable draw:this.drawables){
+			System.out.println(draw.getClass().getSimpleName() + " " + draw.getTexture() + " " + draw.getxPos() + " " + draw.getScreenHeight() + " " + draw.getSpriteHeight());
+			SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
+					draw.getScreenHeight(), 0, 0, draw.getSpriteWidth(), draw.getSpriteHeight(), false, false);
+		}
 	}
 	
 	public void drawButtons(){
@@ -57,8 +78,19 @@ public class UIManager {
 	}
 	
 	private void drawButton(Button button){
-		SB.draw(button.getTexture(), (float)button.getX(),
-				(float) button.getY(), button.getScreenWidth(),button.getScreenHeight());
+/*
+		System.out.println(button.getDraw().getxPos());
+		System.out.println(button.getDraw().getyPos());
+		
+		System.out.println(button.getDraw().getTexture().getHeight());
+		System.out.println(button.getDraw().getTexture().getWidth());		
+		
+		System.out.println(button.getDraw().getScreenHeight());
+		System.out.println(button.getDraw().getScreenWidth());		
+	*/	
+		SB.draw(button.getDraw().getTexture(), (float)button.getDraw().getxPos(), (float)button.getDraw().getyPos(), 
+				button.getDraw().getScreenHeight(), button.getDraw().getScreenWidth());
+
 	}
 	
 	

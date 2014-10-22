@@ -4,6 +4,7 @@ package ar.edu.itba.game;
 
 import java.util.ArrayList;
 
+import Observers.UnitObserver;
 import UserInterface.Textures;
 
 public class MeleeUnit extends Unit {
@@ -67,29 +68,23 @@ public class MeleeUnit extends Unit {
 			this.attackSpeed = ATTACK_SPEED.get((playerUS.getAttackSpeedIndex()));
 			this.attackRange = ATTACK_RANGE.get(playerUS.getAttackRangeIndex());
 			this.damage = DAMAGE.get(playerUS.getDamageIndex());
-			this.element = new Element(Textures.BLUE_BALL, 100, 0, 3, 0, 6, false);
+			this.element = new Element(100, Game.GROUND_HEIGHT, 3, 0, 100, 100, false);
 			this.movementSpeed = MOVEMENT_SPEED.get(playerUS.getMovementSpeedIndex());
 			this.dir = Side.LEFT;
-			this.healthbar = new HealthBar(maxHp, (float)element.getX(), (float)element.getY(), element.getWidth(), element.getHeight(),
-					(float)element.getVelX(), (float)element.getVelY(),element.getScale(), this.dir);
-			//BORRAR
-			System.out.println("instancio player");
+
 		}else{
 			this.maxHp = MAX_HP.get((AIUS.getMaxHpIndex()));
 			this.hp = this.maxHp;
 			this.attackSpeed = ATTACK_SPEED.get((AIUS.getAttackSpeedIndex()));
 			this.attackRange = ATTACK_RANGE.get(AIUS.getAttackRangeIndex());
 			this.damage = DAMAGE.get(AIUS.getDamageIndex());
-			this.element = new Element(Textures.RED_BALL, 1000, 0, 3, 0, 6, false);
+			this.element = new Element(1000, Game.GROUND_HEIGHT, 3, 0, 100, 100, false);
 			this.movementSpeed = MOVEMENT_SPEED.get(AIUS.getMovementSpeedIndex()) * (-1);
 			this.dir = Side.RIGHT;
-			this.healthbar = new HealthBar(maxHp, (float)element.getX(), (float)element.getY(),element.getWidth(), element.getHeight(),
-					(float)element.getVelX(), (float)element.getVelY(), element.getScale(), this.dir);
-			System.out.println("instancio AI");
 		}
-		
+		this.observer = new UnitObserver(this);
+		this.addObserver(this.observer);
 		WorldManager.getInstance().getElements().add(this.element);
-		WorldManager.getInstance().getElements().add(this.healthbar);
 
 	}
 }

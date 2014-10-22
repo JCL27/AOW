@@ -1,4 +1,4 @@
-package ar.edu.itba.game;
+package Draws;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,4 +9,5 @@ public abstract class Textures {
 	public static Texture BUTTON = new Texture(Gdx.files.classpath("resources/green button.png"));
 	public static Texture GREEN_BUTTON = new Texture(Gdx.files.classpath("resources/verde.png"));
 	public static Texture HEALTH_BAR = new Texture(Gdx.files.classpath("resources/Healthbar.png"));
+	public static Texture GROUND = new Texture(Gdx.files.classpath("resources/ground.png"));
 }

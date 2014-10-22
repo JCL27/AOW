@@ -50,7 +50,7 @@ public class MyInputProcessor implements InputProcessor{
 		double scaledY = Game.HEIGHT * Game.SCALE - arg1 * (Game.HEIGHT * Game.SCALE)/ Gdx.graphics.getHeight();
 		Button buttonClicked = null;
 		for(Button button: buttons){
-			if(button.isContained(scaledX, scaledY)){
+			if(button.isClicked(scaledX, scaledY)){
 				buttonClicked = button;
 			}
 		}

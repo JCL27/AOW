@@ -21,6 +21,8 @@ public class Game implements ApplicationListener {
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 400;
 	public static final int SCALE = 2;	
+	public static final double GRAVITY = 0.1;
+	public static final int GROUND_HEIGHT = 300;
 	
 	private OrthographicCamera cam;
 	private Box2DDebugRenderer b2dr;
@@ -41,12 +43,14 @@ public class Game implements ApplicationListener {
 		b2dr = new Box2DDebugRenderer();
 		this.world = new World(new Vector2(0,0),true);
 		
+		
+		
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, WIDTH, HEIGHT);
-		System.out.println(cam.getPickRay(400, 600));
+
 		
 		UIManager.getInstance().setSpriteBatch(SB);
-		UIManager.getInstance().updateUI();
+		UIManager.getInstance().updateButtons();
 	}
 	
 	public OrthographicCamera getCam(){
@@ -68,22 +72,20 @@ public class Game implements ApplicationListener {
 		// TODO Auto-generated method stub
 		Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
+		WorldManager.getInstance().notifyObservers();
+		
 		WorldManager.getInstance().updateUnitsSpeed();
-		WorldManager.getInstance().updateUnitsObjectives();
+		
+		WorldManager.getInstance().updateElements();
+		
 		WorldManager.getInstance().checkCollisions();
+		
+		WorldManager.getInstance().updateUnitsObjectives();
+		
 		SB.begin();
 		
-		
-		for(Element elem:WorldManager.getInstance().getElements()){
-			SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getScreenWidth(), elem.getScreenHeight(), 0, 0, elem.getWidth(), elem.getHeight(), false, false);
-			elem.setX(elem.getX()+elem.getVelX());
-			elem.setY(elem.getY()+elem.getVelY());
-			if(elem.isGravity())
-				elem.setVelY(elem.getVelY()-0.1);
-		}
-		/*for(Button button:WorldManager.getInstance().getButtons()){
-			SB.draw(button.getTexture(), (float)button.getX(),(float) button.getY(), button.getWidth()/button.getScale(), button.getHeight()/button.getScale(), 0, 0, button.getWidth(), button.getHeight(), false, false);
-		}*/
+		//SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getScreenWidth(), elem.getScreenHeight(), 0, 0, elem.getWidth(), elem.getHeight(), false, false);
+		UIManager.getInstance().drawTextures();
 		UIManager.getInstance().drawButtons();
 		SB.end();
 		

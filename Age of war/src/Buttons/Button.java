@@ -1,24 +1,28 @@
 package Buttons;
 
+import Draws.Drawable;
 import UserInterface.Clickable;
 import ar.edu.itba.game.Element;
 import ar.edu.itba.game.WorldManager;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public abstract class Button extends Element implements Clickable {
+public abstract class Button implements Clickable {
 
-	public Button(Texture texture, float X, float Y, float velX, float velY,
-			int scale, boolean gravity) {
-		super(texture, X, Y, velX, velY, scale, gravity);
-		// TODO Auto-generated constructor stub
-	}
+	protected Drawable draw;
 	
-	public Button(Texture texture, float X, float Y, int scale){
-		super(texture, X, Y, 0, 0, scale, false);
+	public boolean isClicked(double X, double Y){
+		if(X> this.draw.getxPos() && Y>this.draw.getyPos() && X<(this.draw.getxPos()+this.draw.getScreenWidth())
+				&& Y<((this.draw.getyPos()+this.draw.getScreenHeight()))){
+			return true;
+		}
+		return false;
 	}
 	
 	@Override
 	public abstract void Click();
-
+	
+	public Drawable getDraw(){
+		return this.draw;
+	}
 }

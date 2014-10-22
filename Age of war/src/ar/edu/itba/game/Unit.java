@@ -1,9 +1,12 @@
 package ar.edu.itba.game;
 
+import java.util.Observable;
+
+import Observers.UnitObserver;
 import exceptions.DeadUnitException;
 
 
-public abstract class Unit implements CanAttack, Attackable{
+public abstract class Unit extends Observable implements CanAttack, Attackable{
 	
 	protected int hp;
 	protected int maxHp;
@@ -14,7 +17,7 @@ public abstract class Unit implements CanAttack, Attackable{
 	protected Player player;
 	protected Side dir;
 	protected Attackable objective;
-	protected HealthBar healthbar;
+	protected UnitObserver observer;
 	
 	protected int cooldown;
 	protected Element element;
@@ -51,14 +54,14 @@ public abstract class Unit implements CanAttack, Attackable{
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
 			double velX;
-			double velY = Math.sqrt(Math.abs(this.getElement().getMiddleX() - objective.getElement().getMiddleX()) * 0.1 / 2);
+			double velY = Math.sqrt(Math.abs(this.getElement().getMiddleX() - objective.getElement().getMiddleX()) * Game.GRAVITY / 2);
 			if(this.getSide()==Side.RIGHT)
 				velX = -velY;
 			else
 				velX = velY;
 			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(), this.getElement().getMiddleY(), velX , velY , true, this.damage));
 			
-			System.out.println("attack!");
+			//System.out.println("attack!");
 
 			this.cooldown = (int)(1000/this.attackSpeed);		
 
@@ -66,19 +69,11 @@ public abstract class Unit implements CanAttack, Attackable{
 		else{
 			this.cooldown--;
 		}
-			
 	}
 	
 	
 	public Unit(){
-		this.maxHp = 500;
-		this.hp = 500;
-		this.attackSpeed = 1.0;
-		this.attackRange = 300;
-		this.movementSpeed = 100;
-		this.damage = 50;
-		//this.element = WorldManager.getInstance().newElement(new Texture(Gdx.files.classpath("resources/verde.png")));
-		this.dir = 	Side.LEFT;
+		
 	}
 	
 	public Unit(int maxHp, double attackSpeed, int attackRange, int movementSpeed, int damage, Element element, Side dir, Player player){
@@ -101,7 +96,6 @@ public abstract class Unit implements CanAttack, Attackable{
 	public void receiveDamage(int damage) throws DeadUnitException{
 		// TODO Auto-generated method stub
 		this.hp-= damage;
-		this.healthbar.reduceHp(damage);
 		System.out.println(this.hp + " " + this.getSide());
 		if(this.hp <= 0){
 			throw new DeadUnitException(this);
@@ -125,27 +119,14 @@ public abstract class Unit implements CanAttack, Attackable{
 	public void updateSpeed(){
 		if(WorldManager.getInstance().canAdvance(this)){
 			this.element.setVelX(this.movementSpeed);
-			//BORRARR
-			this.healthbar.setVelX(this.movementSpeed);
 		}
 		else{
 			this.element.setVelX(0);
-			//BORRARR
-			this.healthbar.setVelX(0);
 		}
 	}
 	
 	public Element getElement(){
 		return this.element;
-	}
-	
-	public int getScale(){
-		return this.element.getScale();
-	}
-	
-	
-	public HealthBar getHealthbar() {
-		return healthbar;
 	}
 
 	public Side getSide(){
@@ -166,6 +147,10 @@ public abstract class Unit implements CanAttack, Attackable{
 	
 	public double getHeight(){
 		return this.element.getHeight();
+	}
+	
+	public Player getPlayer(){
+		return this.player;
 	}
 
 	@Override
@@ -219,5 +204,8 @@ public abstract class Unit implements CanAttack, Attackable{
 		// TODO Auto-generated method stub
 		return this.attackRange;
 	}
-	
+
+	public void notifyObservers(){
+		this.observer.update(null, null);
+	}
 }

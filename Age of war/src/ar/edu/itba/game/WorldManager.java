@@ -1,8 +1,7 @@
 package ar.edu.itba.game;
 
 import java.util.ArrayList;
-
-import Buttons.*;
+import java.util.Observable;
 
 enum Side{LEFT, RIGHT};
 
@@ -12,12 +11,16 @@ public class WorldManager {
 	
 	private Player player;
 	private Player AI;
-	private ArrayList<Element> elements = new ArrayList<Element>();	
+	private ArrayList<Element> elements = new ArrayList<Element>();
+	private ArrayList<Observable> observers = new ArrayList<Observable>();
+	private Element ground;
+	
 	private static WorldManager instance = null;
 
 	private WorldManager() {
 		player = new Player(this);
 		AI = new Player(this);
+		ground = new Element(0, 0, Game.GROUND_HEIGHT, Game.WIDTH * Game.SCALE);
 		//llamar a UIManager
 		this.setUnitsStats();
 	}
@@ -54,26 +57,58 @@ public class WorldManager {
       }
       return instance;
    }
-
+	
+	public void notifyObservers(){
+		for(Unit unit:player.getUnits())
+			unit.notifyObservers();
+		for(Unit unit:AI.getUnits())
+			unit.notifyObservers();
+		for(Projectile pjt:player.getProjectiles())
+			pjt.notifyObservers();
+		for(Projectile pjt:AI.getProjectiles())
+			pjt.notifyObservers();
+	}
+	
+	public void updateElements(){
+		for(Element elem: this.elements){
+			elem.setX(elem.getX()+elem.getVelX());
+			elem.setY(elem.getY()+elem.getVelY());
+			if(elem.isGravity())
+				elem.setVelY(elem.getVelY()- Game.GRAVITY);
+		}
+	}
+	
 	public void checkCollisions(){
 		ArrayList<Collision> cols = new ArrayList<Collision>();
+		ArrayList<Projectile> toDispose = new ArrayList<Projectile>();
 		for(Projectile pjt: player.getProjectiles()){
-			for(Unit unit:AI.getUnits()){
-				if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
-					cols.add(new Collision(pjt, unit));
-					System.out.println("Added1");
+			if(ground.isContained(pjt.getCollisionPoint())){
+				toDispose.add(pjt);
+			}else{
+				for(Unit unit:AI.getUnits()){
+					if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
+						cols.add(new Collision(pjt, unit));
+						System.out.println("Added1");
+					}
 				}
 			}
 		}
 		for(Projectile pjt: AI.getProjectiles())
-			for(Unit unit:player.getUnits()){
-				if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
-					cols.add(new Collision(pjt, unit));
-					System.out.println("Added2");
+			if(ground.isContained(pjt.getCollisionPoint())){
+				toDispose.add(pjt);
+			}else{
+				for(Unit unit:player.getUnits()){
+					if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
+						cols.add(new Collision(pjt, unit));
+						System.out.println("Added2");
+					}
 				}
 			}
 		for(Collision col:cols){
 			col.Collide();
+		}
+		for(Projectile pjt:toDispose){
+			disposeProjectile(pjt);
 		}
 	}
 	
@@ -87,6 +122,7 @@ public class WorldManager {
 	}
 	
 	public void disposeProjectile(Projectile pjt){
+		pjt.notifyDelete();
 		this.elements.remove(pjt.getElement());
 		this.player.getProjectiles().remove(pjt);
 		this.AI.getProjectiles().remove(pjt);
@@ -97,7 +133,6 @@ public class WorldManager {
 		
 		
 		this.elements.remove(thisUnit.getElement());
-		this.elements.remove(thisUnit.getHealthbar());
 		if(thisUnit.getSide()==Side.LEFT){
 			AI.addGold(thisUnit.getGold());
 			AI.addExp(thisUnit.getExp());
@@ -147,11 +182,11 @@ public class WorldManager {
 		for(Unit unit: player.getUnits()){
 			   double distance;
 			   if (thisUnit.getSide() == Side.RIGHT)
-				   distance = thisUnit.getX() - unit.getX() - unit.getWidth()/unit.getScale();
+				   distance = thisUnit.getX() - unit.getX() - unit.getWidth();
 			   else
-				   distance = unit.getX() - thisUnit.getX() - thisUnit.getWidth()/thisUnit.getScale();
+				   distance = unit.getX() - thisUnit.getX() - thisUnit.getWidth();
 			   if (thisUnit.getSide() == Side.RIGHT)
-				   distance = thisUnit.getX() - unit.getX() - unit.getWidth()/unit.getScale();
+				   distance = thisUnit.getX() - unit.getX() - unit.getWidth();
 			   if (!unit.equals(thisUnit) && (distance > 0) && (distance < minDistance))
 			   {
 				   return false;
@@ -179,4 +214,7 @@ public class WorldManager {
 	   return elements;
    }
    
+   public void updateObservers(){
+	   
+   }
 }
