@@ -5,32 +5,37 @@ import ar.edu.itba.game.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public class BigGreenButtonDraw extends Drawable{
+public class ArrowDraw extends Drawable {
+
 	
-	static Texture leftTexture = Textures.GREEN_BUTTON;
-	static int scale = 2;
+	static Texture leftTexture = Textures.ARROW;
+	static int scale = 1;
 	static int totalSprites = 1;
 	
 	private int screenHeight;
 	private int screenWidth;
 	
-	public BigGreenButtonDraw(float xPos, float yPos) {
+	public ArrowDraw(float xPos, float yPos) {
 		super(xPos, yPos);
 
 		this.screenHeight = leftTexture.getHeight() * (Game.HEIGHT * Game.SCALE)/Gdx.graphics.getHeight()/scale;
 		this.screenWidth = leftTexture.getWidth()* (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth()/scale;
 	}
 	
-	public int getScreenHeight(){
-		return this.screenHeight;
-	}
+	@Override
 	public int getScreenWidth() {
+		// TODO Auto-generated method stub
 		return this.screenWidth;
 	}
-	
+
+	@Override
+	public int getScreenHeight() {
+		// TODO Auto-generated method stub
+		return this.screenHeight;
+	}
+
 	
 	public Texture getTexture() {
 		return leftTexture;
 	}
-
 }

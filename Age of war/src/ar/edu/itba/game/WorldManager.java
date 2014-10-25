@@ -19,35 +19,7 @@ public class WorldManager {
 	private WorldManager() {
 		player = new Player(Side.LEFT);
 		AI = new Player(Side.RIGHT);
-		ground = new Element(0, 0, Game.GROUND_HEIGHT, Game.WIDTH * Game.SCALE);
-		//llamar a UIManager
-		this.setUnitsStats();
-	}
-	//depricated
-	private void setUnitsStats() {
-		//MeleeUnitStats
-		MeleeUnit.getATTACK_RANGE().add(300);
-		MeleeUnit.getATTACK_RANGE().add(350);
-		MeleeUnit.getATTACK_RANGE().add(400);
-		
-		MeleeUnit.getATTACK_SPEED().add(4.2);
-		MeleeUnit.getATTACK_SPEED().add(4.5);
-		MeleeUnit.getATTACK_SPEED().add(4.8);
-		MeleeUnit.getATTACK_SPEED().add(5.2);
-		
-		MeleeUnit.getMAX_HP().add(400);
-		MeleeUnit.getMAX_HP().add(500);
-		MeleeUnit.getMAX_HP().add(600);
-		
-		MeleeUnit.getDAMAGE().add(200);
-		MeleeUnit.getDAMAGE().add(80);
-		MeleeUnit.getDAMAGE().add(100);
-		MeleeUnit.getDAMAGE().add(120);
-		
-		MeleeUnit.getMOVEMENT_SPEED().add(1);
-		MeleeUnit.getMOVEMENT_SPEED().add(2);
-		MeleeUnit.getMOVEMENT_SPEED().add(3);
-		
+		ground = new Element(-Game.WIDTH * 10, 0, Game.WIDTH * 21,  Game.GROUND_HEIGHT);
 	}
 	
 	public static WorldManager getInstance() {
@@ -87,7 +59,7 @@ public class WorldManager {
 				for(Unit unit:AI.getUnits()){
 					if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
 						cols.add(new Collision(pjt, unit));
-						System.out.println("Added1");
+						//System.out.println("Added1");
 					}
 				}
 			}
@@ -99,7 +71,7 @@ public class WorldManager {
 				for(Unit unit:player.getUnits()){
 					if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
 						cols.add(new Collision(pjt, unit));
-						System.out.println("Added2");
+						//System.out.println("Added2");
 					}
 				}
 			}
@@ -154,17 +126,25 @@ public class WorldManager {
 	}
 	
 	public Attackable isInRange(CanAttack attacker){
+		//System.out.println(attacker.getClass().getSimpleName() + " " + attacker.getSide() + " attack range: " + attacker.getAttackRange());
 		int range = attacker.getAttackRange();
 		if (attacker.getSide() == Side.LEFT){
 			for(Unit unit:AI.getUnits()){
-				if ((unit.getX() - attacker.getWidth() - attacker.getX()) < range)
+				if (((unit.getX() - attacker.getWidth() - attacker.getX()) < range) &&
+						((attacker.canAttackFlying()) || (!unit.doesFly())))
 					return unit;
 			}
 		}
 		else{
 			for(Unit unit:player.getUnits()){
-				if ((attacker.getX() - unit.getX() - unit.getWidth()) < range)
-					return unit;
+				if (((attacker.getX() - unit.getX() - unit.getWidth()) < range)) {
+					//System.out.println("vuela? " + unit.doesFly() + " " + attacker.canAttackFlying() + " objetivo: " + unit.getClass().getSimpleName());
+					//System.out.println("esta en rango, atackker:" + attacker.getClass().getSimpleName());
+						if(attacker.canAttackFlying() || (!unit.doesFly())){
+								//System.out.println("esta atacando, attacker: " + attacker.getClass().getSimpleName());
+								return unit;
+					}
+				}
 			}
 		}
 		return null;

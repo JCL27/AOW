@@ -20,6 +20,7 @@ public class Game implements ApplicationListener {
 	public static final int SCALE = 2;
 	public static final float GRAVITY = 0.1f;
 	public static final int GROUND_HEIGHT = 300;
+	public static final int FLYING_HEIGHT = 300;
 	
 	private OrthographicCamera cam;
 	private Box2DDebugRenderer b2dr;

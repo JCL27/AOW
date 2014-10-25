@@ -46,10 +46,14 @@ public class MyInputProcessor implements InputProcessor{
 		ArrayList<Button> buttons = UIManager.getInstance().getButtons();
 		double scaledX = arg0 * (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth();
 		double scaledY = Game.HEIGHT * Game.SCALE - arg1 * (Game.HEIGHT * Game.SCALE)/ Gdx.graphics.getHeight();
+		Button buttonClicked = null;
 		for(Button button: buttons){
 			if(button.isClicked(scaledX, scaledY)){
-				button.Click();
+				buttonClicked = button;
 			}
+		}
+		if(buttonClicked!=null){
+			buttonClicked.Click();
 		}
 		return false;
 	}
