@@ -7,6 +7,7 @@ enum Side{LEFT, RIGHT};
 public class WorldManager {
 	
 	public static double MINDISTANCE = 25;
+	public static int INITIAL_GOLD = 300;
 	
 	private Player player;
 	private Player AI;
@@ -16,8 +17,8 @@ public class WorldManager {
 	private static WorldManager instance = null;
 
 	private WorldManager() {
-		player = new Player();
-		AI = new Player();
+		player = new Player(Side.LEFT);
+		AI = new Player(Side.RIGHT);
 		ground = new Element(0, 0, Game.GROUND_HEIGHT, Game.WIDTH * Game.SCALE);
 		//llamar a UIManager
 		this.setUnitsStats();
@@ -213,7 +214,6 @@ public class WorldManager {
 	   return elements;
    }
    
-   public void updateObservers(){
-	   
+   public void EndGame(){
    }
 }

@@ -63,7 +63,6 @@ public class UIManager {
 	
 	public void drawTextures(){
 		for(Drawable draw:this.drawables){
-			System.out.println(draw.getClass().getSimpleName() + " " + draw.getTexture() + " " + draw.getxPos() + " " + draw.getScreenHeight() + " " + draw.getSpriteHeight());
 			SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
 					draw.getScreenHeight(), 0, 0, draw.getSpriteWidth(), draw.getSpriteHeight(), false, false);
 		}
@@ -88,8 +87,6 @@ public class UIManager {
 	*/	
 		SB.draw(button.getDraw().getTexture(), (float)button.getDraw().getxPos(), (float)button.getDraw().getyPos(), 
 				button.getDraw().getScreenHeight(), button.getDraw().getScreenWidth());
-
+		
 	}
-	
-	
 }

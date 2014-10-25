@@ -10,10 +10,10 @@ public class Player {
 	private ArrayList<Projectile> projectiles;
 	private Tower tower;
 	
-	public Player (){
-		this.gold = 0;
+	public Player (Side side){
+		this.gold = WorldManager.INITIAL_GOLD;
 		this.experience = 0;
-		this.base = new Base();
+		this.base = new Base(side);
 		this.units = new ArrayList<Unit>();
 		this.projectiles = new ArrayList<Projectile>();
 	}
