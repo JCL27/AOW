@@ -10,15 +10,15 @@ public abstract class Drawable {
 	protected static Texture rightTexture;
 	protected static int totalSprites;
 	
-	protected double xPos;
-	protected double yPos;
+	protected float xPos;
+	protected float yPos;
 	protected Player player;
 	
 	protected int screenWidth;
 	protected int screenHeight;
 	protected int currentSprite;
 	
-	public Drawable(double xPos2, double yPos2, int screenHeight, int screenWidth){
+	public Drawable(float xPos2, float yPos2, int screenHeight, int screenWidth){
 		
 		this.xPos = xPos2;
 		this.yPos = yPos2;
@@ -26,7 +26,7 @@ public abstract class Drawable {
 		this.screenWidth = screenWidth;
 	}
 	
-	public Drawable(double xPos2, double yPos2){
+	public Drawable(float xPos2, float yPos2){
 		
 		this.xPos = xPos2;
 		this.yPos = yPos2;
@@ -36,7 +36,7 @@ public abstract class Drawable {
 		return xPos;
 	}
 
-	public void setxPos(double xPos) {
+	public void setxPos(float xPos) {
 		this.xPos = xPos;
 	}
 
@@ -44,7 +44,7 @@ public abstract class Drawable {
 		return yPos;
 	}
 
-	public void setyPos(double yPos) {
+	public void setyPos(float yPos) {
 		this.yPos = yPos;
 	}
 

@@ -117,7 +117,11 @@ public class WorldManager {
 		}
 		for(Unit unit:AI.getUnits()){
 			unit.updateAttackObjective();
-		}			
+		}
+		if(player.getTower() != null)
+			player.getTower().updateAttackObjective();
+		if(AI.getTower() != null)
+			AI.getTower().updateAttackObjective();
 	}
 	
 	public void disposeProjectile(Projectile pjt){
@@ -125,6 +129,10 @@ public class WorldManager {
 		this.elements.remove(pjt.getElement());
 		this.player.getProjectiles().remove(pjt);
 		this.AI.getProjectiles().remove(pjt);
+	}
+	
+	public void disposeTower(Tower tower){
+		
 	}
 	
 	public void killUnit(Unit thisUnit){

@@ -46,6 +46,9 @@ public class Player {
 	public int getExp(){
 		return this.experience;
 	}
+	public Tower getTower(){
+		return this.tower;
+	}
 	//	public Unit(int maxHp, double attackSpeed, int attackRange, int movementSpeed, int damage, Element element, Direction dir){
 
 	

@@ -17,7 +17,7 @@ public class UnitObserver implements Observer{
 		this.unit = unit;
 		switch(unit.getClass().getSimpleName()){
 			case("MeleeUnit"):
-			
+
 				this.draw = new MeleeUnitDraw(unit.getX(), unit.getY(), (int)unit.getHeight(), (int)unit.getWidth(), unit.getPlayer());
 				break;
 		}

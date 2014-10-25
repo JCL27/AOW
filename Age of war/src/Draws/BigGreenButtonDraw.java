@@ -14,7 +14,7 @@ public class BigGreenButtonDraw extends Drawable{
 	private int screenHeight;
 	private int screenWidth;
 	
-	public BigGreenButtonDraw(double xPos, double yPos) {
+	public BigGreenButtonDraw(float xPos, float yPos) {
 		super(xPos, yPos);
 
 		this.screenHeight = leftTexture.getHeight() * (Game.HEIGHT * Game.SCALE)/Gdx.graphics.getHeight()/scale;

@@ -12,7 +12,7 @@ public class MeleeUnitDraw extends Drawable{
 	static int scale = 4;
 	static int totalSprites = 1;
 	
-	public MeleeUnitDraw(double xPos, double yPos, int screenHeight, int screenWidth, Player player) {
+	public MeleeUnitDraw(float xPos, float yPos, int screenHeight, int screenWidth, Player player) {
 			super(xPos, yPos, screenHeight, screenWidth);
 			this.player = player;
 			//this.screenHeight = leftTexture.getHeight()/scale;
