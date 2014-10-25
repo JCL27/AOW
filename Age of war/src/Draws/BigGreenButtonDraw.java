@@ -13,13 +13,10 @@ public class BigGreenButtonDraw extends Drawable{
 	
 	private int screenHeight;
 	private int screenWidth;
-	private double xPos;
-	private double yPos;
 	
 	public BigGreenButtonDraw(double xPos, double yPos) {
 		super(xPos, yPos);
-		this.xPos = xPos;
-		this.yPos = yPos;
+
 		this.screenHeight = leftTexture.getHeight() * (Game.HEIGHT * Game.SCALE)/Gdx.graphics.getHeight()/scale;
 		this.screenWidth = leftTexture.getWidth()* (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth()/scale;
 	}

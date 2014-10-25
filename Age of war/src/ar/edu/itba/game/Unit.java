@@ -53,13 +53,14 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 	
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
-			double velX;
+			float velX;
 			double velY = Math.sqrt(Math.abs(this.getElement().getMiddleX() - objective.getElement().getMiddleX()) * Game.GRAVITY / 2);
 			if(this.getSide()==Side.RIGHT)
-				velX = -velY;
+				velX = (float)-velY;
 			else
-				velX = velY;
-			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(), this.getElement().getMiddleY(), velX , velY , true, this.damage));
+				velX = (float)velY;
+			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(),
+					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
 			
 			//System.out.println("attack!");
 
@@ -133,19 +134,19 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 		return this.dir;
 	}
 	
-	public double getX(){
+	public float getX(){
 		return this.element.getX();
 	}
 
-	public double getY(){
+	public float getY(){
 		return this.element.getY();
 	}
 	
-	public double getWidth(){
+	public int getWidth(){
 		return this.element.getWidth();
 	}
 	
-	public double getHeight(){
+	public int getHeight(){
 		return this.element.getHeight();
 	}
 	
@@ -207,5 +208,9 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 
 	public void notifyObservers(){
 		this.observer.update(null, null);
+	}
+	
+	public void notifyDelete() {
+		this.observer.dispose();	
 	}
 }

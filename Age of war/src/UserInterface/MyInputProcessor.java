@@ -8,8 +8,6 @@ import ar.edu.itba.game.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 
-import exceptions.NullElementException;
-
 public class MyInputProcessor implements InputProcessor{
 
 	@Override
@@ -48,21 +46,10 @@ public class MyInputProcessor implements InputProcessor{
 		ArrayList<Button> buttons = UIManager.getInstance().getButtons();
 		double scaledX = arg0 * (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth();
 		double scaledY = Game.HEIGHT * Game.SCALE - arg1 * (Game.HEIGHT * Game.SCALE)/ Gdx.graphics.getHeight();
-		Button buttonClicked = null;
 		for(Button button: buttons){
 			if(button.isClicked(scaledX, scaledY)){
-				buttonClicked = button;
+				button.Click();
 			}
-		}
-		try{
-		if(buttonClicked == null){
-			throw new NullElementException();
-		}
-		else
-		{
-			buttonClicked.Click();
-		}
-		}catch(NullElementException e){
 		}
 		return false;
 	}

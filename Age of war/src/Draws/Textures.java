@@ -10,4 +10,5 @@ public abstract class Textures {
 	public static Texture GREEN_BUTTON = new Texture(Gdx.files.classpath("resources/verde.png"));
 	public static Texture HEALTH_BAR = new Texture(Gdx.files.classpath("resources/Healthbar.png"));
 	public static Texture GROUND = new Texture(Gdx.files.classpath("resources/ground.png"));
+	public static Texture AIR_UNIT = new Texture(Gdx.files.classpath("resources/unGlobo.png"));
 }

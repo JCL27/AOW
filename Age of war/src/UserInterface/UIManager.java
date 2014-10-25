@@ -7,9 +7,7 @@ import Buttons.CreateMeleeUnit;
 import Buttons.UpgradeMeleeUnitDamage;
 import Draws.Drawable;
 import Draws.GroundDraw;
-import ar.edu.itba.game.Game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class UIManager {

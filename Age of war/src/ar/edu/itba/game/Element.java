@@ -2,14 +2,12 @@ package ar.edu.itba.game;
 
 import java.awt.geom.Point2D;
 
-import com.badlogic.gdx.graphics.Texture;
-
 public class Element {
 
-	private double X;
-	private double Y;
-	private double velX;
-	private double velY;
+	private float X;
+	private float Y;
+	private float velX;
+	private float velY;
 	private boolean gravity;
 	private int Height;
 	private int Width;
@@ -60,35 +58,35 @@ public class Element {
 	}
 
 
-	public double getX() {
+	public float getX() {
 		return X;
 	}
 
-	public void setX(double x) {
+	public void setX(float x) {
 		X = x;
 	}
 
-	public double getY() {
+	public float getY() {
 		return Y;
 	}
 
-	public void setY(double y) {
+	public void setY(float y) {
 		Y = y;
 	}
 
-	public double getVelX() {
+	public float getVelX() {
 		return velX;
 	}
 
-	public void setVelX(double velX) {
+	public void setVelX(float velX) {
 		this.velX = velX;
 	}
 
-	public double getVelY() {
+	public float getVelY() {
 		return velY;
 	}
 
-	public void setVelY(double velY) {
+	public void setVelY(float velY) {
 		this.velY = velY;
 	}
 
@@ -100,11 +98,11 @@ public class Element {
 		this.gravity = gravity;
 	}
 	
-	public double getMiddleX(){
+	public float getMiddleX(){
 		return this.getX() + (this.getWidth()/2);
 	}
 	
-	public double getMiddleY(){
+	public float getMiddleY(){
 		return this.getY() + (this.getHeight()/2);
 	}
 

@@ -3,10 +3,9 @@ package Observers;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.UIManager;
-
 import Draws.Drawable;
 import Draws.MeleeUnitDraw;
+import UserInterface.UIManager;
 import ar.edu.itba.game.Unit;
 
 public class UnitObserver implements Observer{
@@ -33,6 +32,9 @@ public class UnitObserver implements Observer{
 		
 	}
 	
+	public void dispose() {
+		UIManager.getInstance().getDraws().remove(this.draw);
+	}
 	
 	
 }

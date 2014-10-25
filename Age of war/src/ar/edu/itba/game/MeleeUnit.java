@@ -5,7 +5,6 @@ package ar.edu.itba.game;
 import java.util.ArrayList;
 
 import Observers.UnitObserver;
-import UserInterface.Textures;
 
 public class MeleeUnit extends Unit {
 	private static ArrayList<Integer> MAX_HP = new ArrayList<Integer>();

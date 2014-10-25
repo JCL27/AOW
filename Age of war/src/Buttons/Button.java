@@ -2,10 +2,6 @@ package Buttons;
 
 import Draws.Drawable;
 import UserInterface.Clickable;
-import ar.edu.itba.game.Element;
-import ar.edu.itba.game.WorldManager;
-
-import com.badlogic.gdx.graphics.Texture;
 
 public abstract class Button implements Clickable {
 

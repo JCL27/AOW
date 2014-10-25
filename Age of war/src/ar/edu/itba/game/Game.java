@@ -1,6 +1,5 @@
 package ar.edu.itba.game;
 
-import Buttons.Button;
 import UserInterface.MyInputProcessor;
 import UserInterface.UIManager;
 
@@ -9,28 +8,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class Game implements ApplicationListener {
 	public static final String TITLE = "Age of wars";
 	public static final int WIDTH = 600;
 	public static final int HEIGHT = 400;
-	public static final int SCALE = 2;	
-	public static final double GRAVITY = 0.1;
+	public static final int SCALE = 2;
+	public static final float GRAVITY = 0.1f;
 	public static final int GROUND_HEIGHT = 300;
 	
 	private OrthographicCamera cam;
 	private Box2DDebugRenderer b2dr;
 	private World world;
 	private SpriteBatch SB;
-	private Texture tex;
-	private Sprite sp;
-	private Label label;
 	
 	public void create() {
 		// TODO Auto-generated method stub
@@ -71,7 +65,7 @@ public class Game implements ApplicationListener {
 	public void render() {
 		// TODO Auto-generated method stub
 		Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
+
 		WorldManager.getInstance().notifyObservers();
 		
 		WorldManager.getInstance().updateUnitsSpeed();

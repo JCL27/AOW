@@ -9,15 +9,13 @@ public class Player {
 	private ArrayList<Unit> units;
 	private ArrayList<Projectile> projectiles;
 	private Tower tower;
-	private WorldManager WM;
 	
-	public Player (WorldManager WM){
+	public Player (){
 		this.gold = 0;
 		this.experience = 0;
 		this.base = new Base();
 		this.units = new ArrayList<Unit>();
 		this.projectiles = new ArrayList<Projectile>();
-		this.WM = WM;
 	}
 	
 	public ArrayList<Projectile> getProjectiles(){

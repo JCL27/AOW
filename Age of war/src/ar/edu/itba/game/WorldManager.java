@@ -1,7 +1,6 @@
 package ar.edu.itba.game;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 enum Side{LEFT, RIGHT};
 
@@ -12,19 +11,18 @@ public class WorldManager {
 	private Player player;
 	private Player AI;
 	private ArrayList<Element> elements = new ArrayList<Element>();
-	private ArrayList<Observable> observers = new ArrayList<Observable>();
 	private Element ground;
 	
 	private static WorldManager instance = null;
 
 	private WorldManager() {
-		player = new Player(this);
-		AI = new Player(this);
+		player = new Player();
+		AI = new Player();
 		ground = new Element(0, 0, Game.GROUND_HEIGHT, Game.WIDTH * Game.SCALE);
 		//llamar a UIManager
 		this.setUnitsStats();
 	}
-	
+	//depricated
 	private void setUnitsStats() {
 		//MeleeUnitStats
 		MeleeUnit.getATTACK_RANGE().add(300);
@@ -40,7 +38,7 @@ public class WorldManager {
 		MeleeUnit.getMAX_HP().add(500);
 		MeleeUnit.getMAX_HP().add(600);
 		
-		MeleeUnit.getDAMAGE().add(60);
+		MeleeUnit.getDAMAGE().add(200);
 		MeleeUnit.getDAMAGE().add(80);
 		MeleeUnit.getDAMAGE().add(100);
 		MeleeUnit.getDAMAGE().add(120);
@@ -151,6 +149,7 @@ public class WorldManager {
 //				if (unit.equals(thisUnit))
 //					AI.getUnits().iterator().remove();	
 		}
+		thisUnit.notifyDelete();
 	}
 	
 	public Attackable isInRange(CanAttack attacker){
