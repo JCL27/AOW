@@ -1,21 +1,22 @@
 package ar.edu.itba.game;
 
+import Units.Unit;
 import exceptions.DeadUnitException;
 
 public class Collision {
 	Projectile pjt;
-	Unit unit;
+	Attackable victim;
 	
-	public Collision(Projectile pjt, Unit unit){
+	public Collision(Projectile pjt, Attackable victim){
 		this.pjt = pjt;
-		this.unit = unit;
+		this.victim = victim;
 	}
 	
 	public void Collide(){
 		try {
-			this.unit.receiveDamage(pjt.getDamage());
+			this.victim.receiveDamage(pjt.getDamage());
 		} catch (DeadUnitException e) {
-			WorldManager.getInstance().killUnit(this.unit);
+			WorldManager.getInstance().killUnit(e.getUnit());
 		} finally{
 			WorldManager.getInstance().disposeProjectile(this.pjt);
 		}

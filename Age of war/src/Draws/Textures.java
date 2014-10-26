@@ -12,4 +12,6 @@ public abstract class Textures {
 	public static Texture GROUND = new Texture(Gdx.files.classpath("resources/ground.png"));
 	public static Texture AIR_UNIT = new Texture(Gdx.files.classpath("resources/unGlobo.png"));
 	public static Texture ARROW = new Texture(Gdx.files.classpath("resources/Arrow.png"));
+	public static Texture RED_BASE = new Texture(Gdx.files.classpath("resources/RedBase.png"));
+	public static Texture BLUE_BASE = new Texture(Gdx.files.classpath("resources/BlueBase.png"));
 }

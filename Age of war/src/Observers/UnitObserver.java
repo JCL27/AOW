@@ -5,9 +5,9 @@ import java.util.Observer;
 
 import Draws.Drawable;
 import Draws.FlyingUnitDraw;
-import Draws.MeleeUnitDraw;
+import Draws.RangedUnitDraw;
+import Units.Unit;
 import UserInterface.UIManager;
-import ar.edu.itba.game.Unit;
 
 public class UnitObserver implements Observer{
 	private Unit unit;
@@ -17,11 +17,15 @@ public class UnitObserver implements Observer{
 	public UnitObserver(Unit unit){
 		this.unit = unit;
 		switch(unit.getClass().getSimpleName()){
-			case("MeleeUnit"):
-				this.draw = new MeleeUnitDraw(unit.getX(), unit.getY(), (int)unit.getHeight(), (int)unit.getWidth(), unit.getPlayer());
+			case("RangedUnit"):
+				this.draw = new RangedUnitDraw(unit.getX(), unit.getY(), (int)unit.getHeight(), (int)unit.getWidth(), unit.getPlayer());
+				break;
+			case("AntiaircraftUnit"):
+				this.draw = new RangedUnitDraw(unit.getX(), unit.getY(), (int)unit.getHeight(), (int)unit.getWidth(), unit.getPlayer());	
 				break;
 			case("FlyingUnit"):
 				this.draw = new FlyingUnitDraw(unit.getX(), unit.getY(), (int)unit.getHeight(), (int)unit.getWidth(), unit.getPlayer());	
+				break;
 		}
 		UserInterface.UIManager.getInstance().getDraws().add(this.draw);
 		

@@ -1,8 +1,9 @@
 package ar.edu.itba.game;
 
+
 import java.util.ArrayList;
 
-enum Side{LEFT, RIGHT};
+import Units.Unit;
 
 public class WorldManager {
 	
@@ -57,11 +58,14 @@ public class WorldManager {
 				toDispose.add(pjt);
 			}else{
 				for(Unit unit:AI.getUnits()){
-					if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
+					if(unit.getElement().isContained(pjt.getCollisionPoint())){
 						cols.add(new Collision(pjt, unit));
 						//System.out.println("Added1");
 					}
 				}
+			}
+			if(AI.getBase().getElement().isContained(pjt.getCollisionPoint())){
+				cols.add(new Collision(pjt, AI.getBase()));
 			}
 		}
 		for(Projectile pjt: AI.getProjectiles())
@@ -142,17 +146,23 @@ public class WorldManager {
 						((attacker.canAttackFlying()) || (!unit.doesFly())))
 					return unit;
 			}
+			if (((AI.getBase().getX() - attacker.getWidth() - attacker.getX()) < range)){
+				return AI.getBase();
+			}
 		}
 		else{
 			for(Unit unit:player.getUnits()){
 				if (((attacker.getX() - unit.getX() - unit.getWidth()) < range)) {
-					//System.out.println("vuela? " + unit.doesFly() + " " + attacker.canAttackFlying() + " objetivo: " + unit.getClass().getSimpleName());
-					//System.out.println("esta en rango, atackker:" + attacker.getClass().getSimpleName());
+					System.out.println("vuela? " + unit.doesFly() + " " + attacker.canAttackFlying() + " objetivo: " + unit.getClass().getSimpleName());
+					System.out.println("esta en rango, atackker:" + attacker.getClass().getSimpleName());
 						if(attacker.canAttackFlying() || (!unit.doesFly())){
 								//System.out.println("esta atacando, attacker: " + attacker.getClass().getSimpleName());
 								return unit;
 					}
 				}
+			}
+			if (((attacker.getX() - player.getBase().getX() - player.getBase().getWidth()) < range)) {
+				return player.getBase();
 			}
 		}
 		return null;
@@ -167,18 +177,27 @@ public class WorldManager {
    }
 	
 	private boolean measureDistance(Player player, Unit thisUnit, double minDistance){
+		double distance;
 		for(Unit unit: player.getUnits()){
-			   double distance;
-			   if (thisUnit.getSide() == Side.RIGHT)
-				   distance = thisUnit.getX() - unit.getX() - unit.getWidth();
-			   else
-				   distance = unit.getX() - thisUnit.getX() - thisUnit.getWidth();
-			   if (thisUnit.getSide() == Side.RIGHT)
-				   distance = thisUnit.getX() - unit.getX() - unit.getWidth();
-			   if (!unit.equals(thisUnit) && (distance > 0) && (distance < minDistance))
-			   {
-				   return false;
+			   if(thisUnit.doesFly() == unit.doesFly()){
+				   if (thisUnit.getSide() == Side.RIGHT)
+					   distance = thisUnit.getX() - unit.getX() - unit.getWidth();
+				   else
+					   distance = unit.getX() - thisUnit.getX() - thisUnit.getWidth();
+
+				   if (!unit.equals(thisUnit) && (distance > 0) && (distance < minDistance))
+				   {
+					   return false;
+				   }
 			   }
+		   }
+		if (thisUnit.getSide() == Side.RIGHT)
+			   distance = thisUnit.getX() - player.getBase().getX() - player.getBase().getWidth();
+		   else
+			   distance = player.getBase().getX() - thisUnit.getX() - thisUnit.getWidth();
+		if ((distance > 0) && (distance < minDistance))
+		   {
+			   return false;
 		   }
 		return true;
 	}

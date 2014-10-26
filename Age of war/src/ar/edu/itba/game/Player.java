@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import Units.Unit;
+
 public class Player {
 	private int gold;
 	private int experience;
@@ -76,6 +78,10 @@ public class Player {
 	}
 	public Tower getTower(){
 		return this.tower;
+	}
+	
+	public Base getBase(){
+		return this.base;
 	}
 	//	public Unit(int maxHp, double attackSpeed, int attackRange, int movementSpeed, int damage, Element element, Direction dir){
 

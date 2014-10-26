@@ -13,7 +13,7 @@ public class UIManager {
 	
 	private static UIManager instance = null;
 	
-	private final int BUTTON_HEIGHT = 600;
+	private final int BUTTON_HEIGHT = 150;
 	private final int BUTTON_INITIAL_X = 200;
 	private final int BUTTON_SEPARATION = 150;
 	private SpriteBatch SB;
@@ -55,8 +55,9 @@ public class UIManager {
 			this.buttons.add(new Buttons.Upgrade(this.BUTTON_INITIAL_X + count++ *this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case CREATE_UNIT:
-			this.buttons.add(new Buttons.CreateMeleeUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.CreateRangedUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.CreateFlyingUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.CreateAntiaircraftUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case TERRAIN_UNITS:
 			break;

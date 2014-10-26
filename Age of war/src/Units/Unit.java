@@ -1,7 +1,16 @@
-package ar.edu.itba.game;
+package Units;
 
 import java.util.Observable;
 
+import ar.edu.itba.game.Attackable;
+import ar.edu.itba.game.CanAttack;
+import ar.edu.itba.game.Element;
+import ar.edu.itba.game.Game;
+import ar.edu.itba.game.Player;
+import ar.edu.itba.game.Projectile;
+import ar.edu.itba.game.Side;
+import ar.edu.itba.game.Type;
+import ar.edu.itba.game.WorldManager;
 import Observers.UnitObserver;
 import exceptions.DeadUnitException;
 

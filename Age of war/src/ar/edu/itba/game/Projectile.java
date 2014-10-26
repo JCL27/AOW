@@ -31,7 +31,7 @@ public class Projectile extends Observable{
 	}
 	
 	public Projectile(float X, float Y, float velX, float velY, boolean gravity, int damage){
-		this.element = new Element((X - 15) , Y, velX, velY, 30, 30, true);
+		this.element = new Element((X - 15) , Y, velX, velY, 20, 20, true);
 		this.damage = damage;
 		WorldManager.getInstance().getElements().add(this.element);
 		this.observer = new ProjectileObserver(this);

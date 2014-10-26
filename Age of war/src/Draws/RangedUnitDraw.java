@@ -5,14 +5,14 @@ import ar.edu.itba.game.WorldManager;
 
 import com.badlogic.gdx.graphics.Texture;
 
-public class MeleeUnitDraw extends Drawable{
+public class RangedUnitDraw extends Drawable{
 	
 	static Texture leftTexture = Textures.BLUE_BALL;
 	static Texture rightTexture = Textures.RED_BALL;
 	static int scale = 4;
 	static int totalSprites = 1;
 	
-	public MeleeUnitDraw(float xPos, float yPos, int screenHeight, int screenWidth, Player player) {
+	public RangedUnitDraw(float xPos, float yPos, int screenHeight, int screenWidth, Player player) {
 			super(xPos, yPos, screenHeight, screenWidth);
 			this.player = player;
 			//this.screenHeight = leftTexture.getHeight()/scale;
