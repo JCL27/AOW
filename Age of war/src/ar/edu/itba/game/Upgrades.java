@@ -21,9 +21,11 @@ public class Upgrades {
 		upgradeList.get(name).applyUpgrade();
 	}
 	
-	public void UpgradeMeleeUnitDamage(Player player){
+	public void UpgradeMeleeUnit(Player player){
 		if(player.equals(WorldManager.getInstance().getPlayer())){
-			MeleeUnit.getPlayerUS().upgradeDamage();
+			MeleeUnit.playerLevelUp();
+		}else{
+			MeleeUnit.AILevelUp();
 		}
 	}
 }

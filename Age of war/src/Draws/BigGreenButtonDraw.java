@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class BigGreenButtonDraw extends Drawable{
 	
 	static Texture leftTexture = Textures.GREEN_BUTTON;
-	static int scale = 4;
+	static int scale = 2;
 	static int totalSprites = 1;
 	
 	private int screenHeight;

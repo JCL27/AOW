@@ -23,7 +23,7 @@ public class Element {
 		this.gravity = gravity;
 	}
 	
-	public Element(float X, float Y, int Height, int Width){
+	public Element(float X, float Y, int Width, int Height){
 		this.X = X;
 		this.Y = Y;
 		this.Height = Height;

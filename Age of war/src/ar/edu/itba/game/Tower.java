@@ -74,5 +74,12 @@ public class Tower extends Observable implements CanAttack{
 		return this.element.getWidth();
 	}
 
+
+	@Override
+	public boolean canAttackFlying() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 }

@@ -8,6 +8,11 @@ import exceptions.DeadUnitException;
 
 public abstract class Unit extends Observable implements CanAttack, Attackable{
 	
+	protected Type type;
+	protected boolean attackFlying;
+	protected static int playerUnitLevel = 0;
+	protected static int AIUnitLevel = 0;
+	
 	protected int hp;
 	protected int maxHp;
 	protected double attackSpeed;
@@ -22,26 +27,26 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 	protected int cooldown;
 	protected Element element;
 	
-	protected int gold;
+	protected int bounty;
 	protected int exp;
 	protected int cost;
-
+	
 	public int getGold() {
-		return this.gold;
+		return this.bounty;
 	}
 
 	public void setGold(int gold) {
-		this.gold = gold;
+		this.bounty = gold;
 	}
 
 	public void setExp(int exp) {
 		this.exp = exp;
 	}
-
+	
 	public void setCost(int cost) {
 		this.cost = cost;
 	}
-
+	
 	public int getExp() {
 		return this.exp;
 	}
@@ -49,12 +54,26 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 	public int getCost() {
 		return this.cost;
 	}
-
+	public boolean doesFly(){
+		if(this.type == Type.FLYING){
+			return true;
+		}
+		return false;
+	}
 	
+	public boolean canAttackFlying(){
+		return this.attackFlying;
+	}
+	
+	public Type getType(){
+		return this.type;
+	}
+
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
 			float velX;
-			double velY = Math.sqrt(Math.abs(this.getElement().getMiddleX() - objective.getElement().getMiddleX()) * Game.GRAVITY / 2);
+			double velY = Math.sqrt(Math.abs(this.getElement().getMiddleX() - objective.getElement().getMiddleX()) *
+					Game.GRAVITY / 2);
 			if(this.getSide()==Side.RIGHT)
 				velX = (float)-velY;
 			else
@@ -97,7 +116,7 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 	public void receiveDamage(int damage) throws DeadUnitException{
 		// TODO Auto-generated method stub
 		this.hp-= damage;
-		System.out.println(this.hp + " " + this.getSide());
+		//System.out.println(this.hp + " " + this.getSide());
 		if(this.hp <= 0){
 			throw new DeadUnitException(this);
 		}
@@ -152,6 +171,14 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 	
 	public Player getPlayer(){
 		return this.player;
+	}
+	
+	public static void playerLevelUp(){
+		playerUnitLevel++;
+	}
+	
+	public static void AILevelUp(){
+		AIUnitLevel++;
 	}
 
 	@Override

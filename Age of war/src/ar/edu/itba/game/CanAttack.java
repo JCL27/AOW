@@ -6,4 +6,5 @@ public interface CanAttack {
 	public Side getSide();
 	public float getX();
 	public int getWidth();
+	public boolean canAttackFlying();
 }

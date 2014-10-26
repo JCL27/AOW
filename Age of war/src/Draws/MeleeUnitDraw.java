@@ -39,6 +39,7 @@ public class MeleeUnitDraw extends Drawable{
 	
 	public int getSpriteWidth() {
 		return this.getTexture().getWidth();
+		
 	}
 
 	public int getSpriteHeight() {

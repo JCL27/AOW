@@ -1,14 +1,16 @@
 package ar.edu.itba.game;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 public class Player {
 	private int gold;
 	private int experience;
-	private Base base;
 	private ArrayList<Unit> units;
 	private ArrayList<Projectile> projectiles;
 	private Tower tower;
+	private Base base;
 	
 	public Player (Side side){
 		this.gold = WorldManager.INITIAL_GOLD;
@@ -26,9 +28,35 @@ public class Player {
 		return units;
 	}
 	
-	public void createUnit(){
-		this.units.add(new MeleeUnit(this));
-		WorldManager.getInstance().getAI().getUnits().add(new MeleeUnit(WorldManager.getInstance().getAI()));
+	public void createUnit(Class unitClass){
+		Unit unit = null;
+		Unit unit2 = null;
+		try {
+			unit = (Unit) unitClass.getConstructor(Player.class).newInstance(this);
+			unit2 = (Unit) unitClass.getConstructor(Player.class).newInstance(WorldManager.getInstance().getAI());
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(unit!=null){
+			this.units.add(unit);
+		}
+		WorldManager.getInstance().getAI().getUnits().add(unit2);
 	}
 	
 	public void addGold(int gold){
