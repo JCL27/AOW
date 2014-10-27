@@ -8,9 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import Draws.RangedUnitDraw;
 import Draws.TowerDraw;
 import Units.Unit;
-import ar.edu.itba.game.Tower;
 import Draws.Drawable;
 import UserInterface.UIManager;
+import Draws.Drawable;
+import UserInterface.UIManager;
+import ar.edu.itba.game.Tower;
 import Draws.BasicTowerDraw;
 
 public class TowerObserver implements Observer{
