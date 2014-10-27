@@ -9,6 +9,8 @@ import ar.edu.itba.game.WorldManager;
 import Observers.UnitObserver;
 
 public class RangedUnit extends Unit {
+	private static int playerUnitLevel = 0;
+	private static int AIUnitLevel = 0;
 	
 	public RangedUnit(Player player){
 		
@@ -45,4 +47,14 @@ public class RangedUnit extends Unit {
 		WorldManager.getInstance().getElements().add(this.element);
 		
 	}
+	public static void playerLevelUp() {
+		playerUnitLevel++;
+		
+	}
+
+	public static void AILevelUp() {
+		AIUnitLevel++;
+		
+	}
+	
 }

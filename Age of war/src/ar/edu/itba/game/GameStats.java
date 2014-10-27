@@ -45,8 +45,8 @@ public class GameStats {
 		public final static int FLYING_UNIT_BOUNTY_UPGRADE_RATE = 10;
 		public final static int FLYING_UNIT_COST_UPGRADE_RATE = 7;
 		
-		public final static int FLYING_UNIT_COL_BOX_HEIGHT = 90;
-		public final static int FLYING_UNIT_COL_BOX_WIDTH = 60;
+		public final static int FLYING_UNIT_COL_BOX_HEIGHT = 150;
+		public final static int FLYING_UNIT_COL_BOX_WIDTH = 100;
 	
 	//ANTIAIRCRAFT UNIT
 		public final static Type ANTIAIRCRAFT_UNIT_TYPE = Type.GROUND;

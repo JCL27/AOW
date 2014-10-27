@@ -35,6 +35,7 @@ public class Base extends Observable implements Attackable {
 	@Override
 	public void receiveDamage(int damage) throws DeadUnitException {
 		try{
+			System.out.println("HP: " + this.HP);
 			this.HP -=damage;
 			if(this.HP <= 0){
 				throw new EndGameException();
