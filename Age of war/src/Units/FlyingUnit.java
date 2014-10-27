@@ -11,6 +11,10 @@ import ar.edu.itba.game.WorldManager;
 import Observers.UnitObserver;
 
 public class FlyingUnit extends Unit{
+	
+	private static int playerUnitLevel = 0;
+	private static int AIUnitLevel = 0;
+	
 	public FlyingUnit(Player player){
 		this.player = player;
 		this.objective = null;
@@ -56,20 +60,25 @@ public class FlyingUnit extends Unit{
 			float Y = this.getElement().getY()-30;
 
 			velX = (float) Math.sqrt(-Game.GRAVITY * (Xf - X) * (Xf - X) / ((Yf - Y)*2)); 
-			System.out.println("velocidad " + velX);			
+			//System.out.println("velocidad " + velX);			
 			if(this.getSide()==Side.RIGHT)
 				velX = -velX;
 			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(),
 					this.getElement().getY()-30, velX , (float)velY , true, this.damage));
 			
-			//System.out.println("attack!");
-			System.out.println("velocidad " + velX);
 			this.cooldown = (int)(1000/this.attackSpeed);		
 
 		}
 		else{
 			this.cooldown--;
 		}
+	}
+
+	public static void playerLevelUp() {
+		playerUnitLevel++;	
+	}
+	public static void AILevelUp() {
+		AIUnitLevel++;	
 	}
 	
 }

@@ -7,4 +7,7 @@ public interface CanAttack {
 	public float getX();
 	public int getWidth();
 	public boolean canAttackFlying();
+	public static int fff() {
+		return 0;
+	}
 }

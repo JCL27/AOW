@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import exceptions.NotEnoughGoldException;
 import Units.Unit;
 
 public class Player {
@@ -93,6 +94,12 @@ public class Player {
 	
 	public void addGold(int gold){
 		this.gold += gold;
+	}
+	
+	public void charge(int gold) throws NotEnoughGoldException{
+		if(this.gold < gold)
+			throw new NotEnoughGoldException();
+		this.gold -= gold;
 	}
 	
 	public void addExp(int exp){

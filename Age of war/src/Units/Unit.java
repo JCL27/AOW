@@ -19,8 +19,6 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 	
 	protected Type type;
 	protected boolean attackFlying;
-	protected static int playerUnitLevel = 0;
-	protected static int AIUnitLevel = 0;
 	
 	protected int hp;
 	protected int maxHp;
@@ -182,13 +180,6 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 		return this.player;
 	}
 	
-	public static void playerLevelUp(){
-		playerUnitLevel++;
-	}
-	
-	public static void AILevelUp(){
-		AIUnitLevel++;
-	}
 
 	@Override
 	public int hashCode() {

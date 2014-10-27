@@ -68,7 +68,7 @@ public class WorldManager {
 				cols.add(new Collision(pjt, AI.getBase()));
 			}
 		}
-		for(Projectile pjt: AI.getProjectiles())
+		for(Projectile pjt: AI.getProjectiles()){
 			if(ground.isContained(pjt.getCollisionPoint())){
 				toDispose.add(pjt);
 			}else{
@@ -79,6 +79,10 @@ public class WorldManager {
 					}
 				}
 			}
+			if(player.getBase().getElement().isContained(pjt.getCollisionPoint())){
+				cols.add(new Collision(pjt, player.getBase()));
+			}
+		}
 		for(Collision col:cols){
 			col.Collide();
 		}
@@ -153,8 +157,8 @@ public class WorldManager {
 		else{
 			for(Unit unit:player.getUnits()){
 				if (((attacker.getX() - unit.getX() - unit.getWidth()) < range)) {
-					System.out.println("vuela? " + unit.doesFly() + " " + attacker.canAttackFlying() + " objetivo: " + unit.getClass().getSimpleName());
-					System.out.println("esta en rango, atackker:" + attacker.getClass().getSimpleName());
+					//System.out.println("vuela? " + unit.doesFly() + " " + attacker.canAttackFlying() + " objetivo: " + unit.getClass().getSimpleName());
+					//System.out.println("esta en rango, atackker:" + attacker.getClass().getSimpleName());
 						if(attacker.canAttackFlying() || (!unit.doesFly())){
 								//System.out.println("esta atacando, attacker: " + attacker.getClass().getSimpleName());
 								return unit;

@@ -12,6 +12,9 @@ import ar.edu.itba.game.WorldManager;
 
 public class AntiaircraftUnit extends Unit{
 	
+	private static int playerUnitLevel = 0;
+	private static int AIUnitLevel = 0;
+	
 	public AntiaircraftUnit(Player player){
 		this.player = player;
 		this.objective = null;
@@ -59,7 +62,7 @@ public class AntiaircraftUnit extends Unit{
 				float dist = Xf - X;
 				float altura = Yf - Y;
 				velY = (float) Math.sqrt(2 * Game.GRAVITY * (Yf - Y));
-				t = (float) ((-velY + Math.sqrt(velY*velY-4*altura*Game.GRAVITY/2))/Game.GRAVITY);
+				t = (float) ((-velY + Math.sqrt(Math.abs(velY*velY-4*altura*Game.GRAVITY/2)))/Game.GRAVITY);
 				velX = - dist / t;
 				
 				//float vel = (float) Math.sqrt((velX*velX+velY*velY));
@@ -79,6 +82,7 @@ public class AntiaircraftUnit extends Unit{
 				else
 					velX = (float)velY;
 			}
+			System.out.println("AntiairCraft pjt vel:" + velX + " " + velY);
 			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
 			
@@ -90,6 +94,18 @@ public class AntiaircraftUnit extends Unit{
 		else{
 			this.cooldown--;
 		}
+	}
+
+
+	public static void playerLevelUp() {
+		playerUnitLevel++;
+		
+	}
+
+
+	public static void AILevelUp() {
+		AIUnitLevel++;
+		
 	}
 	
 }

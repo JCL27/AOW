@@ -5,7 +5,9 @@ import java.util.Stack;
 
 import Buttons.Button;
 import Draws.Drawable;
+import Draws.GrassDraw;
 import Draws.GroundDraw;
+import ar.edu.itba.game.Game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -30,6 +32,7 @@ public class UIManager {
 	
 	public UIManager(){
 		drawables.add(new GroundDraw(0,0));
+		drawables.add(new GrassDraw(270f , Game.GROUND_HEIGHT - 10, 50, 50));
 		State.add(State.push(UIState.DEFAULT));
 	}
 	

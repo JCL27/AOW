@@ -3,7 +3,7 @@ package Draws;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
-public abstract class Textures {
+public abstract class Textures{
 	public static Texture BLUE_BALL = new Texture(Gdx.files.classpath("resources/ball.png"));
 	public static Texture RED_BALL = new Texture(Gdx.files.classpath("resources/redBall.png"));
 	public static Texture BUTTON = new Texture(Gdx.files.classpath("resources/green button.png"));
@@ -15,4 +15,5 @@ public abstract class Textures {
 	public static Texture RED_BASE = new Texture(Gdx.files.classpath("resources/RedBase.png"));
 	public static Texture BLUE_BASE = new Texture(Gdx.files.classpath("resources/BlueBase.png"));
 	public static Texture BASIC_TOWER = new Texture(Gdx.files.classpath("resources/Tower.png"));
+	public static Texture GRASS = new Texture(Gdx.files.classpath("resources/pastito.png"));
 }
