@@ -16,8 +16,8 @@ public class FlyingUnitDraw extends Drawable {
 			this.player = player;
 			//this.screenHeight = leftTexture.getHeight()/scale;
 			//this.screenWidth = leftTexture.getWidth()/scale;
-			this.screenHeight = screenHeight;
-			this.screenWidth = screenWidth;
+			//this.screenHeight = screenHeight;
+			//this.screenWidth = screenWidth;
 	}
 	
 	public int getScreenHeight(){

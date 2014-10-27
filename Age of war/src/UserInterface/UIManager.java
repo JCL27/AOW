@@ -62,6 +62,7 @@ public class UIManager {
 		case TERRAIN_UNITS:
 			break;
 		case TOWER:
+			this.buttons.add(new Buttons.CreateBasicTower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case FLYING_UNITS:
 			break;
@@ -86,6 +87,8 @@ public class UIManager {
 	
 	public void drawTextures(){
 		for(Drawable draw:this.drawables){
+			if (draw.getClass().getSimpleName().equals("BasicTowerDraw")){
+			}
 			SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
 					draw.getScreenHeight(), 0, 0, draw.getSpriteWidth(), draw.getSpriteHeight(), false, false);
 		}

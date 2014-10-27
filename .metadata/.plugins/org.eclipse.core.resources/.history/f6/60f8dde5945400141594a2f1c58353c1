@@ -1,7 +1,0 @@
-package ar.edu.itba.game;
-
-public class Upgrade {
-	public Upgrade(){
-		
-	}
-}

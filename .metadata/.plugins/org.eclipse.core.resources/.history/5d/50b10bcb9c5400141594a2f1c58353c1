@@ -1,5 +1,0 @@
-package Buttons;
-
-public class UpgradeMeleeUnitDamage extends Button{
-
-}

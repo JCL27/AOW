@@ -1,5 +1,0 @@
-package ar.edu.itba.game;
-
-public enum UIState {
-	DEFAULT, CREAT_UNIT, TERRAIN_UNITS, FLYING_UNITS, UNDERGROUND_UNITS, UPGRADES;
-}

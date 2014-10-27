@@ -9,4 +9,7 @@
 <fullyQualifiedTypeName name="ar.edu.itba.game.WorldManager"/>
 <fullyQualifiedTypeName name="Buttons.UpgradeMeleeUnitDamage"/>
 <fullyQualifiedTypeName name="ar.edu.itba.game.MeleeUnit"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.ui.Button"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.ui.Widget"/>
+<fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.ui.Image"/>
 </qualifiedTypeNameHistroy>

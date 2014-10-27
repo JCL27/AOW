@@ -75,6 +75,10 @@ public abstract class Drawable {
 	public int getSpriteWidth() {
 		return leftTexture.getWidth();
 	}
+	
+	public int getSpriteHeight() {
+		return leftTexture.getHeight();
+	}
 
 	@Override
 	public int hashCode() {
@@ -120,11 +124,6 @@ public abstract class Drawable {
 			return false;
 		return true;
 	}
-
-	public int getSpriteHeight() {
-		return leftTexture.getHeight();
-	}
-	
 	
 	
 }

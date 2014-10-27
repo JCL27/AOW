@@ -61,6 +61,36 @@ public class Player {
 		WorldManager.getInstance().getAI().getUnits().add(unit2);
 	}
 	
+	public void CreateTower(Class towerClass){
+		this.tower = null;
+		Tower tower2 = null;
+		try {
+			this.tower = (Tower) towerClass.getConstructor(Player.class).newInstance(this);
+			tower2 = (Tower) towerClass.getConstructor(Player.class).newInstance(WorldManager.getInstance().getAI());
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		WorldManager.getInstance().getAI().tower = tower2;
+		
+	}
+	
 	public void addGold(int gold){
 		this.gold += gold;
 	}

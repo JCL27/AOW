@@ -2,7 +2,9 @@ package ar.edu.itba.game;
 
 import java.util.Observable;
 
-public class Tower extends Observable implements CanAttack{
+import Observers.TowerObserver;
+
+public abstract class Tower extends Observable implements CanAttack{
 	
 	protected Element element;
 	protected int damage;
@@ -13,7 +15,8 @@ public class Tower extends Observable implements CanAttack{
 	protected int attackRange;
 	protected Attackable objective;
 	protected Player player;
-	protected boolean canAttackFlying;
+	protected boolean attackFlying;
+	protected TowerObserver observer;
 	
 	public void updateAttackObjective(){
 		if (this.objective == null || !WorldManager.getInstance().getElements().contains(this.objective.getElement())){

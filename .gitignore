@@ -1,0 +1,4 @@
+.metadata/*
+.metadata/.*
+*.class
+Age of war/bin/*
