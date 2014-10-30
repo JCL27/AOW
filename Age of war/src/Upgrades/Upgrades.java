@@ -3,8 +3,6 @@ package Upgrades;
 import java.util.HashMap;
 
 import ar.edu.itba.game.Player;
-import ar.edu.itba.game.WorldManager;
-import Units.RangedUnit;
 
 public class Upgrades {
 	

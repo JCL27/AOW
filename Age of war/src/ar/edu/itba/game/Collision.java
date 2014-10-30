@@ -1,6 +1,5 @@
 package ar.edu.itba.game;
 
-import Units.Unit;
 import exceptions.DeadUnitException;
 
 public class Collision {

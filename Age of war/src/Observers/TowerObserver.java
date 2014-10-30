@@ -3,22 +3,14 @@ package Observers;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-
-import Draws.RangedUnitDraw;
-import Draws.TowerDraw;
-import Units.Unit;
-import Draws.Drawable;
-import UserInterface.UIManager;
-import Draws.Drawable;
+import Draws.BasicTowerDraw;
 import UserInterface.UIManager;
 import ar.edu.itba.game.Tower;
-import Draws.BasicTowerDraw;
 
 public class TowerObserver implements Observer{
 	
 	private Tower tower;
-	private Drawable draw;
+	private Draws.Drawable draw;
 	public TowerObserver (Tower tower){
 		this.tower = tower;
 		switch(tower.getClass().getSimpleName()){

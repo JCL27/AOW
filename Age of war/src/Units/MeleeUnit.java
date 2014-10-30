@@ -9,14 +9,17 @@ import ar.edu.itba.game.Side;
 import ar.edu.itba.game.WorldManager;
 
 public class MeleeUnit extends Unit {
-		public MeleeUnit(Player player){
-			this.player = player;
-			this.objective = null;
-			this.cooldown = 0;
-			this.bounty = GameStats.MELEE_UNIT_BOUNTY;
-			this.cost = GameStats.MELEE_UNIT_COST;
-			this.exp = GameStats.MELEE_UNIT_EXP;
-			
+	private static int playerUnitLevel = 0;
+	private static int AIUnitLevel = 0;	
+	
+	public MeleeUnit(Player player){
+		this.player = player;
+		this.objective = null;
+		this.cooldown = 0;
+		this.bounty = GameStats.MELEE_UNIT_BOUNTY;
+		this.cost = GameStats.MELEE_UNIT_COST;
+		this.exp = GameStats.MELEE_UNIT_EXP;
+		
 			if (this.player.equals(WorldManager.getInstance().getPlayer())){
 				this.maxHp = (int) (GameStats.MELEE_UNIT_MAX_HP + Math.sqrt(playerUnitLevel * GameStats.MELEE_UNIT_MAX_HP_UPGRADE_RATE));
 				this.hp = this.maxHp;
