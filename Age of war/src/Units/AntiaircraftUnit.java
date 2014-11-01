@@ -60,9 +60,9 @@ public class AntiaircraftUnit extends Unit{
 				float Y = this.getElement().getMiddleY();
 				float t = 0;
 				float dist = Xf - X;
-				float altura = Yf - Y;
+				float height = Yf - Y;
 				velY = (float) Math.sqrt(2 * Game.GRAVITY * (Yf - Y));
-				t = (float) ((-velY + Math.sqrt(Math.abs(velY*velY-4*altura*Game.GRAVITY/2)))/Game.GRAVITY);
+				t = (float) ((-velY + Math.sqrt(Math.abs(velY*velY-4*height*Game.GRAVITY/2)))/Game.GRAVITY);
 				velX = - dist / t;
 				
 				//float vel = (float) Math.sqrt((velX*velX+velY*velY));

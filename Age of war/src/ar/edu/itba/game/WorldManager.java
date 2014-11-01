@@ -39,6 +39,8 @@ public class WorldManager {
 			pjt.notifyObservers();
 		for(Projectile pjt:AI.getProjectiles())
 			pjt.notifyObservers();
+		if (this.player.getTower() != null)
+			player.getTower().notifyObservers();
 	}
 	
 	public void updateElements(){
@@ -91,17 +93,21 @@ public class WorldManager {
 		}
 	}
 	
-	public void updateUnitsObjectives(){
+	public void updateAttackObjectives(){
 		for(Unit unit:player.getUnits()){
 			unit.updateAttackObjective();
 		}
 		for(Unit unit:AI.getUnits()){
 			unit.updateAttackObjective();
 		}
-		if(player.getTower() != null)
+		if(player.getTower() != null){
+			System.out.println("Updateo Player");
 			player.getTower().updateAttackObjective();
-		if(AI.getTower() != null)
-			AI.getTower().updateAttackObjective();
+		}	
+		if(AI.getTower() != null){
+			System.out.println("Updateo AI");
+			AI.getTower().updateAttackObjective();	
+		}	
 	}
 	
 	public void disposeProjectile(Projectile pjt){
@@ -112,6 +118,15 @@ public class WorldManager {
 	}
 	
 	public void disposeTower(Tower tower){
+		tower.notifyDelete();
+		if (tower.getPlayer() == this.player){
+			this.elements.remove(player.getTower());
+			this.player.setTower(null);
+		}
+		else{
+			this.AI.setTower(null);
+			this.elements.remove(AI.getTower());
+		}	
 		
 	}
 	

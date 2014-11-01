@@ -116,6 +116,15 @@ public class Player {
 		return this.tower;
 	}
 	
+	public void setTower(Tower tower) {
+		this.tower = tower;
+	}
+	public void sellTower(){
+		if(this.tower != null)
+			this.tower.Sell();
+		
+	}
+
 	public Base getBase(){
 		return this.base;
 	}

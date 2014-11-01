@@ -94,5 +94,9 @@ public class GameStats {
 		
 		public final static int MELEE_UNIT_COL_BOX_HEIGHT = 50;
 		public final static int MELEE_UNIT_COL_BOX_WIDTH = 50;
+		
+		//Tower Stats
+		
+		public final static int TOWER_HEIGHT = 200;
 	
 }

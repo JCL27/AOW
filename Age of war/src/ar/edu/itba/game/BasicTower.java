@@ -13,20 +13,20 @@ public class BasicTower extends Tower {
 		if (this.player.equals(WorldManager.getInstance().getPlayer())){
 		this.damage = 200;
 		this.cost = 200;
-		this.cooldown = 200;
+		this.cooldown = 0;
 		this.side = Side.LEFT;
-		this.attackSpeed = 1;
-		this.attackRange = 700;
-		this.element = new Element(50, Game.FLYING_HEIGHT + Game.GROUND_HEIGHT, 3, 0, 200, 100, false);
-		}
+		this.attackSpeed = 5;
+		this.attackRange = 600;
+		this.element = new Element(50, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, 0, 0, 100, 100, false);
+		} 
 		else{
 			this.damage = 200;
 			this.cost = 200;
-			this.cooldown = 200;
+			this.cooldown = 0;
 			this.side = Side.RIGHT;
-			this.attackSpeed = 1;
-			this.attackRange = 700;
-			this.element = new Element(1000, Game.FLYING_HEIGHT + Game.GROUND_HEIGHT, 3, 0, 200, 100, false);
+			this.attackSpeed = 5;
+			this.attackRange = 600;
+			this.element = new Element(1000, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, 0, 0, 100, 100, false);
 		}
 	
 		this.observer = new TowerObserver(this);
