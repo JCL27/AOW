@@ -1,12 +1,17 @@
 package ar.edu.itba.game;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import Units.Unit;
 
-public class WorldManager {
+public class WorldManager implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4035477768723084005L;
 	public static double MINDISTANCE = 25;
 	public static int INITIAL_GOLD = 300;
 	
@@ -240,6 +245,41 @@ public class WorldManager {
 	   return elements;
    }
    
-   public void EndGame(){
+   public void endGame(){
+   }
+   
+   public static void disposeWM(){
+	   instance = null;
+   }
+   
+   public static void setInstance(WorldManager WM){
+	   instance = WM;
+   }
+   
+   public String toString(){
+	   String str = player.toString() + " " +AI.toString() + " " + elements.toString();
+	   return str;
+   }
+   
+   public void reAssignObservers(){
+	   for(Unit unit:player.getUnits()){
+		   unit.reAssignObserver();
+	   }
+	   for(Unit unit:AI.getUnits()){
+		   unit.reAssignObserver();
+	   }
+	   for(Projectile pjt:player.getProjectiles()){
+		   pjt.reAssignObserver();
+	   }
+	   for(Projectile pjt:AI.getProjectiles()){
+		   pjt.reAssignObserver();
+	   }
+	   player.getBase().reAssignObserver();
+	   AI.getBase().reAssignObserver();
+	   if(player.getTower()!=null)
+		   player.getTower().reAssignObserver();
+	   if(AI.getTower()!=null)
+		   AI.getTower().reAssignObserver();
+	   
    }
 }

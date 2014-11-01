@@ -1,13 +1,19 @@
 package ar.edu.itba.game;
 
+import java.io.Serializable;
 import java.util.Observable;
 
 import Observers.BaseObserver;
+import Observers.UnitObserver;
 import exceptions.DeadUnitException;
 import exceptions.EndGameException;
 
-public class Base extends Observable implements Attackable {
+public class Base extends Observable implements Attackable, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4883608043561346759L;
 	static int MAX_HIT_POINTS = 1000;
 	static int HEIGHT = 282;
 	static int WIDTH = 180;
@@ -16,6 +22,7 @@ public class Base extends Observable implements Attackable {
 	private int HP;
 	private Element element;
 	private Side side;
+	private BaseObserver observer;
 	
 	public Base(Side side){
 		int X;
@@ -78,6 +85,11 @@ public class Base extends Observable implements Attackable {
 		return this.side;
 	}
 	
+	public void reAssignObserver(){
+		this.deleteObservers();
+		this.observer = new BaseObserver(this);
+		this.addObserver(this.observer);
+	}
 	
 	
 }

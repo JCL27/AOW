@@ -12,8 +12,12 @@ import ar.edu.itba.game.WorldManager;
 
 public class AntiaircraftUnit extends Unit{
 	
-	private static int playerUnitLevel = 0;
-	private static int AIUnitLevel = 0;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8389088340073951657L;
+	private static Integer playerUnitLevel = 0;
+	private static Integer AIUnitLevel = 0;
 	
 	public AntiaircraftUnit(Player player){
 		this.player = player;
@@ -99,13 +103,19 @@ public class AntiaircraftUnit extends Unit{
 
 	public static void playerLevelUp() {
 		playerUnitLevel++;
-		
 	}
-
 
 	public static void AILevelUp() {
 		AIUnitLevel++;
-		
 	}
 	
+	public static String[] getLevels(){
+		String[] str = {playerUnitLevel.toString(), AIUnitLevel.toString()};
+		return str;
+	}
+	
+	public static void setLevels(String[] row){
+		playerUnitLevel = Integer.parseInt(row[0]);
+		AIUnitLevel = Integer.parseInt(row[1]);
+	}
 }

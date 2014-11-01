@@ -9,8 +9,12 @@ import ar.edu.itba.game.Side;
 import ar.edu.itba.game.WorldManager;
 
 public class MeleeUnit extends Unit {
-	private static int playerUnitLevel = 0;
-	private static int AIUnitLevel = 0;	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6458482342043685784L;
+	private static Integer playerUnitLevel = 0;
+	private static Integer AIUnitLevel = 0;	
 	
 	public MeleeUnit(Player player){
 		this.player = player;
@@ -46,4 +50,14 @@ public class MeleeUnit extends Unit {
 			this.attackFlying = false;
 			WorldManager.getInstance().getElements().add(this.element);
 		}
+	
+	public static String[] getLevels(){
+		String[] str = {playerUnitLevel.toString(), AIUnitLevel.toString()};
+		return str;
+	}
+	
+	public static void setLevels(String[] row){
+		playerUnitLevel = Integer.parseInt(row[0]);
+		AIUnitLevel = Integer.parseInt(row[1]);
+	}
 }

@@ -12,8 +12,12 @@ import Observers.UnitObserver;
 
 public class FlyingUnit extends Unit{
 	
-	private static int playerUnitLevel = 0;
-	private static int AIUnitLevel = 0;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7357772180229981544L;
+	private static Integer playerUnitLevel = 0;
+	private static Integer AIUnitLevel = 0;
 	
 	public FlyingUnit(Player player){
 		this.player = player;
@@ -81,4 +85,13 @@ public class FlyingUnit extends Unit{
 		AIUnitLevel++;	
 	}
 	
+	public static String[] getLevels(){
+		String[] str = {playerUnitLevel.toString(), AIUnitLevel.toString()};
+		return str;
+	}
+	
+	public static void setLevels(String[] row){
+		playerUnitLevel = Integer.parseInt(row[0]);
+		AIUnitLevel = Integer.parseInt(row[1]);
+	}
 }

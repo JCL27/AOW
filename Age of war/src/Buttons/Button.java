@@ -15,6 +15,7 @@ public abstract class Button implements Clickable {
 		return false;
 	}
 	
+	
 	@Override
 	public abstract void Click();
 	

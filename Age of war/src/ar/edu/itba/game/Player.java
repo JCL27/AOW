@@ -1,12 +1,17 @@
 package ar.edu.itba.game;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import exceptions.NotEnoughGoldException;
 import Units.Unit;
 
-public class Player {
+public class Player implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3361130881364588943L;
 	private int gold;
 	private int experience;
 	private ArrayList<Unit> units;
@@ -130,5 +135,11 @@ public class Player {
 	}
 	//	public Unit(int maxHp, double attackSpeed, int attackRange, int movementSpeed, int damage, Element element, Direction dir){
 
+	@Override
+	public String toString() {
+		return "Player [gold=" + gold + ", experience=" + experience
+				+ ", units=" + units + ", projectiles=" + projectiles + "]";
+	}
+	
 	
 }

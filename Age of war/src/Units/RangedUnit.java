@@ -1,16 +1,22 @@
 package Units;
 
+import java.io.Serializable;
+
+import Observers.UnitObserver;
 import ar.edu.itba.game.Element;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.Side;
 import ar.edu.itba.game.WorldManager;
-import Observers.UnitObserver;
 
-public class RangedUnit extends Unit {
-	private static int playerUnitLevel = 0;
-	private static int AIUnitLevel = 0;
+public class RangedUnit extends Unit implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3399027554023024600L;
+	private static Integer playerUnitLevel = 0;
+	private static Integer AIUnitLevel = 0;
 	
 	public RangedUnit(Player player){
 		
@@ -57,4 +63,13 @@ public class RangedUnit extends Unit {
 		
 	}
 	
+	public static String[] getLevels(){
+		String[] str = {playerUnitLevel.toString(), AIUnitLevel.toString()};
+		return str;
+	}
+	
+	public static void setLevels(String[] row){
+		playerUnitLevel = Integer.parseInt(row[0]);
+		AIUnitLevel = Integer.parseInt(row[1]);
+	}
 }

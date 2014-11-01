@@ -1,9 +1,14 @@
 package ar.edu.itba.game;
 
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 
-public class Element {
+public class Element implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -842106608382607798L;
 	private float X;
 	private float Y;
 	private float velX;

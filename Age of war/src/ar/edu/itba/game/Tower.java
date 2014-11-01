@@ -3,6 +3,7 @@ package ar.edu.itba.game;
 import java.util.Observable;
 
 import Observers.TowerObserver;
+import Observers.UnitObserver;
 
 public abstract class Tower extends Observable implements CanAttack{
 	
@@ -141,6 +142,11 @@ public abstract class Tower extends Observable implements CanAttack{
 	public void notifyDelete() {
 		this.observer.dispose();	
 	}
-
+	
+	public void reAssignObserver(){
+		this.deleteObservers();
+		this.observer = new TowerObserver(this);
+		this.addObserver(this.observer);
+	}
 	
 }

@@ -1,14 +1,20 @@
 package ar.edu.itba.game;
 
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 import java.util.Observable;
 
 import Observers.ProjectileObserver;
+import Observers.UnitObserver;
 
-public class Projectile extends Observable{
+public class Projectile extends Observable implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3388226133504707762L;
 	private Element element;
 	private int damage;
-	private ProjectileObserver observer;
+	private transient ProjectileObserver observer;
 	
 	public double getMiddleX(){
 		return this.element.getMiddleX();
@@ -45,5 +51,11 @@ public class Projectile extends Observable{
 	public void notifyDelete() {
 		this.observer.dispose();	
 	}
-
+	
+	public void reAssignObserver(){
+		this.deleteObservers();
+		this.observer = new ProjectileObserver(this);
+		this.addObserver(this.observer);
+		
+	}
 }

@@ -1,7 +1,23 @@
 package ar.edu.itba.game;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
+import Units.AntiaircraftUnit;
+import Units.FlyingUnit;
+import Units.MeleeUnit;
+import Units.RangedUnit;
 import UserInterface.MyInputProcessor;
 import UserInterface.UIManager;
+import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -75,7 +91,7 @@ public class Game implements ApplicationListener {
 		
 		WorldManager.getInstance().checkCollisions();
 		
-		WorldManager.getInstance().updateUnitsObjectives();
+		WorldManager.getInstance().updateAttackObjectives();
 		
 		SB.begin();
 		
@@ -88,10 +104,90 @@ public class Game implements ApplicationListener {
 		
 	}
 	
-	//private void spriteIterator(Texture texture, int Height, int Width, int start, int finish){
-	//	;
+	public static void saveGame(){
 		
-	//}
+		//System.out.println("guarda");
+		
+		   try {
+			   FileOutputStream fileO = new FileOutputStream("WM.ser");
+			   ObjectOutputStream objO = new ObjectOutputStream(fileO);
+			   objO.writeObject(WorldManager.getInstance());
+			   objO.close();
+			   fileO.close();
+		   } catch (FileNotFoundException e) {
+				e.printStackTrace();
+		   } catch (IOException e) {
+			   	e.printStackTrace();
+		   }
+		   String csv = "levels.csv";
+		   CSVWriter writer;
+		   try {
+			   String[] levels;
+			   ArrayList<String[]> data = new ArrayList<String[]>();
+			   writer = new CSVWriter(new FileWriter(csv));
+			   levels = AntiaircraftUnit.getLevels();
+			   data.add(levels);
+			   levels = FlyingUnit.getLevels();
+			   data.add(levels);
+			   levels = MeleeUnit.getLevels();
+			   data.add(levels);
+			   levels = RangedUnit.getLevels();
+			   data.add(levels);
+			   writer.writeAll(data);
+			   writer.close();
+		   } catch (IOException e) {
+			   e.printStackTrace();
+		   }
+		    
+		   
+		   //System.out.println(WorldManager.getInstance().toString());
+	
+	}
+	
+	public static void loadGame(){
+		System.out.println("carga");
+		//System.out.println(WorldManager.getInstance().toString());
+		System.out.println(RangedUnit.getLevels()[0] + " " + RangedUnit.getLevels()[1]);	
+		try {
+			   WorldManager.disposeWM();
+			   FileInputStream fileO = new FileInputStream("WM.ser");
+			   ObjectInputStream objO = new ObjectInputStream(fileO);
+			   WorldManager.setInstance((WorldManager)objO.readObject());
+			   objO.close();
+			   fileO.close();
+		   } catch (FileNotFoundException e) {
+				e.printStackTrace();
+		   } catch (IOException e) {
+			   	e.printStackTrace();
+		   } catch (ClassNotFoundException e){
+			   e.printStackTrace();
+		   }
+		try{
+			String csvFilename = "levels.csv";
+			CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
+			String[] row = null;
+			row = csvReader.readNext();
+			AntiaircraftUnit.setLevels(row);
+			row = csvReader.readNext();
+			FlyingUnit.setLevels(row);
+			row = csvReader.readNext();
+			MeleeUnit.setLevels(row);
+			row = csvReader.readNext();
+			RangedUnit.setLevels(row);
+			csvReader.close();
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		System.out.println(RangedUnit.getLevels()[0] + " " + RangedUnit.getLevels()[1]);
+			
+		   //System.out.println(WorldManager.getInstance().toString());
+		   UIManager.getInstance().clearDraws();
+		   UIManager.getInstance().initializeDraws();
+		   WorldManager.getInstance().reAssignObservers();
+	}
+	
 	
 	@Override
 	public void resize(int arg0, int arg1) {

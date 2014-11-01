@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class UIManager {
 	
 	private static UIManager instance = null;
+	private static int buttonIndex = 0;
 	
 	private final int BUTTON_HEIGHT = 150;
 	private final int BUTTON_INITIAL_X = 200;
@@ -23,6 +24,7 @@ public class UIManager {
 	private ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private Stack<UIState> State = new Stack<UIState>();
 	
+	
 	public static UIManager getInstance() {
 	      if(instance == null) {
 	         instance = new UIManager();
@@ -31,6 +33,10 @@ public class UIManager {
 	   }
 	
 	public UIManager(){
+		this.initializeDraws();
+	}
+	
+	public void initializeDraws(){
 		drawables.add(new GroundDraw(0,0));
 		drawables.add(new GrassDraw(270f , Game.GROUND_HEIGHT - 10, 50, 50));
 		State.add(State.push(UIState.DEFAULT));
@@ -56,6 +62,7 @@ public class UIManager {
 			this.buttons.add(new Buttons.CreateUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.Tower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.Upgrade(this.BUTTON_INITIAL_X + count++ *this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.MenuButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case CREATE_UNIT:
 			this.buttons.add(new Buttons.CreateRangedUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
@@ -76,17 +83,22 @@ public class UIManager {
 			this.buttons.add(new Buttons.UpgradeMeleeUnitDamage(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		}
+		
 		if(!State.peek().equals(UIState.DEFAULT)){
 			this.buttons.add(new Buttons.Back(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 		}
 	}
-
+	
 	public ArrayList<Drawable> getDraws(){
 		return this.drawables;
 	}
 	
 	public ArrayList<Button> getButtons() {
 		return this.buttons;
+	}
+	
+	public void clearDraws(){
+		this.drawables.clear();
 	}
 	
 	public void drawTextures(){

@@ -1,7 +1,9 @@
 package Units;
 
+import java.io.Serializable;
 import java.util.Observable;
 
+import Observers.UnitObserver;
 import ar.edu.itba.game.Attackable;
 import ar.edu.itba.game.CanAttack;
 import ar.edu.itba.game.Element;
@@ -11,12 +13,17 @@ import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
 import ar.edu.itba.game.Type;
 import ar.edu.itba.game.WorldManager;
-import Observers.UnitObserver;
 import exceptions.DeadUnitException;
 
 
-public abstract class Unit extends Observable implements CanAttack, Attackable{
+public abstract class Unit extends Observable implements CanAttack, Attackable, Serializable{
 	
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7429831188289779363L;
 	protected Type type;
 	protected boolean attackFlying;
 	
@@ -29,7 +36,7 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 	protected Player player;
 	protected Side dir;
 	protected Attackable objective;
-	protected UnitObserver observer;
+	protected transient UnitObserver observer;
 	
 	protected int cooldown;
 	protected Element element;
@@ -239,5 +246,23 @@ public abstract class Unit extends Observable implements CanAttack, Attackable{
 	
 	public void notifyDelete() {
 		this.observer.dispose();	
+	}
+	
+	public void reAssignObserver(){
+		this.deleteObservers();
+		this.observer = new UnitObserver(this);
+		this.addObserver(this.observer);
+	}
+	
+	@Override
+	public String toString() {
+		return "Unit [type=" + type + ", attackFlying=" + attackFlying
+				+ ", hp=" + hp + ", maxHp=" + maxHp + ", attackSpeed="
+				+ attackSpeed + ", attackRange=" + attackRange
+				+ ", movementSpeed=" + movementSpeed + ", damage=" + damage
+				+ ", dir=" + dir + ", objective="
+				+ ", observer="  + ", cooldown="
+				+ cooldown + ", element=" + element + ", bounty=" + bounty
+				+ ", exp=" + exp + ", cost=" + cost + "]";
 	}
 }
