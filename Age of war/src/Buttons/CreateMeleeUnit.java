@@ -13,5 +13,6 @@ public class CreateMeleeUnit extends Button{
 	public void Click() {
 		// TODO Auto-generated method stub
 		WorldManager.getInstance().getPlayer().createUnit(MeleeUnit.class);
+		int foo;
 	}
 }
