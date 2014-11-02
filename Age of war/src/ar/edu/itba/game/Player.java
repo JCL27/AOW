@@ -54,7 +54,7 @@ public class Player implements Serializable{
 		}catch(NotEnoughGoldException e){
 			e.printStackTrace();	
 		}
-		
+		System.out.println("gold: " + this.gold);
 	}
 	
 	
@@ -135,7 +135,7 @@ public class Player implements Serializable{
 			this.tower.Sell();
 		}	
 	}
-
+	
 	public Base getBase(){
 		return this.base;
 	}

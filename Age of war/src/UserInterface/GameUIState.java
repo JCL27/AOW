@@ -1,0 +1,5 @@
+package UserInterface;
+
+public enum GameUIState {
+	DEFAULT, CREATE_UNIT, TERRAIN_UNITS, TOWER ,FLYING_UNITS, UNDERGROUND_UNITS, UPGRADES;
+}

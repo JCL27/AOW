@@ -2,7 +2,7 @@ package Buttons;
 
 import Draws.BigGreenButtonDraw;
 import UserInterface.UIManager;
-import UserInterface.UIState;
+import UserInterface.GameUIState;
 
 public class Tower extends Button{
 
@@ -12,7 +12,7 @@ public class Tower extends Button{
 	
 	@Override
 	public void Click() {
-		UIManager.getInstance().pushState(UIState.TOWER);
+		UIManager.getInstance().pushState(GameUIState.TOWER);
 		UIManager.getInstance().updateButtons();
 	}
 	

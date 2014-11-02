@@ -22,7 +22,7 @@ public class UIManager {
 	private SpriteBatch SB;
 	private ArrayList<Button> buttons = new ArrayList<Button>();
 	private ArrayList<Drawable> drawables = new ArrayList<Drawable>();
-	private Stack<UIState> State = new Stack<UIState>();
+	private Stack<GameUIState> State = new Stack<GameUIState>();
 	
 	
 	public static UIManager getInstance() {
@@ -39,14 +39,15 @@ public class UIManager {
 	public void initializeDraws(){
 		drawables.add(new GroundDraw(0,0));
 		drawables.add(new GrassDraw(270f , Game.GROUND_HEIGHT - 10, 50, 50));
-		State.add(State.push(UIState.DEFAULT));
+		State.add(State.push(GameUIState.DEFAULT));
+		this.updateButtons();
 	}
 	
 	public void setSpriteBatch(SpriteBatch SB){
 		this.SB = SB;
 	}
 	
-	public void pushState(UIState state){
+	public void pushState(GameUIState state){
 		this.State.push(state);
 	}
 	
@@ -88,7 +89,7 @@ public class UIManager {
 			break;
 		}
 		
-		if(!State.peek().equals(UIState.DEFAULT)){
+		if(!State.peek().equals(GameUIState.DEFAULT)){
 			this.buttons.add(new Buttons.Back(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 		}
 	}

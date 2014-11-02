@@ -1,8 +1,9 @@
 package Buttons;
 
 import Draws.BigGreenButtonDraw;
+import UserInterface.GameUIState;
 import UserInterface.UIManager;
-import UserInterface.UIState;
+
 
 public class CreateUnit extends Button {
 
@@ -12,7 +13,7 @@ public class CreateUnit extends Button {
 	
 	@Override
 	public void Click() {
-		UIManager.getInstance().pushState(UIState.CREATE_UNIT);
+		UIManager.getInstance().pushState(GameUIState.CREATE_UNIT);
 		UIManager.getInstance().updateButtons();
 	}
 }

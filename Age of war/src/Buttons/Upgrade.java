@@ -1,14 +1,14 @@
 package Buttons;
 
 import Draws.BigGreenButtonDraw;
+import UserInterface.GameUIState;
 import UserInterface.UIManager;
-import UserInterface.UIState;
 
 public class Upgrade extends Button {
 
 	@Override
 	public void Click() {
-		UIManager.getInstance().pushState(UIState.UPGRADES);
+		UIManager.getInstance().pushState(GameUIState.UPGRADES);
 		UIManager.getInstance().updateButtons();
 	}
 	

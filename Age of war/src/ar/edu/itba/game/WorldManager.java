@@ -61,40 +61,14 @@ public class WorldManager implements Serializable{
 				elem.setVelY(elem.getVelY()- Game.GRAVITY);
 		}
 	}
-	
-	/*public void updateUnitsQueue(){
-		if(!this.player.getUnitsQueue().isEmpty()){
-			Unit unit = player.getUnitsQueue().get(0);
-			System.out.println("En Player");
-			if(unit.getCreationTime() == 0){
-				this.player.getUnits().add(unit);
-				this.player.getUnitsQueue().remove(0);
-			}
-			else{
-				unit.reduceCreationTime();
-				//System.out.println(unit.getCreationTime());
-			}
-		}
-		if(!this.AI.getUnitsQueue().isEmpty()){
-			System.out.println("En AI");
-			Unit unit = AI.getUnitsQueue().get(0);
-			if(unit.getCreationTime() == 0){
-				this.AI.getUnits().add(unit);
-				this.AI.getUnitsQueue().remove(0);
-			}
-			else
-				unit.reduceCreationTime();
-		}
-	}*/
-	
 	public void updateUnitsQueue(){
-		//Player[] players = {this.player, this.playerAI};
+
 		if(!this.player.getUnitsQueue().isEmpty()){
-			System.out.println("Hay algo en cola");
+			//System.out.println("Hay algo en cola");
 			Class unitClass = this.player.getUnitsQueue().get(0);
 			if(this.playerCreatingUnit && this.playerUnitCreationTime == 0){
-				this.player.createUnit(unitClass);
 				this.player.getUnitsQueue().remove(0);
+				this.player.createUnit(unitClass);
 				this.playerCreatingUnit = false;
 			}
 			else if(this.playerCreatingUnit){

@@ -91,14 +91,14 @@ public class AI {
 				break;
 			case(8):
 				if(player.getGold()>GameStats.TOWER_COST){
-					player.buyUnit(FlyingUnit.class);
+					//player.buyTower(FlyingUnit.class);
 					objectiveAccomplished = true;
 				}	
 				break;
 			}
 		}
 		
-	/*	if(upgradeResearched == true){
+		if(upgradeResearched == true){
 			upgradeChoice = rand.nextInt(8);
 			this.upgradeResearched = false;
 			//System.out.println("choice setted: " + choice);
@@ -117,6 +117,6 @@ public class AI {
 		case(4):
 		case(5):
 		}
-		*/
+		
 	}
 }

@@ -38,6 +38,8 @@ public class Game implements ApplicationListener {
 	public static final int GROUND_HEIGHT = 300;
 	public static final int FLYING_HEIGHT = 300;
 	
+	public static GameState gameState = GameState.MENU;
+	
 	private OrthographicCamera cam;
 	private Box2DDebugRenderer b2dr;
 	private World world;
@@ -45,24 +47,21 @@ public class Game implements ApplicationListener {
 	private int secondCount = 0;
 	
 	public void create() {
-		// TODO Auto-generated method stub
+
 		Texture.setEnforcePotImages(false);
 		Gdx.input.setInputProcessor(new MyInputProcessor());
 		SB = new SpriteBatch();
 		
-	//	label = new Label("hola");
-		
 		b2dr = new Box2DDebugRenderer();
+		
 		this.world = new World(new Vector2(0,0),true);
-		
-		
 		
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, WIDTH, HEIGHT);
 
-		
 		UIManager.getInstance().setSpriteBatch(SB);
-		UIManager.getInstance().updateButtons();
+		
+		
 	}
 	
 	public OrthographicCamera getCam(){
@@ -71,17 +70,17 @@ public class Game implements ApplicationListener {
 	
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub	
+
 	}
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub		
+
 	}
 
 	@Override
-	public void render() {
-		// TODO Auto-generated method stub
+	public void render() {		
+		
 		Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		WorldManager.getInstance().updateUnitsQueue();
@@ -98,12 +97,13 @@ public class Game implements ApplicationListener {
 		
 		SB.begin();
 		
-		//SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getScreenWidth(), elem.getScreenHeight(), 0, 0, elem.getWidth(), elem.getHeight(), false, false);
 		UIManager.getInstance().drawTextures();
 		UIManager.getInstance().drawButtons();
+		
 		SB.end();
 		
 		b2dr.render(world, cam.combined);
+		
 		AI.getInstance().desitionMaker();
 
 		oneSecondLoop();
@@ -195,8 +195,9 @@ public class Game implements ApplicationListener {
 	}
 	
 	private void oneSecondLoop(){
-		if(++secondCount>=65){
-			secondCount = 0;
+		if(secondCount--<=0){
+			secondCount = (int) (1/Gdx.graphics.getDeltaTime());
+			System.out.println("renders/seg: " + 1/Gdx.graphics.getDeltaTime());
 			WorldManager.getInstance().getPlayer().addGold(10);
 			WorldManager.getInstance().getplayerAI().addGold(10);
 		}
