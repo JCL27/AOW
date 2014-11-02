@@ -15,6 +15,7 @@ public class CreateFlyingUnit extends Button {
 		// TODO Auto-generated method stub
 		//WorldManager.getInstance().getPlayer().createUnit(FlyingUnit.class);
 		WorldManager.getInstance().getPlayer().buyUnit(FlyingUnit.class);
+		//WorldManager.getInstance().getplayerAI().buyUnit(FlyingUnit.class);
 	}
 
 }

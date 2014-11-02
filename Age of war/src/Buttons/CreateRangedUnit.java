@@ -13,7 +13,7 @@ public class CreateRangedUnit extends Button {
 	@Override
 	public void Click() {
 		// TODO Auto-generated method stub
-		System.out.println("creo ranged");
+		System.out.println("CreateRangedUnit: creo ranged");
 		//WorldManager.getInstance().getPlayer().createUnit(RangedUnit.class);
 		WorldManager.getInstance().getPlayer().buyUnit(RangedUnit.class);
 	}

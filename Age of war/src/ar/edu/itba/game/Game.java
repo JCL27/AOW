@@ -60,7 +60,11 @@ public class Game implements ApplicationListener {
 		cam.setToOrtho(false, WIDTH, HEIGHT);
 
 		UIManager.getInstance().setSpriteBatch(SB);
+		WorldManager.getInstance();
+		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayer().getBase().getElement());
+		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getplayerAI().getBase().getElement());
 		
+		//System.out.println(WorldManager.getInstance().getElements().contains(WorldManager.getInstance().getPlayer().getBase().getElement()));
 		
 	}
 	

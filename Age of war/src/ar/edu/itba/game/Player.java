@@ -56,8 +56,9 @@ public class Player implements Serializable{
 		}
 	}
 	
-	public void buyUnit(Class unitClass){
+	public boolean buyUnit(Class unitClass){
 		Integer unitCost = null;
+		boolean created = true;
 		boolean available = false;
 		try {
 			if(this.equals(WorldManager.getInstance().getPlayer()))
@@ -81,9 +82,11 @@ public class Player implements Serializable{
 				this.charge(unitCost);
 				this.unitsQueue.add(unitClass);
 			}catch(NotEnoughGoldException e){
+				created = false;
 				e.printStackTrace();	
 			}
 		}
+		return created;
 	}
 	
 	
@@ -123,14 +126,16 @@ public class Player implements Serializable{
 
 	}
 	
-	public void buyTower(){
+	public boolean buyTower(){
+		boolean created = true;
 		try {
 			this.charge(GameStats.TOWER_COST);
 			this.createTower();
 		} catch (NotEnoughGoldException e) {
-			// TODO Auto-generated catch block
+			created = false;
 			e.printStackTrace();
 		}
+		return created;
 	}
 	public void createTower(){
 		this.tower = new Tower(this);

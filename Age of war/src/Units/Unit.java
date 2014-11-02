@@ -246,13 +246,24 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 	}
 	
 	public void updateAttackObjective(){
-		if (this.objective == null || !WorldManager.getInstance().getElements().contains(this.objective.getElement())){
+		if (this.objective == null || !WorldManager.getInstance().getElements().contains(this.objective.getElement())
+				|| isBehind(objective)){
+
 			this.objective = WorldManager.getInstance().isInRange(this);
 		}
 		if(this.objective != null){
-			//System.out.println("objective set " + this.getSide());
 			this.attack(this.objective);
 		}
+	}
+	
+	public boolean isBehind(Attackable objective){
+		if(this.dir == Side.LEFT && (objective.getElement().getMiddleX() - this.getElement().getMiddleX() < 0)){
+			return true;
+		}
+		else if (this.dir == Side.RIGHT && (objective.getElement().getMiddleX() - this.getElement().getMiddleX() > 0)){
+			return true;
+		}
+		return false;
 	}
 	
 	public void updateSpeed(){

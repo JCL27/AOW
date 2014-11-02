@@ -13,7 +13,7 @@ public class WorldManager implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -4035477768723084005L;
-	public static double MINDISTANCE = 25;
+	public static float MINDISTANCE = 25;
 	private static boolean playerCreatingUnit = false;
 	private static boolean AICreatingUnit = false;
 	private static int playerUnitCreationTime = 0;
@@ -60,7 +60,6 @@ public class WorldManager implements Serializable{
 				elem.setVelY(elem.getVelY()- Game.GRAVITY);
 		}
 	}
-
 	
 	public void updateUnitsQueue(){
 	
@@ -71,6 +70,7 @@ public class WorldManager implements Serializable{
 				this.player.getUnitsQueue().remove(0);
 				this.player.createUnit(unitClass);
 				playerCreatingUnit = false;
+
 			}
 			else if(playerCreatingUnit){
 				playerUnitCreationTime-- ;
@@ -218,15 +218,16 @@ public class WorldManager implements Serializable{
 		}
 		thisUnit.notifyDelete();
 	}
-	
+
 	public Attackable isInRange(CanAttack attacker){
 		//System.out.println(attacker.getClass().getSimpleName() + " " + attacker.getSide() + " attack range: " + attacker.getAttackRange());
 		int range = attacker.getAttackRange();
 		if (attacker.getSide() == Side.LEFT){
 			for(Unit unit:playerAI.getUnits()){
-				if (((unit.getX() - attacker.getWidth() - attacker.getX()) < range) &&
-						((attacker.canAttackFlying()) || (!unit.doesFly())))
+				float distance = unit.getX() - attacker.getWidth() - attacker.getX();
+				if ( distance < range && distance > 0 && ((attacker.canAttackFlying()) || (!unit.doesFly()))){
 					return unit;
+				}
 			}
 			if (((playerAI.getBase().getX() - attacker.getWidth() - attacker.getX()) < range)){
 				return playerAI.getBase();
@@ -234,15 +235,12 @@ public class WorldManager implements Serializable{
 		}
 		else{
 			for(Unit unit:player.getUnits()){
-				if (((attacker.getX() - unit.getX() - unit.getWidth()) < range)) {
-					//System.out.println("vuela? " + unit.doesFly() + " " + attacker.canAttackFlying() + " objetivo: " + unit.getClass().getSimpleName());
-					//System.out.println("esta en rango, atackker:" + attacker.getClass().getSimpleName());
-						if(attacker.canAttackFlying() || (!unit.doesFly())){
-								//System.out.println("esta atacando, attacker: " + attacker.getClass().getSimpleName());
-								return unit;
+				float distance = attacker.getX() - unit.getX() - unit.getWidth();
+				if (distance < range && distance > 0 && (attacker.canAttackFlying() || (!unit.doesFly()))) {
+							return unit;
 					}
 				}
-			}
+			
 			if (((attacker.getX() - player.getBase().getX() - player.getBase().getWidth()) < range)) {
 				return player.getBase();
 			}

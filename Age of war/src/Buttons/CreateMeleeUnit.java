@@ -14,6 +14,7 @@ public class CreateMeleeUnit extends Button{
 
 		//WorldManager.getInstance().getPlayer().createUnit(MeleeUnit.class);
 		WorldManager.getInstance().getPlayer().buyUnit(MeleeUnit.class);
+		//WorldManager.getInstance().getplayerAI().buyUnit(MeleeUnit.class);
 
 
 	}
