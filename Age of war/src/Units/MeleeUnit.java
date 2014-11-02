@@ -1,13 +1,17 @@
 package Units;
 
+import exceptions.DeadUnitException;
+import exceptions.EndGameException;
 import Observers.UnitObserver;
+import ar.edu.itba.game.Attackable;
 import ar.edu.itba.game.Element;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
+import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
 import ar.edu.itba.game.WorldManager;
-
+ //TODO: ADD UPGRADES
 public class MeleeUnit extends Unit {
 	/**
 	 * 
@@ -25,6 +29,7 @@ public class MeleeUnit extends Unit {
 		this.bounty = GameStats.MELEE_UNIT_BOUNTY;
 		this.cost = GameStats.MELEE_UNIT_COST;
 		this.exp = GameStats.MELEE_UNIT_EXP;
+		this.creationTime = GameStats.MELEE_UNIT_CREATION_TIME;
 		
 			if (this.player.equals(WorldManager.getInstance().getPlayer())){
 				this.maxHp = (int) (GameStats.MELEE_UNIT_MAX_HP + Math.sqrt(playerUnitLevel * GameStats.MELEE_UNIT_MAX_HP_UPGRADE_RATE));
@@ -83,5 +88,28 @@ public class MeleeUnit extends Unit {
 
 	public static void setAIAvailable(boolean aIAvailable) {
 		AIAvailable = aIAvailable;
+	}	
+	public void attack(Attackable objective){
+		if(this.cooldown == 0){
+			try {
+				this.objective.receiveDamage(this.damage);
+			} catch (DeadUnitException e) {
+				WorldManager.getInstance().killUnit((Unit)this.objective);
+			}
+			this.cooldown = (int)(1000/this.attackSpeed);		
+
+		}
+		else{
+			this.cooldown--;
+		}
+	}
+	
+	public static void playerLevelUp() {
+		playerUnitLevel++;	
+	}
+
+	public static void AILevelUp() {
+		AIUnitLevel++;
+		
 	}
 }

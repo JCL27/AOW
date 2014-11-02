@@ -57,6 +57,31 @@ public class WorldManager implements Serializable{
 		}
 	}
 	
+	/*public void updateUnitsQueue(){
+		if(!this.player.getUnitsQueue().isEmpty()){
+			Unit unit = player.getUnitsQueue().get(0);
+			System.out.println("En Player");
+			if(unit.getCreationTime() == 0){
+				this.player.getUnits().add(unit);
+				this.player.getUnitsQueue().remove(0);
+			}
+			else{
+				unit.reduceCreationTime();
+				//System.out.println(unit.getCreationTime());
+			}
+		}
+		if(!this.AI.getUnitsQueue().isEmpty()){
+			System.out.println("En AI");
+			Unit unit = AI.getUnitsQueue().get(0);
+			if(unit.getCreationTime() == 0){
+				this.AI.getUnits().add(unit);
+				this.AI.getUnitsQueue().remove(0);
+			}
+			else
+				unit.reduceCreationTime();
+		}
+	}*/
+	
 	public void checkCollisions(){
 		ArrayList<Collision> cols = new ArrayList<Collision>();
 		ArrayList<Projectile> toDispose = new ArrayList<Projectile>();

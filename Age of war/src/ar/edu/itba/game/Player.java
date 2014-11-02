@@ -18,6 +18,7 @@ public class Player implements Serializable{
 	private ArrayList<Projectile> projectiles;
 	private Tower tower;
 	private Base base;
+	private ArrayList<Class> unitsQueue;
 	
 	public Player (Side side){
 		this.gold = WorldManager.INITIAL_GOLD;
@@ -25,6 +26,7 @@ public class Player implements Serializable{
 		this.base = new Base(side);
 		this.units = new ArrayList<Unit>();
 		this.projectiles = new ArrayList<Projectile>();
+		this.unitsQueue = new ArrayList<Class>();
 	}
 	
 	public ArrayList<Projectile> getProjectiles(){
@@ -60,7 +62,10 @@ public class Player implements Serializable{
 		}
 		if(unit!=null){
 			this.units.add(unit);
+			//this.unitsQueue.add(unit);
 		}
+		//WorldManager.getInstance().getAI().getUnits().add(unit2);
+		//WorldManager.getInstance().getAI().getUnitsQueue().add(unit2);
 
 	}
 	
@@ -102,6 +107,11 @@ public class Player implements Serializable{
 		this.experience += exp;
 	}
 	
+	
+	public ArrayList<Class> getUnitsQueue() {
+		return unitsQueue;
+	}
+
 	public int getGold(){
 		return this.gold;
 	}

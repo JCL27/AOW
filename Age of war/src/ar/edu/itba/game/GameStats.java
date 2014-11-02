@@ -13,6 +13,7 @@ public class GameStats {
 		public final static int RANGED_UNIT_BOUNTY = 300;
 		public final static int RANGED_UNIT_COST = 250;
 		public final static int RANGED_UNIT_EXP = 70;
+		public final static int RANGED_UNIT_CREATION_TIME = 200;
 		
 		public final static int RANGED_UNIT_MAX_HP_UPGRADE_RATE = 1;
 		public final static double RANGED_UNIT_ATTACK_SPEED_UPGRADE_RATE = 0.5;
@@ -36,6 +37,7 @@ public class GameStats {
 		public final static int FLYING_UNIT_BOUNTY = 300;
 		public final static int FLYING_UNIT_COST = 250;
 		public final static int FLYING_UNIT_EXP = 70;
+		public final static int FLYING_UNIT_CREATION_TIME = 200;
 		
 		public final static int FLYING_UNIT_MAX_HP_UPGRADE_RATE = 1;
 		public final static double FLYING_UNIT_ATTACK_SPEED_UPGRADE_RATE = 0.1;
@@ -59,6 +61,7 @@ public class GameStats {
 		public final static int ANTIAIRCRAFT_UNIT_BOUNTY = 300;
 		public final static int ANTIAIRCRAFT_UNIT_COST = 250;
 		public final static int ANTIAIRCRAFT_UNIT_EXP = 70;
+		public final static int ANTIAIRCRAFT_UNIT_CREATION_TIME = 200;
 		
 		public final static int ANTIAIRCRAFT_UNIT_MAX_HP_UPGRADE_RATE = 1;
 		public final static double ANTIAIRCRAFT_UNIT_ATTACK_SPEED_UPGRADE_RATE = 0.1;
@@ -77,12 +80,13 @@ public class GameStats {
 		public final static boolean MELEE_UNIT_ATTACK_FLYING = false;
 		public final static int MELEE_UNIT_MAX_HP = 300;
 		public final static double MELEE_UNIT_ATTACK_SPEED = 15.0;
-		public final static int MELEE_UNIT_ATTACK_RANGE = 300;
+		public final static int MELEE_UNIT_ATTACK_RANGE = 25;
 		public final static int MELEE_UNIT_MOVEMENT_SPEED = 4;
 		public final static int MELEE_UNIT_DAMAGE = 80;
 		public final static int MELEE_UNIT_BOUNTY = 300;
 		public final static int MELEE_UNIT_COST = 250;
 		public final static int MELEE_UNIT_EXP = 70;
+		public final static int MELEE_UNIT_CREATION_TIME = 200;
 		
 		public final static int MELEE_UNIT_MAX_HP_UPGRADE_RATE = 1;
 		public final static double MELEE_UNIT_ATTACK_SPEED_UPGRADE_RATE = 0.5;
@@ -92,8 +96,8 @@ public class GameStats {
 		public final static int MELEE_UNIT_BOUNTY_UPGRADE_RATE = 10;
 		public final static int MELEE_UNIT_COST_UPGRADE_RATE = 7;
 		
-		public final static int MELEE_UNIT_COL_BOX_HEIGHT = 50;
-		public final static int MELEE_UNIT_COL_BOX_WIDTH = 50;
+		public final static int MELEE_UNIT_COL_BOX_HEIGHT = 90;
+		public final static int MELEE_UNIT_COL_BOX_WIDTH = 90;
 		
 		//Tower Stats
 		

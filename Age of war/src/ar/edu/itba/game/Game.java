@@ -84,6 +84,8 @@ public class Game implements ApplicationListener {
 		// TODO Auto-generated method stub
 		Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+	//	WorldManager.getInstance().updateUnitsQueue();
+		
 		WorldManager.getInstance().notifyObservers();
 		
 		WorldManager.getInstance().updateUnitsSpeed();
@@ -93,8 +95,6 @@ public class Game implements ApplicationListener {
 		WorldManager.getInstance().checkCollisions();
 		
 		WorldManager.getInstance().updateAttackObjectives();
-		
-		
 		
 		SB.begin();
 		

@@ -30,6 +30,7 @@ public class FlyingUnit extends Unit{
 		this.bounty = GameStats.FLYING_UNIT_BOUNTY;
 		this.cost = GameStats.FLYING_UNIT_COST;
 		this.exp = GameStats.FLYING_UNIT_EXP;
+		this.creationTime = GameStats.FLYING_UNIT_CREATION_TIME;
 		
 		if (this.player.equals(WorldManager.getInstance().getPlayer())){
 			this.maxHp = (int) (GameStats.FLYING_UNIT_MAX_HP + Math.sqrt(playerUnitLevel * GameStats.FLYING_UNIT_MAX_HP_UPGRADE_RATE));

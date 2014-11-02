@@ -39,6 +39,7 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 	protected transient UnitObserver observer;
 	
 	protected int cooldown;
+	protected int creationTime;
 	protected Element element;
 	
 	protected int bounty;
@@ -63,6 +64,122 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 	
 	public int getExp() {
 		return this.exp;
+	}
+
+	public int getCost() {
+		return this.cost;
+	}
+	
+	public boolean isAttackFlying() {
+		return attackFlying;
+	}
+
+	public void setAttackFlying(boolean attackFlying) {
+		this.attackFlying = attackFlying;
+	}
+
+	public int getHp() {
+		return hp;
+	}
+
+	public void setHp(int hp) {
+		this.hp = hp;
+	}
+
+	public int getMaxHp() {
+		return maxHp;
+	}
+
+	public void setMaxHp(int maxHp) {
+		this.maxHp = maxHp;
+	}
+
+	public double getAttackSpeed() {
+		return attackSpeed;
+	}
+
+	public void setAttackSpeed(double attackSpeed) {
+		this.attackSpeed = attackSpeed;
+	}
+
+	public int getMovementSpeed() {
+		return movementSpeed;
+	}
+
+	public void setMovementSpeed(int movementSpeed) {
+		this.movementSpeed = movementSpeed;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
+	}
+
+	public Side getDir() {
+		return dir;
+	}
+
+	public void setDir(Side dir) {
+		this.dir = dir;
+	}
+
+	public Attackable getObjective() {
+		return objective;
+	}
+
+	public void setObjective(Attackable objective) {
+		this.objective = objective;
+	}
+
+	public UnitObserver getObserver() {
+		return observer;
+	}
+
+	public void setObserver(UnitObserver observer) {
+		this.observer = observer;
+	}
+
+	public int getCooldown() {
+		return cooldown;
+	}
+
+	public void setCooldown(int cooldown) {
+		this.cooldown = cooldown;
+	}
+
+	public int getCreationTime() {
+		return creationTime;
+	}
+
+	public void reduceCreationTime() {
+		this.creationTime --;
+	}
+
+	public int getBounty() {
+		return bounty;
+	}
+
+	public void setBounty(int bounty) {
+		this.bounty = bounty;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public void setAttackRange(int attackRange) {
+		this.attackRange = attackRange;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public void setElement(Element element) {
+		this.element = element;
 	}
 
 	public boolean doesFly(){
@@ -127,6 +244,7 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 	public void receiveDamage(int damage) throws DeadUnitException{
 		// TODO Auto-generated method stub
 		this.hp-= damage;
+		System.out.println(this.hp);
 		//System.out.println(this.hp + " " + this.getSide());
 		if(this.hp <= 0){
 			throw new DeadUnitException(this);
