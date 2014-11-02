@@ -28,7 +28,6 @@ public class RangedUnit extends Unit implements Serializable{
 		this.bounty = GameStats.RANGED_UNIT_BOUNTY;
 		this.cost = GameStats.RANGED_UNIT_COST;
 		this.exp = GameStats.RANGED_UNIT_EXP;
-		this.creationTime = GameStats.RANGED_UNIT_CREATION_TIME;
 		
 		if (this.player.equals(WorldManager.getInstance().getPlayer())){
 			this.maxHp = (int) (GameStats.RANGED_UNIT_MAX_HP + Math.sqrt(playerUnitLevel * GameStats.RANGED_UNIT_MAX_HP_UPGRADE_RATE));
@@ -96,5 +95,9 @@ public class RangedUnit extends Unit implements Serializable{
 
 	public static void setAIAvailable(boolean aIAvailable) {
 		AIAvailable = aIAvailable;
+	}
+	
+	public static int getCreationTime() {
+		return GameStats.RANGED_UNIT_CREATION_TIME;
 	}
 }

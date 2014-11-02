@@ -44,7 +44,6 @@ public class AntiaircraftUnit extends Unit{
 		this.bounty = GameStats.ANTIAIRCRAFT_UNIT_BOUNTY;
 		this.cost = GameStats.ANTIAIRCRAFT_UNIT_COST;
 		this.exp = GameStats.ANTIAIRCRAFT_UNIT_EXP;
-		this.creationTime = GameStats.ANTIAIRCRAFT_UNIT_CREATION_TIME;
 		
 		if (this.player.equals(WorldManager.getInstance().getPlayer())){
 			this.maxHp = (int) (GameStats.ANTIAIRCRAFT_UNIT_MAX_HP + Math.sqrt(playerUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_MAX_HP_UPGRADE_RATE));
@@ -142,5 +141,8 @@ public class AntiaircraftUnit extends Unit{
 	public static void setLevels(String[] row){
 		playerUnitLevel = Integer.parseInt(row[0]);
 		AIUnitLevel = Integer.parseInt(row[1]);
+	}
+	public static int getCreationTime() {
+		return GameStats.ANTIAIRCRAFT_UNIT_CREATION_TIME;
 	}
 }

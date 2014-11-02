@@ -2,6 +2,7 @@ package ar.edu.itba.game;
 
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import Units.Unit;
@@ -14,6 +15,10 @@ public class WorldManager implements Serializable{
 	private static final long serialVersionUID = -4035477768723084005L;
 	public static double MINDISTANCE = 25;
 	public static int INITIAL_GOLD = 300;
+	private static boolean playerCreatingUnit = false;
+	private static boolean AICreatingUnit = false;
+	private static int playerUnitCreationTime = 0;
+	private static int AIUnitCreationTime = 0;
 	
 	private Player player;
 	private Player playerAI;
@@ -81,6 +86,57 @@ public class WorldManager implements Serializable{
 				unit.reduceCreationTime();
 		}
 	}*/
+	
+	public void updateUnitsQueue(){
+		//Player[] players = {this.player, this.playerAI};
+		if(!this.player.getUnitsQueue().isEmpty()){
+			System.out.println("Hay algo en cola");
+			Class unitClass = this.player.getUnitsQueue().get(0);
+			if(this.playerCreatingUnit && this.playerUnitCreationTime == 0){
+				this.player.createUnit(unitClass);
+				this.player.getUnitsQueue().remove(0);
+				this.playerCreatingUnit = false;
+			}
+			else if(this.playerCreatingUnit){
+				this.playerUnitCreationTime-- ;
+			}
+			else{
+				try {
+					this.playerUnitCreationTime = (int) unitClass.getMethod("getCreationTime", null).invoke(null, null);
+					this.playerCreatingUnit = true;
+				} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
+						| SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println(this.playerUnitCreationTime);
+			}
+		}
+		
+		if(!this.playerAI.getUnitsQueue().isEmpty()){
+			Class unitClass = this.playerAI.getUnitsQueue().get(0);
+			if(this.AICreatingUnit && this.AIUnitCreationTime == 0){
+				this.playerAI.createUnit(unitClass);
+				this.playerAI.getUnitsQueue().remove(0);
+				this.AICreatingUnit = false;
+			}
+			else if(this.AICreatingUnit){
+				this.AIUnitCreationTime-- ;
+			}
+			else{
+				try {
+					this.AIUnitCreationTime = (int) unitClass.getMethod("getCreationTime", null).invoke(null, null);
+					this.AICreatingUnit = true;
+				} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
+						| SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+	}
 	
 	public void checkCollisions(){
 		ArrayList<Collision> cols = new ArrayList<Collision>();

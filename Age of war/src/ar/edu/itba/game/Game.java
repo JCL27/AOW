@@ -84,7 +84,7 @@ public class Game implements ApplicationListener {
 		// TODO Auto-generated method stub
 		Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-	//	WorldManager.getInstance().updateUnitsQueue();
+		WorldManager.getInstance().updateUnitsQueue();
 		
 		WorldManager.getInstance().notifyObservers();
 		
@@ -104,8 +104,8 @@ public class Game implements ApplicationListener {
 		SB.end();
 		
 		b2dr.render(world, cam.combined);
-		oneSecondLoop();
-		AI.getInstance().desitionMaker();
+		//oneSecondLoop();
+		//AI.getInstance().desitionMaker();
 	}
 	
 	public static void saveGame(){

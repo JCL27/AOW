@@ -37,6 +37,27 @@ public class Player implements Serializable{
 		return units;
 	}
 	
+	public void BuyUnit(Class unitClass){
+		Integer unitCost = null;
+		
+		try {
+			unitCost = (Integer)unitClass.getMethod("getCost", Player.class).invoke(null, this);
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException| SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(unitClass.getSimpleName()+ " " + unitCost);
+		try{
+			this.charge(unitCost);
+			this.unitsQueue.add(unitClass);
+		}catch(NotEnoughGoldException e){
+			e.printStackTrace();	
+		}
+		
+	}
+	
+	
 	public void createUnit(Class unitClass){
 		Unit unit = null;
 		try {
@@ -62,10 +83,14 @@ public class Player implements Serializable{
 		}
 		if(unit!=null){
 			this.units.add(unit);
-			//this.unitsQueue.add(unit);
+			//this.unitsQueue.add(unitClass);
+			//this.BuyUnit(unitClass);
 		}
 		//WorldManager.getInstance().getAI().getUnits().add(unit2);
 		//WorldManager.getInstance().getAI().getUnitsQueue().add(unit2);
+		
+		// TODO Auto-generated catch block
+		
 
 	}
 	

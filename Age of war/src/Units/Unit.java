@@ -8,6 +8,7 @@ import ar.edu.itba.game.Attackable;
 import ar.edu.itba.game.CanAttack;
 import ar.edu.itba.game.Element;
 import ar.edu.itba.game.Game;
+import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
@@ -39,7 +40,6 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 	protected transient UnitObserver observer;
 	
 	protected int cooldown;
-	protected int creationTime;
 	protected Element element;
 	
 	protected int bounty;
@@ -148,14 +148,6 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
-	}
-
-	public int getCreationTime() {
-		return creationTime;
-	}
-
-	public void reduceCreationTime() {
-		this.creationTime --;
 	}
 
 	public int getBounty() {

@@ -29,7 +29,6 @@ public class MeleeUnit extends Unit {
 		this.bounty = GameStats.MELEE_UNIT_BOUNTY;
 		this.cost = GameStats.MELEE_UNIT_COST;
 		this.exp = GameStats.MELEE_UNIT_EXP;
-		this.creationTime = GameStats.MELEE_UNIT_CREATION_TIME;
 		
 			if (this.player.equals(WorldManager.getInstance().getPlayer())){
 				this.maxHp = (int) (GameStats.MELEE_UNIT_MAX_HP + Math.sqrt(playerUnitLevel * GameStats.MELEE_UNIT_MAX_HP_UPGRADE_RATE));
@@ -111,5 +110,8 @@ public class MeleeUnit extends Unit {
 	public static void AILevelUp() {
 		AIUnitLevel++;
 		
+	}
+	public static int getCreationTime() {
+		return GameStats.MELEE_UNIT_CREATION_TIME;
 	}
 }
