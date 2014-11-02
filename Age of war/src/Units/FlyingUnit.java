@@ -1,5 +1,6 @@
 package Units;
 
+import exceptions.UnavailableUnitException;
 import ar.edu.itba.game.Attackable;
 import ar.edu.itba.game.Element;
 import ar.edu.itba.game.Game;
@@ -17,9 +18,12 @@ public class FlyingUnit extends Unit{
 	 */
 	private static final long serialVersionUID = -7357772180229981544L;
 	private static Integer playerUnitLevel = 0;
+	private static boolean playerAvailable = true;
 	private static Integer AIUnitLevel = 0;
+	private static boolean AIAvailable = false;
 	
-	public FlyingUnit(Player player){
+	public FlyingUnit(Player player) throws UnavailableUnitException{
+		checkIfAvailable(player);
 		this.player = player;
 		this.objective = null;
 		this.cooldown = 0;
@@ -52,6 +56,15 @@ public class FlyingUnit extends Unit{
 		this.addObserver(this.observer);
 		this.attackFlying = false;
 		WorldManager.getInstance().getElements().add(this.element);
+	}
+	
+	public void checkIfAvailable(Player player) throws UnavailableUnitException{
+		if(player == WorldManager.getInstance().getPlayer()){
+			if(!playerAvailable)
+				throw new UnavailableUnitException();
+		}else if (!AIAvailable){
+			throw new UnavailableUnitException();
+		}
 	}
 	
 	public void attack(Attackable objective){
@@ -93,5 +106,27 @@ public class FlyingUnit extends Unit{
 	public static void setLevels(String[] row){
 		playerUnitLevel = Integer.parseInt(row[0]);
 		AIUnitLevel = Integer.parseInt(row[1]);
+	}
+	
+	public static int getCost(Player player){
+		if(player == WorldManager.getInstance().getplayerAI())
+			return (int) (GameStats.FLYING_UNIT_COST + Math.sqrt(AIUnitLevel * GameStats.FLYING_UNIT_COST_UPGRADE_RATE));
+		return (int) (GameStats.FLYING_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.FLYING_UNIT_COST_UPGRADE_RATE));
+	}
+	
+	public static boolean isPlayerAvailable() {
+		return playerAvailable;
+	}
+
+	public static void setPlayerAvailable(boolean playerAvailable) {
+		FlyingUnit.playerAvailable = playerAvailable;
+	}
+
+	public static boolean isAIAvailable() {
+		return AIAvailable;
+	}
+
+	public static void setAIAvailable(boolean aIAvailable) {
+		AIAvailable = aIAvailable;
 	}
 }

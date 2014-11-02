@@ -1,12 +1,17 @@
 package ar.edu.itba.game;
 
+import java.io.Serializable;
 import java.util.Observable;
 
 import Observers.TowerObserver;
 import Observers.UnitObserver;
 
-public abstract class Tower extends Observable implements CanAttack{
+public abstract class Tower extends Observable implements CanAttack, Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6947500221042518381L;
 	protected Element element;
 	protected int damage;
 	protected int cost;
@@ -17,7 +22,7 @@ public abstract class Tower extends Observable implements CanAttack{
 	protected Attackable objective;
 	protected Player player;
 	protected boolean attackFlying;
-	protected TowerObserver observer;
+	protected transient TowerObserver observer;
 	
 	public void updateAttackObjective(){
 		if (this.objective == null || !WorldManager.getInstance().getElements().contains(this.objective.getElement())){

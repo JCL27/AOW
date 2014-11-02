@@ -14,7 +14,9 @@ public class MeleeUnit extends Unit {
 	 */
 	private static final long serialVersionUID = 6458482342043685784L;
 	private static Integer playerUnitLevel = 0;
-	private static Integer AIUnitLevel = 0;	
+	private static boolean playerAvailable = true;
+	private static Integer AIUnitLevel = 0;
+	private static boolean AIAvailable = true;
 	
 	public MeleeUnit(Player player){
 		this.player = player;
@@ -59,5 +61,27 @@ public class MeleeUnit extends Unit {
 	public static void setLevels(String[] row){
 		playerUnitLevel = Integer.parseInt(row[0]);
 		AIUnitLevel = Integer.parseInt(row[1]);
+	}
+	
+	public static int getCost(Player player){
+		if(player == WorldManager.getInstance().getplayerAI())
+			return (int) (GameStats.MELEE_UNIT_COST + Math.sqrt(AIUnitLevel * GameStats.MELEE_UNIT_COST_UPGRADE_RATE));
+		return (int) (GameStats.MELEE_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.MELEE_UNIT_COST_UPGRADE_RATE));
+	}
+	
+	public static boolean isPlayerAvailable() {
+		return playerAvailable;
+	}
+
+	public static void setPlayerAvailable(boolean playerAvailable) {
+		MeleeUnit.playerAvailable = playerAvailable;
+	}
+
+	public static boolean isAIAvailable() {
+		return AIAvailable;
+	}
+
+	public static void setAIAvailable(boolean aIAvailable) {
+		AIAvailable = aIAvailable;
 	}
 }

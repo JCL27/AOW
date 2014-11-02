@@ -17,8 +17,26 @@ public class AntiaircraftUnit extends Unit{
 	 */
 	private static final long serialVersionUID = 8389088340073951657L;
 	private static Integer playerUnitLevel = 0;
+	private static boolean playerAvailable = true;
 	private static Integer AIUnitLevel = 0;
+	private static boolean AIAvailable = false;
 	
+	public static boolean isPlayerAvailable() {
+		return playerAvailable;
+	}
+
+	public static void setPlayerAvailable(boolean playerAvailable) {
+		AntiaircraftUnit.playerAvailable = playerAvailable;
+	}
+
+	public static boolean isAIAvailable() {
+		return AIAvailable;
+	}
+
+	public static void setAIAvailable(boolean aIAvailable) {
+		AIAvailable = aIAvailable;
+	}
+
 	public AntiaircraftUnit(Player player){
 		this.player = player;
 		this.objective = null;
@@ -107,6 +125,12 @@ public class AntiaircraftUnit extends Unit{
 
 	public static void AILevelUp() {
 		AIUnitLevel++;
+	}
+	
+	public static int getCost(Player player){
+		if(player == WorldManager.getInstance().getplayerAI())
+			return (int) (GameStats.ANTIAIRCRAFT_UNIT_COST + Math.sqrt(AIUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE));
+		return (int) (GameStats.ANTIAIRCRAFT_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE));
 	}
 	
 	public static String[] getLevels(){

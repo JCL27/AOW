@@ -3,6 +3,7 @@ package Upgrades;
 import java.util.ArrayList;
 
 import exceptions.NotEnoughGoldException;
+import exceptions.UnavailableUpgradeException;
 import ar.edu.itba.game.Player;
 
 public abstract class Upgrade {
@@ -11,12 +12,15 @@ public abstract class Upgrade {
 	
 	protected boolean applied;
 	protected boolean available;
+	protected boolean multiUpgradable;
 	protected int cost;
 	
 	public abstract void applyUpgrade(Player player);
 	
-	public void chargeAndApply(Player player){
+	public void chargeAndApply(Player player) throws UnavailableUpgradeException{
 		try{
+			if (this.available == false)
+				throw new UnavailableUpgradeException();
 			charge(player);
 			applyUpgrade(player);
 		}catch(NotEnoughGoldException e){
@@ -38,6 +42,14 @@ public abstract class Upgrade {
 					}
 				}
 			}
+		}
+	}
+	
+	public boolean isAvailable(){
+		if(multiUpgradable){
+			return available;
+		}else{
+			return (available && !applied);
 		}
 	}
 }

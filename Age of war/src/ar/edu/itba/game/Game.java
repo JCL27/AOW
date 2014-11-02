@@ -42,6 +42,7 @@ public class Game implements ApplicationListener {
 	private Box2DDebugRenderer b2dr;
 	private World world;
 	private SpriteBatch SB;
+	private int secondCount = 0;
 	
 	public void create() {
 		// TODO Auto-generated method stub
@@ -93,6 +94,8 @@ public class Game implements ApplicationListener {
 		
 		WorldManager.getInstance().updateAttackObjectives();
 		
+		
+		
 		SB.begin();
 		
 		//SB.draw(elem.getTexture(), (float)elem.getX(),(float) elem.getY(), elem.getScreenWidth(), elem.getScreenHeight(), 0, 0, elem.getWidth(), elem.getHeight(), false, false);
@@ -101,13 +104,14 @@ public class Game implements ApplicationListener {
 		SB.end();
 		
 		b2dr.render(world, cam.combined);
-		
+		oneSecondLoop();
+		AI.getInstance().desitionMaker();
 	}
 	
 	public static void saveGame(){
 		
 		//System.out.println("guarda");
-		
+			
 		   try {
 			   FileOutputStream fileO = new FileOutputStream("WM.ser");
 			   ObjectOutputStream objO = new ObjectOutputStream(fileO);
@@ -188,6 +192,13 @@ public class Game implements ApplicationListener {
 		   WorldManager.getInstance().reAssignObservers();
 	}
 	
+	private void oneSecondLoop(){
+		if(++secondCount>=65){
+			secondCount = 0;
+			WorldManager.getInstance().getPlayer().addGold(10);
+			WorldManager.getInstance().getplayerAI().addGold(10);
+		}
+	}
 	
 	@Override
 	public void resize(int arg0, int arg1) {

@@ -65,9 +65,6 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 		return this.exp;
 	}
 
-	public int getCost() {
-		return this.cost;
-	}
 	public boolean doesFly(){
 		if(this.type == Type.FLYING){
 			return true;

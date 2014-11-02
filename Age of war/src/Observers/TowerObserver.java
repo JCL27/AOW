@@ -11,6 +11,7 @@ public class TowerObserver implements Observer{
 	
 	private Tower tower;
 	private Draws.Drawable draw;
+	
 	public TowerObserver (Tower tower){
 		this.tower = tower;
 		switch(tower.getClass().getSimpleName()){

@@ -16,7 +16,9 @@ public class RangedUnit extends Unit implements Serializable{
 	 */
 	private static final long serialVersionUID = -3399027554023024600L;
 	private static Integer playerUnitLevel = 0;
+	private static boolean playerAvailable = true;
 	private static Integer AIUnitLevel = 0;
+	private static boolean AIAvailable = true;
 	
 	public RangedUnit(Player player){
 		
@@ -71,5 +73,27 @@ public class RangedUnit extends Unit implements Serializable{
 	public static void setLevels(String[] row){
 		playerUnitLevel = Integer.parseInt(row[0]);
 		AIUnitLevel = Integer.parseInt(row[1]);
+	}
+	
+	public static int getCost(Player player){
+		if(player == WorldManager.getInstance().getplayerAI())
+			return (int) (GameStats.RANGED_UNIT_COST + Math.sqrt(AIUnitLevel * GameStats.RANGED_UNIT_COST_UPGRADE_RATE));
+		return (int) (GameStats.RANGED_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.RANGED_UNIT_COST_UPGRADE_RATE));
+	}
+	
+	public static boolean isPlayerAvailable() {
+		return playerAvailable;
+	}
+
+	public static void setPlayerAvailable(boolean playerAvailable) {
+		RangedUnit.playerAvailable = playerAvailable;
+	}
+
+	public static boolean isAIAvailable() {
+		return AIAvailable;
+	}
+
+	public static void setAIAvailable(boolean aIAvailable) {
+		AIAvailable = aIAvailable;
 	}
 }

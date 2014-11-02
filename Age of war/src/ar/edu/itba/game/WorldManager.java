@@ -16,7 +16,7 @@ public class WorldManager implements Serializable{
 	public static int INITIAL_GOLD = 300;
 	
 	private Player player;
-	private Player AI;
+	private Player playerAI;
 	private ArrayList<Element> elements = new ArrayList<Element>();
 	private Element ground;
 	
@@ -24,7 +24,7 @@ public class WorldManager implements Serializable{
 
 	private WorldManager() {
 		player = new Player(Side.LEFT);
-		AI = new Player(Side.RIGHT);
+		playerAI = new Player(Side.RIGHT);
 		ground = new Element(-Game.WIDTH * 10, 0, Game.WIDTH * 21,  Game.GROUND_HEIGHT);
 	}
 	
@@ -38,11 +38,11 @@ public class WorldManager implements Serializable{
 	public void notifyObservers(){
 		for(Unit unit:player.getUnits())
 			unit.notifyObservers();
-		for(Unit unit:AI.getUnits())
+		for(Unit unit:playerAI.getUnits())
 			unit.notifyObservers();
 		for(Projectile pjt:player.getProjectiles())
 			pjt.notifyObservers();
-		for(Projectile pjt:AI.getProjectiles())
+		for(Projectile pjt:playerAI.getProjectiles())
 			pjt.notifyObservers();
 		if (this.player.getTower() != null)
 			player.getTower().notifyObservers();
@@ -64,18 +64,18 @@ public class WorldManager implements Serializable{
 			if(ground.isContained(pjt.getCollisionPoint())){
 				toDispose.add(pjt);
 			}else{
-				for(Unit unit:AI.getUnits()){
+				for(Unit unit:playerAI.getUnits()){
 					if(unit.getElement().isContained(pjt.getCollisionPoint())){
 						cols.add(new Collision(pjt, unit));
 						//System.out.println("Added1");
 					}
 				}
 			}
-			if(AI.getBase().getElement().isContained(pjt.getCollisionPoint())){
-				cols.add(new Collision(pjt, AI.getBase()));
+			if(playerAI.getBase().getElement().isContained(pjt.getCollisionPoint())){
+				cols.add(new Collision(pjt, playerAI.getBase()));
 			}
 		}
-		for(Projectile pjt: AI.getProjectiles()){
+		for(Projectile pjt: playerAI.getProjectiles()){
 			if(ground.isContained(pjt.getCollisionPoint())){
 				toDispose.add(pjt);
 			}else{
@@ -102,24 +102,24 @@ public class WorldManager implements Serializable{
 		for(Unit unit:player.getUnits()){
 			unit.updateAttackObjective();
 		}
-		for(Unit unit:AI.getUnits()){
+		for(Unit unit:playerAI.getUnits()){
 			unit.updateAttackObjective();
 		}
 		if(player.getTower() != null){
 			System.out.println("Updateo Player");
 			player.getTower().updateAttackObjective();
 		}	
-		if(AI.getTower() != null){
-			System.out.println("Updateo AI");
-			AI.getTower().updateAttackObjective();	
+		if(playerAI.getTower() != null){
+			System.out.println("Updateo playerAI");
+			playerAI.getTower().updateAttackObjective();	
 		}	
 	}
-	
+
 	public void disposeProjectile(Projectile pjt){
 		pjt.notifyDelete();
 		this.elements.remove(pjt.getElement());
 		this.player.getProjectiles().remove(pjt);
-		this.AI.getProjectiles().remove(pjt);
+		this.playerAI.getProjectiles().remove(pjt);
 	}
 	
 	public void disposeTower(Tower tower){
@@ -129,8 +129,8 @@ public class WorldManager implements Serializable{
 			this.player.setTower(null);
 		}
 		else{
-			this.AI.setTower(null);
-			this.elements.remove(AI.getTower());
+			this.playerAI.setTower(null);
+			this.elements.remove(playerAI.getTower());
 		}	
 		
 	}
@@ -141,10 +141,10 @@ public class WorldManager implements Serializable{
 		
 		this.elements.remove(thisUnit.getElement());
 		if(thisUnit.getSide()==Side.LEFT){
-			AI.addGold(thisUnit.getGold());
-			AI.addExp(thisUnit.getExp());
+			playerAI.addGold(thisUnit.getGold());
+			playerAI.addExp(thisUnit.getExp());
 			player.getUnits().remove(thisUnit);
-			System.out.println("AI gold is: " + AI.getGold());
+			System.out.println("playerAI gold is: " + playerAI.getGold());
 //			for(Unit unit: player.getUnits())
 //				if (unit.equals(thisUnit))
 //					player.getUnits().iterator().remove();
@@ -152,11 +152,11 @@ public class WorldManager implements Serializable{
 		else{
 			player.addGold(thisUnit.getGold());
 			player.addExp(thisUnit.getExp());
-			AI.getUnits().remove(thisUnit);
+			playerAI.getUnits().remove(thisUnit);
 			System.out.println("player gold is: " + player.getGold());
-//			for(Unit unit: AI.getUnits())
+//			for(Unit unit: playerAI.getUnits())
 //				if (unit.equals(thisUnit))
-//					AI.getUnits().iterator().remove();	
+//					playerAI.getUnits().iterator().remove();	
 		}
 		thisUnit.notifyDelete();
 	}
@@ -165,13 +165,13 @@ public class WorldManager implements Serializable{
 		//System.out.println(attacker.getClass().getSimpleName() + " " + attacker.getSide() + " attack range: " + attacker.getAttackRange());
 		int range = attacker.getAttackRange();
 		if (attacker.getSide() == Side.LEFT){
-			for(Unit unit:AI.getUnits()){
+			for(Unit unit:playerAI.getUnits()){
 				if (((unit.getX() - attacker.getWidth() - attacker.getX()) < range) &&
 						((attacker.canAttackFlying()) || (!unit.doesFly())))
 					return unit;
 			}
-			if (((AI.getBase().getX() - attacker.getWidth() - attacker.getX()) < range)){
-				return AI.getBase();
+			if (((playerAI.getBase().getX() - attacker.getWidth() - attacker.getX()) < range)){
+				return playerAI.getBase();
 			}
 		}
 		else{
@@ -195,7 +195,7 @@ public class WorldManager implements Serializable{
 	public boolean canAdvance(Unit thisUnit){
 	   if (!measureDistance(player, thisUnit, MINDISTANCE))
 		   return false;
-	   if (!measureDistance(AI, thisUnit, MINDISTANCE))
+	   if (!measureDistance(playerAI, thisUnit, MINDISTANCE))
 		   return false;
 	   return true;
    }
@@ -229,7 +229,7 @@ public class WorldManager implements Serializable{
 	public void updateUnitsSpeed(){
 		for(Unit unit:player.getUnits())
 			unit.updateSpeed();
-		for(Unit unit:AI.getUnits())
+		for(Unit unit:playerAI.getUnits())
 			unit.updateSpeed();
 	}
 
@@ -237,8 +237,8 @@ public class WorldManager implements Serializable{
 	   return player;
    }
    
-   public Player getAI(){
-	   return AI;
+   public Player getplayerAI(){
+	   return playerAI;
    }
    
    public ArrayList<Element> getElements(){
@@ -257,7 +257,7 @@ public class WorldManager implements Serializable{
    }
    
    public String toString(){
-	   String str = player.toString() + " " +AI.toString() + " " + elements.toString();
+	   String str = player.toString() + " " +playerAI.toString() + " " + elements.toString();
 	   return str;
    }
    
@@ -265,21 +265,21 @@ public class WorldManager implements Serializable{
 	   for(Unit unit:player.getUnits()){
 		   unit.reAssignObserver();
 	   }
-	   for(Unit unit:AI.getUnits()){
+	   for(Unit unit:playerAI.getUnits()){
 		   unit.reAssignObserver();
 	   }
 	   for(Projectile pjt:player.getProjectiles()){
 		   pjt.reAssignObserver();
 	   }
-	   for(Projectile pjt:AI.getProjectiles()){
+	   for(Projectile pjt:playerAI.getProjectiles()){
 		   pjt.reAssignObserver();
 	   }
 	   player.getBase().reAssignObserver();
-	   AI.getBase().reAssignObserver();
+	   playerAI.getBase().reAssignObserver();
 	   if(player.getTower()!=null)
 		   player.getTower().reAssignObserver();
-	   if(AI.getTower()!=null)
-		   AI.getTower().reAssignObserver();
+	   if(playerAI.getTower()!=null)
+		   playerAI.getTower().reAssignObserver();
 	   
    }
 }

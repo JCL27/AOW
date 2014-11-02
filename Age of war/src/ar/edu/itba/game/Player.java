@@ -37,10 +37,8 @@ public class Player implements Serializable{
 	
 	public void createUnit(Class unitClass){
 		Unit unit = null;
-		Unit unit2 = null;
 		try {
 			unit = (Unit) unitClass.getConstructor(Player.class).newInstance(this);
-			unit2 = (Unit) unitClass.getConstructor(Player.class).newInstance(WorldManager.getInstance().getAI());
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,7 +61,7 @@ public class Player implements Serializable{
 		if(unit!=null){
 			this.units.add(unit);
 		}
-		WorldManager.getInstance().getAI().getUnits().add(unit2);
+
 	}
 	
 	public void CreateTower(Class towerClass){
@@ -71,28 +69,22 @@ public class Player implements Serializable{
 		Tower tower2 = null;
 		try {
 			this.tower = (Tower) towerClass.getConstructor(Player.class).newInstance(this);
-			tower2 = (Tower) towerClass.getConstructor(Player.class).newInstance(WorldManager.getInstance().getAI());
+			tower2 = (Tower) towerClass.getConstructor(Player.class).newInstance(WorldManager.getInstance().getplayerAI());
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		WorldManager.getInstance().getAI().tower = tower2;
+		WorldManager.getInstance().getplayerAI().tower = tower2;
 		
 	}
 	

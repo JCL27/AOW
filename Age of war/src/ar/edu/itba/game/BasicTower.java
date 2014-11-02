@@ -5,6 +5,11 @@ import Observers.TowerObserver;
 public class BasicTower extends Tower {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3984333532731151825L;
+
 	public BasicTower(Player player){
 		this.player = player;
 		this.objective = null;
