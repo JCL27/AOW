@@ -1,14 +1,12 @@
 package Units;
 
 import exceptions.DeadUnitException;
-import exceptions.EndGameException;
 import Observers.UnitObserver;
 import ar.edu.itba.game.Attackable;
 import ar.edu.itba.game.Element;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
-import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
 import ar.edu.itba.game.WorldManager;
  //TODO: ADD UPGRADES
@@ -109,7 +107,6 @@ public class MeleeUnit extends Unit {
 
 	public static void AILevelUp() {
 		AIUnitLevel++;
-		
 	}
 	public static int getCreationTime() {
 		return GameStats.MELEE_UNIT_CREATION_TIME;

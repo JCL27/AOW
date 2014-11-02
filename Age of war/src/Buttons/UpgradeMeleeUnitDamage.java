@@ -2,7 +2,7 @@ package Buttons;
 
 import Draws.BigGreenButtonDraw;
 import Units.MeleeUnit;
-import Upgrades.Upgrades;
+import Upgrades.UnitUpgrade;
 import ar.edu.itba.game.WorldManager;
 
 public class UpgradeMeleeUnitDamage extends Button{
@@ -11,6 +11,6 @@ public class UpgradeMeleeUnitDamage extends Button{
 	}
 	
 	public void Click(){
-		Upgrades.getInstance().applyUpgrade("UnitUpgrade",WorldManager.getInstance().getPlayer(), MeleeUnit.class);
+		WorldManager.getInstance().getPlayer().research(UnitUpgrade.class, MeleeUnit.class);
 	}
 }

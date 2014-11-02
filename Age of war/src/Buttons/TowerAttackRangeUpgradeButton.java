@@ -1,7 +1,7 @@
 package Buttons;
 
 import Draws.BigGreenButtonDraw;
-import Upgrades.Upgrades;
+import Upgrades.TowerAttackRangeUpgrade;
 import ar.edu.itba.game.WorldManager;
 
 public class TowerAttackRangeUpgradeButton extends Button {
@@ -13,7 +13,7 @@ public class TowerAttackRangeUpgradeButton extends Button {
 	
 	@Override
 	public void Click() {
-		Upgrades.getInstance().applyUpgrade("TowerAttackRangeUpgrade", WorldManager.getInstance().getPlayer());
+		WorldManager.getInstance().getPlayer().research(TowerAttackRangeUpgrade.class);
 	}
 
 }

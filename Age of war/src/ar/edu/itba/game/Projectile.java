@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Observable;
 
 import Observers.ProjectileObserver;
-import Observers.UnitObserver;
 
 public class Projectile extends Observable implements Serializable{
 	/**

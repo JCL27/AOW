@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Observable;
 
 import Observers.BaseObserver;
-import Observers.UnitObserver;
 import exceptions.DeadUnitException;
 import exceptions.EndGameException;
 
@@ -42,14 +41,13 @@ public class Base extends Observable implements Attackable, Serializable {
 	//TODO: ADD THROWS ENDGAMEEXCEPTION A LA INTERFAZ
 	@Override
 	public void receiveDamage(int damage) throws DeadUnitException {
-			System.out.println("HP: " + this.HP);
 			this.HP -=damage;
 			if(this.HP <= 0){
 				try {
 					throw new EndGameException();
 				} catch (EndGameException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}	
 		

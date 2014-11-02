@@ -17,7 +17,7 @@ public class AntiaircraftUnit extends Unit{
 	 */
 	private static final long serialVersionUID = 8389088340073951657L;
 	private static Integer playerUnitLevel = 0;
-	private static boolean playerAvailable = true;
+	private static boolean playerAvailable = false;
 	private static Integer AIUnitLevel = 0;
 	private static boolean AIAvailable = false;
 	
@@ -87,14 +87,6 @@ public class AntiaircraftUnit extends Unit{
 				t = (float) ((-velY + Math.sqrt(Math.abs(velY*velY-4*height*Game.GRAVITY/2)))/Game.GRAVITY);
 				velX = - dist / t;
 				
-				//float vel = (float) Math.sqrt((velX*velX+velY*velY));
-				
-				
-				
-			/*	if(this.getSide()==Side.RIGHT)
-					velX = (float)-velY;
-				else
-					velX = (float)velY;*/
 			}else{
 
 				velY = (float) Math.sqrt(Math.abs(this.getElement().getMiddleX() - objective.getElement().getMiddleX()) *

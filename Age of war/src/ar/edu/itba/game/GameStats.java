@@ -10,8 +10,8 @@ public class GameStats {
 		public final static int RANGED_UNIT_ATTACK_RANGE = 300;
 		public final static int RANGED_UNIT_MOVEMENT_SPEED = 4;
 		public final static int RANGED_UNIT_DAMAGE = 80;
-		public final static int RANGED_UNIT_BOUNTY = 300;
-		public final static int RANGED_UNIT_COST = 250;
+		public final static int RANGED_UNIT_BOUNTY = 90;
+		public final static int RANGED_UNIT_COST = 75;
 		public final static int RANGED_UNIT_EXP = 70;
 		public final static int RANGED_UNIT_CREATION_TIME = 50;
 		
@@ -29,13 +29,13 @@ public class GameStats {
 	//Flying Unit
 		public final static Type FLYING_UNIT_TYPE = Type.FLYING;
 		public final static boolean FLYING_UNIT_ATTACK_FLYING = false;
-		public final static int FLYING_UNIT_MAX_HP = 300;
+		public final static int FLYING_UNIT_MAX_HP = 80;
 		public final static float FLYING_UNIT_ATTACK_SPEED = 5.0f;
 		public final static int FLYING_UNIT_ATTACK_RANGE = 300;
 		public final static int FLYING_UNIT_MOVEMENT_SPEED = 4;
 		public final static int FLYING_UNIT_DAMAGE = 80;
 		public final static int FLYING_UNIT_BOUNTY = 300;
-		public final static int FLYING_UNIT_COST = 250;
+		public final static int FLYING_UNIT_COST = 180;
 		public final static int FLYING_UNIT_EXP = 70;
 		public final static int FLYING_UNIT_CREATION_TIME = 100;
 		
@@ -59,7 +59,7 @@ public class GameStats {
 		public final static int ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED = 4;
 		public final static int ANTIAIRCRAFT_UNIT_DAMAGE = 80;
 		public final static int ANTIAIRCRAFT_UNIT_BOUNTY = 300;
-		public final static int ANTIAIRCRAFT_UNIT_COST = 250;
+		public final static int ANTIAIRCRAFT_UNIT_COST = 110;
 		public final static int ANTIAIRCRAFT_UNIT_EXP = 70;
 		public final static int ANTIAIRCRAFT_UNIT_CREATION_TIME = 150;
 		
@@ -67,7 +67,7 @@ public class GameStats {
 		public final static double ANTIAIRCRAFT_UNIT_ATTACK_SPEED_UPGRADE_RATE = 0.1;
 		public final static int ANTIAIRCRAFT_UNIT_ATTACK_RANGE_UPGRADE_RATE = 0;
 		public final static int ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED_UPGRADE_RATE = 1;
-		public final static int ANTIAIRCRAFT_UNIT_DAMAGE_UPGRADE_RATE = 5;
+		public final static int ANTIAIRCRAFT_UNIT_DAMAGE_UPGRADE_RATE = 10;
 		public final static int ANTIAIRCRAFT_UNIT_BOUNTY_UPGRADE_RATE = 10;
 		public final static int ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE = 7;
 		
@@ -84,7 +84,7 @@ public class GameStats {
 		public final static int MELEE_UNIT_MOVEMENT_SPEED = 4;
 		public final static int MELEE_UNIT_DAMAGE = 170;
 		public final static int MELEE_UNIT_BOUNTY = 300;
-		public final static int MELEE_UNIT_COST = 300;
+		public final static int MELEE_UNIT_COST = 95;
 		public final static int MELEE_UNIT_EXP = 70;
 		public final static int MELEE_UNIT_CREATION_TIME = 280;
 		
@@ -120,5 +120,9 @@ public class GameStats {
 		public final static int TOWER_DAMAGE_UPGRADE_COST = 300;
 		public final static int TOWER_ATTACK_SPEED_UPGRADE_COST = 300;
 		public final static int TOWER_ATTACK_RANGE_UPGRADE_COST = 300;
+		public final static int ANTIAIRCRAFT_UNIT_RESEARCH_COST = 90;
+		public final static int FLYING_UNIT_RESEARCH_COST = 130;
 		
+		
+		public final static int INITIAL_GOLD = 400;
 }	

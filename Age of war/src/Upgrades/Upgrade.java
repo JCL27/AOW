@@ -2,7 +2,7 @@ package Upgrades;
 
 import java.util.ArrayList;
 
-import exceptions.NotEnoughGoldException;
+import exceptions.NotEnoughExpException;
 import exceptions.UnavailableUpgradeException;
 import ar.edu.itba.game.Player;
 
@@ -10,7 +10,7 @@ public abstract class Upgrade {
 	protected ArrayList<Upgrade> needs;
 	protected ArrayList<Upgrade> allows;
 	
-	protected boolean applied;
+	protected boolean applied = false;
 	protected boolean available;
 	protected boolean multiUpgradable;
 	protected int cost;
@@ -22,15 +22,12 @@ public abstract class Upgrade {
 		this.player = player;
 	}
 	
-	public void chargeAndApply(Class classType) throws UnavailableUpgradeException{
-		try{
-			if (this.available == false)
-				throw new UnavailableUpgradeException();
-			charge(player);
-			applyUpgrade(classType);
-		}catch(NotEnoughGoldException e){
-			//avisar que no se puede
-		}
+	public void chargeAndApply(Class classType) throws UnavailableUpgradeException, NotEnoughExpException {
+		if (this.isAvailable() == false)
+			throw new UnavailableUpgradeException();
+		useExp();
+		applyUpgrade(classType);
+		this.applied = true;
 	}
 	
 	public void setAvailable(){
@@ -41,8 +38,8 @@ public abstract class Upgrade {
 		this.available = false;
 	}
 	
-	public void charge(Player player) throws NotEnoughGoldException{
-		player.charge(this.cost);
+	public void useExp() throws NotEnoughExpException{
+		this.player.useExp(this.cost);
 	}
 	
 	public void checkNewUpgrades(){

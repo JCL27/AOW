@@ -1,7 +1,7 @@
 package Buttons;
 
 import Draws.BigGreenButtonDraw;
-import Upgrades.Upgrades;
+import Upgrades.TowerAttackSpeedUpgrade;
 import ar.edu.itba.game.WorldManager;
 
 public class TowerAttackSpeedUpgradeButton extends Button {
@@ -12,6 +12,6 @@ public class TowerAttackSpeedUpgradeButton extends Button {
 	
 	@Override
 	public void Click() {
-		Upgrades.getInstance().applyUpgrade("TowerAttackSpeedUpgrade", WorldManager.getInstance().getPlayer());
+		WorldManager.getInstance().getPlayer().research(TowerAttackSpeedUpgrade.class);
 	}
 }

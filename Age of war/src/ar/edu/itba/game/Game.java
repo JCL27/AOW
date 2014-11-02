@@ -197,7 +197,7 @@ public class Game implements ApplicationListener {
 	private void oneSecondLoop(){
 		if(secondCount--<=0){
 			secondCount = (int) (1/Gdx.graphics.getDeltaTime());
-			System.out.println("renders/seg: " + 1/Gdx.graphics.getDeltaTime());
+			//System.out.println("renders/seg: " + 1/Gdx.graphics.getDeltaTime());
 			WorldManager.getInstance().getPlayer().addGold(10);
 			WorldManager.getInstance().getplayerAI().addGold(10);
 		}

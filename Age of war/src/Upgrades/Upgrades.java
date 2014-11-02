@@ -2,8 +2,9 @@ package Upgrades;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Set;
 
+import exceptions.NotEnoughExpException;
+import exceptions.UnavailableUpgradeException;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.WorldManager;
 
@@ -23,9 +24,13 @@ public class Upgrades {
 		this.upgradeListPlayer.put("TowerDamageUpgrade", new TowerDamageUpgrade(player));
 		this.upgradeListPlayerAI.put("TowerDamageUpgrade", new TowerDamageUpgrade(playerAI));
 		this.upgradeListPlayer.put("TowerAttackSpeedUpgrade", new TowerAttackSpeedUpgrade(player));
-		this.upgradeListPlayerAI.put("TowerAttackSpeedUpgrade", new TowerAttackSpeedUpgrade(player));
+		this.upgradeListPlayerAI.put("TowerAttackSpeedUpgrade", new TowerAttackSpeedUpgrade(playerAI));
 		this.upgradeListPlayer.put("TowerAttackRangeUpgrade", new TowerAttackRangeUpgrade(player));
-		this.upgradeListPlayerAI.put("TowerAttackRangeUpgrade", new TowerAttackRangeUpgrade(player));
+		this.upgradeListPlayerAI.put("TowerAttackRangeUpgrade", new TowerAttackRangeUpgrade(playerAI));
+		this.upgradeListPlayer.put("AntiaircraftUnitResearch", new AntiaircraftUnitResearch(player));
+		this.upgradeListPlayerAI.put("AntiaircraftUnitResearch", new AntiaircraftUnitResearch(playerAI));
+		this.upgradeListPlayer.put("FlyingUnitResearch", new FlyingUnitResearch(player));
+		this.upgradeListPlayerAI.put("FlyingUnitResearch", new FlyingUnitResearch(playerAI));
 	}
 	
 	public static Upgrades getInstance() {
@@ -35,12 +40,16 @@ public class Upgrades {
 		return instance;
 	}
 	
-	public void applyUpgrade(String name, Player player){
-		upgradeListPlayer.get(name).applyUpgrade(null);
+	public void applyUpgrade(String name, Player player) throws UnavailableUpgradeException, NotEnoughExpException{
+		this.applyUpgrade(name, player, null);
 	}
 	
-	public void applyUpgrade(String name, Player player, Class classType){
-		upgradeListPlayer.get(name).applyUpgrade(classType);
+	public void applyUpgrade(String name, Player player, Class classType) throws UnavailableUpgradeException, NotEnoughExpException{
+		if(this.player.equals(player)){
+			upgradeListPlayer.get(name).chargeAndApply(classType);
+		}else{
+			upgradeListPlayerAI.get(name).chargeAndApply(classType);
+		}
 	}
 	
 	public ArrayList<Upgrade> getAIAvailableUpgrades(){
@@ -51,6 +60,13 @@ public class Upgrades {
 		}
 		return availables;
 	}
+	
+	public boolean isAvailable(Class upgradeClass, Player player){
+		if(this.player.equals(player))
+			return this.upgradeListPlayer.get(upgradeClass.getSimpleName()).isAvailable();
+		else
+			return this.upgradeListPlayerAI.get(upgradeClass.getSimpleName()).isAvailable();
+	}	
 	
 	public void setAvailable(String name, Player player){
 		if(this.player.equals(player))

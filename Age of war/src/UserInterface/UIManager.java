@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class UIManager {
 	
 	private static UIManager instance = null;
-	private static int buttonIndex = 0;
 	
 	private final int BUTTON_HEIGHT = 150;
 	private final int BUTTON_INITIAL_X = 200;
@@ -108,8 +107,6 @@ public class UIManager {
 	
 	public void drawTextures(){
 		for(Drawable draw:this.drawables){
-			if (draw.getClass().getSimpleName().equals("BasicTowerDraw")){
-			}
 			SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
 					draw.getScreenHeight(), 0, 0, draw.getSpriteWidth(), draw.getSpriteHeight(), false, false);
 		}

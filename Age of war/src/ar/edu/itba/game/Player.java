@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import exceptions.NotEnoughExpException;
 import exceptions.NotEnoughGoldException;
+import exceptions.UnavailableUpgradeException;
 import Units.Unit;
 
 public class Player implements Serializable{
@@ -21,7 +23,7 @@ public class Player implements Serializable{
 	private ArrayList<Class> unitsQueue;
 	
 	public Player (Side side){
-		this.gold = WorldManager.INITIAL_GOLD;
+		this.gold = GameStats.INITIAL_GOLD;
 		this.experience = 0;
 		this.base = new Base(side);
 		this.units = new ArrayList<Unit>();
@@ -37,24 +39,51 @@ public class Player implements Serializable{
 		return units;
 	}
 	
-	public void buyUnit(Class unitClass){
-		Integer unitCost = null;
+	public void research(Class upgradeType){
+		this.research(upgradeType, null);
+	}
+	
+	public void research(Class upgradeType, Class unitType){
 		
 		try {
-			unitCost = (Integer)unitClass.getMethod("getCost", Player.class).invoke(null, this);
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException| SecurityException e) {
+			Upgrades.Upgrades.getInstance().applyUpgrade(upgradeType.getSimpleName(), this, unitType);
+		} catch (UnavailableUpgradeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotEnoughExpException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(unitClass.getSimpleName()+ " " + unitCost);
-		try{
-			this.charge(unitCost);
-			this.unitsQueue.add(unitClass);
-		}catch(NotEnoughGoldException e){
-			e.printStackTrace();	
+	}
+	
+	public void buyUnit(Class unitClass){
+		Integer unitCost = null;
+		boolean available = false;
+		try {
+			if(this.equals(WorldManager.getInstance().getPlayer()))
+				available = (boolean) unitClass.getMethod("isPlayerAvailable").invoke(unitClass);
+			else
+				available = (boolean) unitClass.getMethod("isAIAvailable").invoke(unitClass);
+		} catch (IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException | NoSuchMethodException
+				| SecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		System.out.println("gold: " + this.gold);
+		if(available){
+			try {
+				unitCost = (Integer)unitClass.getMethod("getCost", Player.class).invoke(null, this);
+			} catch (IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException| SecurityException e) {
+				e.printStackTrace();
+			}
+			try{
+				this.charge(unitCost);
+				this.unitsQueue.add(unitClass);
+			}catch(NotEnoughGoldException e){
+				e.printStackTrace();	
+			}
+		}
 	}
 	
 	
@@ -96,10 +125,8 @@ public class Player implements Serializable{
 	
 	public void buyTower(){
 		try {
-			System.out.println("ORO ANTES: " + this.gold);
 			this.charge(GameStats.TOWER_COST);
 			this.createTower();
-			System.out.println("ORO DESPUES: " + this.gold);
 		} catch (NotEnoughGoldException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,6 +144,14 @@ public class Player implements Serializable{
 		if(this.gold < gold)
 			throw new NotEnoughGoldException();
 		this.gold -= gold;
+	}
+	
+	public void useExp(int exp) throws NotEnoughExpException{
+		if (this.experience < exp){
+			System.out.println("Player: playerExp: " + this.experience + " cost: " + exp);
+			throw new NotEnoughExpException();
+		}
+		this.experience -= exp;
 	}
 	
 	public void addExp(int exp){

@@ -14,7 +14,6 @@ public class WorldManager implements Serializable{
 	 */
 	private static final long serialVersionUID = -4035477768723084005L;
 	public static double MINDISTANCE = 25;
-	public static int INITIAL_GOLD = 2000;
 	private static boolean playerCreatingUnit = false;
 	private static boolean AICreatingUnit = false;
 	private static int playerUnitCreationTime = 0;
@@ -165,11 +164,11 @@ public class WorldManager implements Serializable{
 			unit.updateAttackObjective();
 		}
 		if(player.getTower() != null){
-			System.out.println("Updateo Player");
+			//System.out.println("Updateo Player");
 			player.getTower().updateAttackObjective();
 		}	
 		if(playerAI.getTower() != null){
-			System.out.println("Updateo playerAI");
+			//System.out.println("Updateo playerAI");
 			playerAI.getTower().updateAttackObjective();	
 		}	
 	}

@@ -16,6 +16,16 @@ public class Tower extends Observable implements CanAttack, Serializable{
 	private int cooldown;
 	private Side side;
 	private float attackSpeed;
+	public boolean isUpgradedDamage() {
+		return upgradedDamage;
+	}
+	public boolean isUpgradedAttackRange() {
+		return upgradedAttackRange;
+	}
+	public boolean isUpgradedAttackSpeed() {
+		return upgradedAttackSpeed;
+	}
+
 	private int attackRange;
 	private Attackable objective;
 	private Player player;
@@ -34,7 +44,7 @@ public class Tower extends Observable implements CanAttack, Serializable{
 		if(this.objective != null){
 			this.attack(this.objective);
 		}
-		System.out.println("Torre: " + this.player + " Objetivo: " + this.objective);
+		//System.out.println("Torre: " + this.player + " Objetivo: " + this.objective);
 	}
 	public void notifyObservers(){
 		this.observer.update(null, null);
@@ -110,7 +120,7 @@ public class Tower extends Observable implements CanAttack, Serializable{
 		}
 		else{
 			this.cooldown--;
-			System.out.println("Cooldown " + this.cooldown);
+
 		}
 		
 	}

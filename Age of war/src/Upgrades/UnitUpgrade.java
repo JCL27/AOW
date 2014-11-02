@@ -2,7 +2,7 @@ package Upgrades;
 
 import java.lang.reflect.InvocationTargetException;
 
-import Units.MeleeUnit;
+import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.WorldManager;
 
@@ -10,6 +10,8 @@ public class UnitUpgrade extends Upgrade {
 	
 	public UnitUpgrade(Player player) {
 		super(player);
+		this.available = true;
+		this.cost = GameStats.UNIT_UPGRADE_COST;
 	}
 
 	@Override

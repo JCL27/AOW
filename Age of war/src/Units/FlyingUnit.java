@@ -18,7 +18,7 @@ public class FlyingUnit extends Unit{
 	 */
 	private static final long serialVersionUID = -7357772180229981544L;
 	private static Integer playerUnitLevel = 0;
-	private static boolean playerAvailable = true;
+	private static boolean playerAvailable = false;
 	private static Integer AIUnitLevel = 0;
 	private static boolean AIAvailable = false;
 	
