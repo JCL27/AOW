@@ -1,4 +1,6 @@
 .metadata/*
 .metadata/.*
+.metadata/.plugins/org.eclipse.core.resources/.projects/Age of war/.indexes/e4/31/b6/aa/f2/history.index
+.metadata/version.ini
 *.class
 Age of war/bin/*
