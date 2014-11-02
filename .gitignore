@@ -2,3 +2,8 @@
 .metadata/.*
 *.class
 Age of war/bin/*
+Age of war/.settings/*
+it
+.classpath
+*.ser
+*.csv
