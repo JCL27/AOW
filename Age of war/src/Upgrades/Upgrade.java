@@ -14,18 +14,31 @@ public abstract class Upgrade {
 	protected boolean available;
 	protected boolean multiUpgradable;
 	protected int cost;
+	protected Player player;
 	
-	public abstract void applyUpgrade(Player player);
+	public abstract void applyUpgrade(Class classType);
 	
-	public void chargeAndApply(Player player) throws UnavailableUpgradeException{
+	public Upgrade(Player player){
+		this.player = player;
+	}
+	
+	public void chargeAndApply(Class classType) throws UnavailableUpgradeException{
 		try{
 			if (this.available == false)
 				throw new UnavailableUpgradeException();
 			charge(player);
-			applyUpgrade(player);
+			applyUpgrade(classType);
 		}catch(NotEnoughGoldException e){
 			//avisar que no se puede
 		}
+	}
+	
+	public void setAvailable(){
+		this.available = true;
+	}
+	
+	public void setUnavailable(){
+		this.available = false;
 	}
 	
 	public void charge(Player player) throws NotEnoughGoldException{
@@ -51,5 +64,9 @@ public abstract class Upgrade {
 		}else{
 			return (available && !applied);
 		}
+	}
+	
+	public int getCost(){
+		return this.cost;
 	}
 }

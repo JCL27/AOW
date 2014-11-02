@@ -14,11 +14,8 @@ public class TowerObserver implements Observer{
 	
 	public TowerObserver (Tower tower){
 		this.tower = tower;
-		switch(tower.getClass().getSimpleName()){
-		case("BasicTower"):
-			this.draw = new BasicTowerDraw(tower.getX(), tower.getY(), tower.getHeight(), tower.getWidth(), tower.getPlayer());
-			break;
-		}
+		System.out.println(tower.getHeight() + " " + tower.getWidth());
+		this.draw = new BasicTowerDraw(tower.getX(), tower.getY(), tower.getHeight(), tower.getWidth(), tower.getPlayer());
 		UserInterface.UIManager.getInstance().getDraws().add(this.draw);
 		
 	}

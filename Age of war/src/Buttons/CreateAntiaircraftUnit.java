@@ -15,6 +15,6 @@ public class CreateAntiaircraftUnit extends Button {
 	public void Click() {
 		// TODO Auto-generated method stub
 		//WorldManager.getInstance().getPlayer().createUnit(AntiaircraftUnit.class);
-		WorldManager.getInstance().getPlayer().BuyUnit(AntiaircraftUnit.class);
+		WorldManager.getInstance().getPlayer().buyUnit(AntiaircraftUnit.class);
 	}
 }

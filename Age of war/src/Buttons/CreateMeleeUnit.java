@@ -11,9 +11,10 @@ public class CreateMeleeUnit extends Button{
 		}
 	@Override
 	public void Click() {
-		// TODO Auto-generated method stub
+
 		//WorldManager.getInstance().getPlayer().createUnit(MeleeUnit.class);
-		WorldManager.getInstance().getPlayer().BuyUnit(MeleeUnit.class);
-		int foo;
+		WorldManager.getInstance().getPlayer().buyUnit(MeleeUnit.class);
+
+
 	}
 }

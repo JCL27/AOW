@@ -3,26 +3,29 @@ package ar.edu.itba.game;
 import java.io.Serializable;
 import java.util.Observable;
 
+import exceptions.AlreadyAppliedUpgradeException;
 import Observers.TowerObserver;
-import Observers.UnitObserver;
 
-public abstract class Tower extends Observable implements CanAttack, Serializable{
+public class Tower extends Observable implements CanAttack, Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6947500221042518381L;
-	protected Element element;
-	protected int damage;
-	protected int cost;
-	protected int cooldown;
-	protected Side side;
-	protected float attackSpeed;
-	protected int attackRange;
-	protected Attackable objective;
-	protected Player player;
-	protected boolean attackFlying;
-	protected transient TowerObserver observer;
+	
+	private Element element;
+	private int damage;
+	private int cost;
+	private int cooldown;
+	private Side side;
+	private float attackSpeed;
+	private int attackRange;
+	private Attackable objective;
+	private Player player;
+	private boolean attackFlying;
+	private transient TowerObserver observer;
+	
+	private boolean upgradedDamage = false;
+	private boolean upgradedAttackRange = false;
+	private boolean upgradedAttackSpeed = false;
+	
 	
 	public void updateAttackObjective(){
 		if (this.objective == null || !WorldManager.getInstance().getElements().contains(this.objective.getElement())){
@@ -45,14 +48,40 @@ public abstract class Tower extends Observable implements CanAttack, Serializabl
 	public Element getElement(){
 		return this.element;
 	}
+	/////////////////////
 
+	public Tower(Player player){
+		this.player = player;
+		this.objective = null;
+		this.attackFlying = true;
+		this.cooldown = 0;
+		
+		this.damage = GameStats.TOWER_DAMAGE;
+		this.cost = GameStats.TOWER_COST;
+		this.attackSpeed = GameStats.TOWER_ATTACK_SPEED;
+		this.attackRange = GameStats.TOWER_ATTACK_RANGE;
+		
+		if (this.player.equals(WorldManager.getInstance().getPlayer())){
+			this.side = Side.LEFT;
+			this.element = new Element(50, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, 100, 100);
+		} 
+		else{
+			this.side = Side.RIGHT;
+			this.element = new Element(1000, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, 100, 100);
+		}
+		
+		this.observer = new TowerObserver(this);
+		this.addObserver(this.observer);
+		
+		Upgrades.Upgrades.getInstance().setAvailable("TowerDamageUpgrade", this.player);
+		Upgrades.Upgrades.getInstance().setAvailable("TowerAttackSpeedUpgrade", this.player);
+		Upgrades.Upgrades.getInstance().setAvailable("TowerAttackRangeUpgrade", this.player);
+	}
+	///////////////////////////
 
 	@Override
 	public void attack(Attackable objective) {
-		// TODO Auto-generated method stub
-		System.out.println("Entre a attacking");
 		if(this.cooldown == 0){
-			System.out.println("Esta sin cooldown");
 			float velX = 0;
 			float velY = 0;
 			float Yf = objective.getElement().getMiddleY();
@@ -60,40 +89,21 @@ public abstract class Tower extends Observable implements CanAttack, Serializabl
 			float X = this.getElement().getMiddleX();
 			float Y = this.getElement().getMiddleY();
 			if(objective.doesFly()){
-				System.out.println("Objetivo es vuela");
 				float t = 0;
 				float dist = Xf - X;
 				float height = Yf - Y;
 				velY = (float) Math.sqrt(2 * Game.GRAVITY * (Yf - Y));
 				t = (float) ((-velY + Math.sqrt(Math.abs(velY*velY-4*height*Game.GRAVITY/2)))/Game.GRAVITY);
 				velX = - dist / t;
-				System.out.println(velY + " " + velX );
-				//float vel = (float) Math.sqrt((velX*velX+velY*velY));
-				
-				
 			}else{
-				System.out.println("Objetivo es terrestre");
 				velY = 0;
-				velX = (float) Math.sqrt(-Game.GRAVITY * (Xf - X) * (Xf - X) / ((Yf - Y)*2)); 
-			//System.out.println("velocidad " + velX);			
+				velX = (float) Math.sqrt(-Game.GRAVITY * (Xf - X) * (Xf - X) / ((Yf - Y)*2)); 		
 			if(this.getSide()==Side.RIGHT)
 				velX = -velX;
-			
-			/*Da new: this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(),
-					this.getElement().getY()-30, velX , (float)velY , true, this.damage));*/
-				
-			/* Original: velY = (float) Math.sqrt(Math.abs(this.getElement().getMiddleX() - objective.getElement().getMiddleX()) *
-						Game.GRAVITY / 2);
-				if(this.getSide()==Side.RIGHT)
-					velX = (float)-velY;
-				else
-					velX = (float)velY;*/
 			}
-			System.out.println("AntiairCraft pjt vel:" + velX + " " + velY);
+			
 			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
-			
-			//System.out.println("attack!");
 
 			this.cooldown = (int)(1000/this.attackSpeed);		
 
@@ -105,7 +115,30 @@ public abstract class Tower extends Observable implements CanAttack, Serializabl
 		
 	}
 
-
+	public void upgradeDamage() throws AlreadyAppliedUpgradeException{
+		if(!this.upgradedDamage){
+			this.upgradedDamage = true;
+			this.damage += GameStats.TOWER_DAMAGE_BONUS;
+		}else
+			throw new AlreadyAppliedUpgradeException();
+	}
+	
+	public void upgradeAttackRange() throws AlreadyAppliedUpgradeException{
+		if(!this.upgradedAttackRange){
+			this.upgradedAttackRange = true;
+			this.attackRange += GameStats.TOWER_ATTACK_RANGE_BONUS;
+		}else
+			throw new AlreadyAppliedUpgradeException();
+	}
+	
+	public void upgradeAttackSpeed() throws AlreadyAppliedUpgradeException{
+		if(!this.upgradedAttackSpeed){
+			this.upgradedAttackSpeed = true;
+			this.attackSpeed += GameStats.TOWER_ATTACK_SPEED_BONUS;
+		}else
+			throw new AlreadyAppliedUpgradeException();
+	}
+	
 	@Override
 	public int getAttackRange() {
 		return this.attackRange;

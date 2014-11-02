@@ -16,7 +16,7 @@ public class CreateRangedUnit extends Button {
 		// TODO Auto-generated method stub
 		System.out.println("creo ranged");
 		//WorldManager.getInstance().getPlayer().createUnit(RangedUnit.class);
-		WorldManager.getInstance().getPlayer().BuyUnit(RangedUnit.class);
+		WorldManager.getInstance().getPlayer().buyUnit(RangedUnit.class);
 	}
 
 }

@@ -104,7 +104,7 @@ public class MeleeUnit extends Unit {
 	}
 	
 	public static void playerLevelUp() {
-		playerUnitLevel++;	
+		playerUnitLevel++;
 	}
 
 	public static void AILevelUp() {

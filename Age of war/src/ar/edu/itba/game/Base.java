@@ -14,7 +14,7 @@ public class Base extends Observable implements Attackable, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -4883608043561346759L;
-	static int MAX_HIT_POINTS = 1000;
+	static int MAX_HIT_POINTS = 5000;
 	static int HEIGHT = 282;
 	static int WIDTH = 180;
 	

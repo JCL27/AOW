@@ -37,7 +37,7 @@ public class Player implements Serializable{
 		return units;
 	}
 	
-	public void BuyUnit(Class unitClass){
+	public void buyUnit(Class unitClass){
 		Integer unitCost = null;
 		
 		try {
@@ -94,28 +94,8 @@ public class Player implements Serializable{
 
 	}
 	
-	public void CreateTower(Class towerClass){
-		this.tower = null;
-		Tower tower2 = null;
-		try {
-			this.tower = (Tower) towerClass.getConstructor(Player.class).newInstance(this);
-			tower2 = (Tower) towerClass.getConstructor(Player.class).newInstance(WorldManager.getInstance().getplayerAI());
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		}
-		
-		WorldManager.getInstance().getplayerAI().tower = tower2;
-		
+	public void CreateTower(){
+		this.tower = new Tower(this);
 	}
 	
 	public void addGold(int gold){
@@ -132,7 +112,6 @@ public class Player implements Serializable{
 		this.experience += exp;
 	}
 	
-	
 	public ArrayList<Class> getUnitsQueue() {
 		return unitsQueue;
 	}
@@ -148,24 +127,28 @@ public class Player implements Serializable{
 		return this.tower;
 	}
 	
-	public void setTower(Tower tower) {
-		this.tower = tower;
-	}
 	public void sellTower(){
-		if(this.tower != null)
+		if(this.tower != null){
+			Upgrades.Upgrades.getInstance().setUnavailable("TowerDamageUpgrade", this);
+			Upgrades.Upgrades.getInstance().setUnavailable("TowerAttackSpeedUpgrade", this);
+			Upgrades.Upgrades.getInstance().setUnavailable("TowerAttackRangeUpgrade", this);
 			this.tower.Sell();
-		
+		}	
 	}
 
 	public Base getBase(){
 		return this.base;
 	}
-	//	public Unit(int maxHp, double attackSpeed, int attackRange, int movementSpeed, int damage, Element element, Direction dir){
-
+	
+	
 	@Override
 	public String toString() {
 		return "Player [gold=" + gold + ", experience=" + experience
 				+ ", units=" + units + ", projectiles=" + projectiles + "]";
+	}
+
+	public void disposeTower() {
+		this.tower = null;
 	}
 	
 	

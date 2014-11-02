@@ -14,7 +14,7 @@ public class WorldManager implements Serializable{
 	 */
 	private static final long serialVersionUID = -4035477768723084005L;
 	public static double MINDISTANCE = 25;
-	public static int INITIAL_GOLD = 300;
+	public static int INITIAL_GOLD = 2000;
 	private static boolean playerCreatingUnit = false;
 	private static boolean AICreatingUnit = false;
 	private static int playerUnitCreationTime = 0;
@@ -207,10 +207,10 @@ public class WorldManager implements Serializable{
 		tower.notifyDelete();
 		if (tower.getPlayer() == this.player){
 			this.elements.remove(player.getTower());
-			this.player.setTower(null);
+			this.player.disposeTower();
 		}
 		else{
-			this.playerAI.setTower(null);
+			this.playerAI.disposeTower();
 			this.elements.remove(playerAI.getTower());
 		}	
 		

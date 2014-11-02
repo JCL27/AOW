@@ -104,8 +104,10 @@ public class Game implements ApplicationListener {
 		SB.end();
 		
 		b2dr.render(world, cam.combined);
-		//oneSecondLoop();
-		//AI.getInstance().desitionMaker();
+		AI.getInstance().desitionMaker();
+
+		oneSecondLoop();
+
 	}
 	
 	public static void saveGame(){
