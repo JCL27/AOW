@@ -4,3 +4,8 @@
 .metadata/version.ini
 *.class
 Age of war/bin/*
+Age of war/.settings/*
+it
+.classpath
+*.ser
+*.csv
