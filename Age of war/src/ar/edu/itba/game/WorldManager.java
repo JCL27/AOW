@@ -61,46 +61,50 @@ public class WorldManager implements Serializable{
 				elem.setVelY(elem.getVelY()- Game.GRAVITY);
 		}
 	}
-	public void updateUnitsQueue(){
 
+	
+	public void updateUnitsQueue(){
+	
 		if(!this.player.getUnitsQueue().isEmpty()){
 			//System.out.println("Hay algo en cola");
 			Class unitClass = this.player.getUnitsQueue().get(0);
-			if(this.playerCreatingUnit && this.playerUnitCreationTime == 0){
+			if(playerCreatingUnit && playerUnitCreationTime == 0){
 				this.player.getUnitsQueue().remove(0);
 				this.player.createUnit(unitClass);
-				this.playerCreatingUnit = false;
+				playerCreatingUnit = false;
 			}
-			else if(this.playerCreatingUnit){
-				this.playerUnitCreationTime-- ;
+			else if(playerCreatingUnit){
+				playerUnitCreationTime-- ;
 			}
 			else{
 				try {
-					this.playerUnitCreationTime = (int) unitClass.getMethod("getCreationTime", null).invoke(null, null);
-					this.playerCreatingUnit = true;
+					//playerUnitCreationTime = (int) unitClass.getMethod("getCreationTime", null).invoke(null, null);
+					playerUnitCreationTime = (int) unitClass.getMethod("getCreationTime").invoke(null);
+					playerCreatingUnit = true;
 				} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
 						| SecurityException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println(this.playerUnitCreationTime);
+				System.out.println(playerUnitCreationTime);
 			}
 		}
 		
 		if(!this.playerAI.getUnitsQueue().isEmpty()){
 			Class unitClass = this.playerAI.getUnitsQueue().get(0);
-			if(this.AICreatingUnit && this.AIUnitCreationTime == 0){
-				this.playerAI.createUnit(unitClass);
-				this.playerAI.getUnitsQueue().remove(0);
-				this.AICreatingUnit = false;
+			if(AICreatingUnit && AIUnitCreationTime == 0){
+				playerAI.createUnit(unitClass);
+				playerAI.getUnitsQueue().remove(0);
+				AICreatingUnit = false;
 			}
-			else if(this.AICreatingUnit){
-				this.AIUnitCreationTime-- ;
+			else if(AICreatingUnit){
+				AIUnitCreationTime-- ;
 			}
 			else{
 				try {
-					this.AIUnitCreationTime = (int) unitClass.getMethod("getCreationTime", null).invoke(null, null);
-					this.AICreatingUnit = true;
+					//AIUnitCreationTime = (int) unitClass.getMethod("getCreationTime", null).invoke(null, null);
+					AIUnitCreationTime = (int) unitClass.getMethod("getCreationTime").invoke(null);
+					AICreatingUnit = true;
 				} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
 						| SecurityException e) {
 					// TODO Auto-generated catch block

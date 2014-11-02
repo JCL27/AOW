@@ -94,7 +94,18 @@ public class Player implements Serializable{
 
 	}
 	
-	public void CreateTower(){
+	public void buyTower(){
+		try {
+			System.out.println("ORO ANTES: " + this.gold);
+			this.charge(GameStats.TOWER_COST);
+			this.createTower();
+			System.out.println("ORO DESPUES: " + this.gold);
+		} catch (NotEnoughGoldException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void createTower(){
 		this.tower = new Tower(this);
 	}
 	

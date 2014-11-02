@@ -104,8 +104,7 @@ public class GameStats {
 		public final static float TOWER_ATTACK_SPEED = 7.0f;
 		public final static int TOWER_ATTACK_RANGE = 100;
 		public final static int TOWER_DAMAGE = 350;
-		public final static int TOWER_COST = 250;
-		public final static int TOWER_UNIT_CREATION_TIME = 200;
+		public final static int TOWER_COST = 500;
 		
 		public final static float TOWER_ATTACK_SPEED_BONUS = 9.0f;
 		public final static int TOWER_ATTACK_RANGE_BONUS = 80;

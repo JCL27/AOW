@@ -12,7 +12,7 @@ public class CreateBasicTower extends Button {
 
 	@Override
 	public void Click() {
-		WorldManager.getInstance().getPlayer().CreateTower();
+		WorldManager.getInstance().getPlayer().buyTower();
 		//WorldManager.getInstance().getplayerAI().CreateTower();
 	}
 	
