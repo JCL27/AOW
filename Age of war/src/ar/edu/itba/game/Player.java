@@ -14,8 +14,8 @@ public class Player implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -3361130881364588943L;
-	private int gold;
-	private int experience;
+	private Integer gold;
+	private Integer experience;
 	private ArrayList<Unit> units;
 	private ArrayList<Projectile> projectiles;
 	private Tower tower;
@@ -167,11 +167,11 @@ public class Player implements Serializable{
 		return unitsQueue;
 	}
 
-	public int getGold(){
+	public Integer getGold(){
 		return this.gold;
 	}
 	
-	public int getExp(){
+	public Integer getExp(){
 		return this.experience;
 	}
 	public Tower getTower(){

@@ -7,9 +7,21 @@ import Buttons.Button;
 import Draws.Drawable;
 import Draws.GrassDraw;
 import Draws.GroundDraw;
+import Draws.Textures;
 import ar.edu.itba.game.Game;
+import ar.edu.itba.game.GameStats;
+import ar.edu.itba.game.WorldManager;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+//import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+
 
 public class UIManager {
 	
@@ -23,6 +35,12 @@ public class UIManager {
 	private ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private Stack<GameUIState> State = new Stack<GameUIState>();
 	
+	BitmapFont font;
+	LabelStyle style;
+	NinePatch labelBackground;
+	Skin labelSkin;
+	Label goldLabel;
+	Label xpLabel;
 	
 	public static UIManager getInstance() {
 	      if(instance == null) {
@@ -38,6 +56,21 @@ public class UIManager {
 	public void initializeDraws(){
 		drawables.add(new GroundDraw(0,0));
 		drawables.add(new GrassDraw(270f , Game.GROUND_HEIGHT - 10, 50, 50));
+		
+		font = new BitmapFont(false);
+		style = new LabelStyle(font, Color.MAGENTA);
+		labelBackground = new NinePatch(Textures.GROUND, 10, 100, 10, 10);
+		labelSkin = new Skin();
+		labelSkin.add("background", labelBackground);
+		style.background = labelSkin.getDrawable("background");
+		
+		goldLabel = new Label("Gold: ", style);
+        xpLabel = new Label("Experience: ", style);
+		goldLabel.setPosition(15, 750);
+		xpLabel.setPosition(15, 700);
+		
+		
+		
 		State.add(State.push(GameUIState.DEFAULT));
 		this.updateButtons();
 	}
@@ -110,6 +143,11 @@ public class UIManager {
 			SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
 					draw.getScreenHeight(), 0, 0, draw.getSpriteWidth(), draw.getSpriteHeight(), false, false);
 		}
+		goldLabel.setText("Gold: " + WorldManager.getInstance().getPlayer().getGold().toString());
+		goldLabel.draw(SB, 1);
+		//font.draw(SB, "COBO", 200, 500);
+		xpLabel.setText("XP: " + WorldManager.getInstance().getPlayer().getExp().toString());
+		xpLabel.draw(SB, 1);
 	}
 	
 	public void drawButtons(){
