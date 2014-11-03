@@ -67,9 +67,7 @@ public class AI {
 				}	
 				break;
 			case(6):
-				System.out.println("AI: intento");
 				if(AntiaircraftUnit.isAIAvailable()){
-					System.out.println("AI: pudo");
 					if(player.getGold()>AntiaircraftUnit.getCost(player)){
 						player.buyUnit(AntiaircraftUnit.class);
 						objectiveAccomplished = true;
@@ -140,12 +138,8 @@ public class AI {
 			break;
 		case(4):
 			if(!AntiaircraftUnit.isAIAvailable()){
-				System.out.println("AI: researcheo1 " + this.player.getExp());
 				if(Upgrades.Upgrades.getInstance().isAvailable(AntiaircraftUnitResearch.class, this.player)){
-					System.out.println("AI: researcheo2 " + this.player.getExp());
 					if(player.getExp()> GameStats.ANTIAIRCRAFT_UNIT_RESEARCH_COST){
-						System.out.println("AI: researcheo3 " + this.player.getExp());
-						System.out.println("AI: playerExp: " + this.player.getExp() + " cost: " + GameStats.ANTIAIRCRAFT_UNIT_RESEARCH_COST);
 						player.research(AntiaircraftUnitResearch.class);
 						upgradeResearched = true;
 					}

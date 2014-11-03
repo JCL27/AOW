@@ -32,15 +32,17 @@ public class UIManager {
 	private final int BUTTON_SEPARATION = 150;
 	private SpriteBatch SB;
 	private ArrayList<Button> buttons = new ArrayList<Button>();
+	private ArrayList<DrawableObject> DOs = new ArrayList<DrawableObject>();
 	private ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private Stack<GameUIState> State = new Stack<GameUIState>();
 	
-	BitmapFont font;
-	LabelStyle style;
-	NinePatch labelBackground;
-	Skin labelSkin;
-	Label goldLabel;
-	Label xpLabel;
+	private BitmapFont font;
+	private LabelStyle style;
+	private NinePatch labelBackground;
+	private Skin labelSkin;
+	private Label goldLabel;
+	private Label xpLabel;
+
 	
 	public static UIManager getInstance() {
 	      if(instance == null) {
@@ -49,6 +51,14 @@ public class UIManager {
 	      return instance;
 	   }
 	
+	public ArrayList<DrawableObject> getDOs() {
+		return DOs;
+	}
+
+	public void setDOs(ArrayList<DrawableObject> dOs) {
+		DOs = dOs;
+	}
+
 	public UIManager(){
 		this.initializeDraws();
 	}
@@ -140,14 +150,21 @@ public class UIManager {
 	
 	public void drawTextures(){
 		for(Drawable draw:this.drawables){
-			SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
-					draw.getScreenHeight(), 0, 0, draw.getSpriteWidth(), draw.getSpriteHeight(), false, false);
+			this.drawTexture(draw);
 		}
 		goldLabel.setText("Gold: " + WorldManager.getInstance().getPlayer().getGold().toString());
 		goldLabel.draw(SB, 1);
 		//font.draw(SB, "COBO", 200, 500);
 		xpLabel.setText("XP: " + WorldManager.getInstance().getPlayer().getExp().toString());
 		xpLabel.draw(SB, 1);
+	}
+	
+	private void drawTexture(Drawable draw){
+		
+		//System.out.println(draw.getClass().getSimpleName() + " " + draw.getxPos() + " " + draw.getScreenHeight() + " " + draw.getSpriteHeight());
+		
+		SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
+				draw.getScreenHeight(), 0, 0, draw.getSpriteWidth(), draw.getSpriteHeight(), false, false);
 	}
 	
 	public void drawButtons(){
@@ -157,20 +174,19 @@ public class UIManager {
 	}
 	
 	private void drawButton(Button button){
-/*
-		System.out.println(button.getClass().getSimpleName());
-		
-		System.out.println(button.getDraw().getxPos());
-		System.out.println(button.getDraw().getyPos());
-		
-		System.out.println(button.getDraw().getTexture().getHeight());
-		System.out.println(button.getDraw().getTexture().getWidth());		
-		
-		System.out.println(button.getDraw().getScreenHeight());
-		System.out.println(button.getDraw().getScreenWidth());		
-	*/		
 		SB.draw(button.getDraw().getTexture(), (float)button.getDraw().getxPos(), (float)button.getDraw().getyPos(), 
 				button.getDraw().getScreenHeight(), button.getDraw().getScreenWidth());
+	}
 	
+	public void drawObjects(){
+		for(DrawableObject DO: DOs){
+			this.drawObject(DO);
+		}
+	}
+	
+	private void drawObject(DrawableObject DO){
+		for(Drawable draw:DO.getDraws()){
+			this.drawTexture(draw);
+		}
 	}
 }

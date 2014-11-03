@@ -16,4 +16,6 @@ public class Main{
 		cfg.initialBackgroundColor.add(Color.valueOf("B2FFFF"));
 		new LwjglApplication(new Game(), cfg);
 	}
+	
+	
 }

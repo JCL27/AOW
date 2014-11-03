@@ -103,6 +103,7 @@ public class Game implements ApplicationListener {
 		
 		UIManager.getInstance().drawTextures();
 		UIManager.getInstance().drawButtons();
+		UIManager.getInstance().drawObjects();
 		
 		SB.end();
 		

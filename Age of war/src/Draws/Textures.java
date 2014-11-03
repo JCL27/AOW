@@ -17,4 +17,11 @@ public abstract class Textures{
 	public static Texture BASIC_TOWER = new Texture(Gdx.files.classpath("resources/Arrow.png"));
 	public static Texture GRASS = new Texture(Gdx.files.classpath("resources/pastito.png"));
 	public static Texture MAIN_BUTTON = new Texture(Gdx.files.classpath("resources/images.jpg"));
+	public static Texture BLACK_SQUARE = new Texture(Gdx.files.classpath("resources/blackSquare.jpg"));
+	public static Texture GREEN_SQUARE = new Texture(Gdx.files.classpath("resources/greenSquare.png"));
+	public static Texture MELEE_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/icon (55).jpeg"));
+	public static Texture RANGED_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/icon (37).jpeg"));
+	public static Texture FLYING_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/icon (112).jpeg"));
+	public static Texture ANTIAIRCRAFT_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/icon (42).jpeg"));
+	
 }

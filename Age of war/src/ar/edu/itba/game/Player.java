@@ -3,13 +3,15 @@ package ar.edu.itba.game;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Observable;
 
+import Observers.PlayerObserver;
+import Units.Unit;
 import exceptions.NotEnoughExpException;
 import exceptions.NotEnoughGoldException;
 import exceptions.UnavailableUpgradeException;
-import Units.Unit;
 
-public class Player implements Serializable{
+public class Player extends Observable implements Serializable{
 	/**
 	 * 
 	 */
@@ -21,6 +23,10 @@ public class Player implements Serializable{
 	private Tower tower;
 	private Base base;
 	private ArrayList<Class> unitsQueue;
+	private boolean playerCreatingUnit = false;
+	private int playerUnitCreationTime = 0;
+	private PlayerObserver obs;
+	private Class unitToQueue = null;
 	
 	public Player (Side side){
 		this.gold = GameStats.INITIAL_GOLD;
@@ -29,6 +35,8 @@ public class Player implements Serializable{
 		this.units = new ArrayList<Unit>();
 		this.projectiles = new ArrayList<Projectile>();
 		this.unitsQueue = new ArrayList<Class>();
+		obs = new PlayerObserver(this, side);
+		this.addObserver(this.obs);
 	}
 	
 	public ArrayList<Projectile> getProjectiles(){
@@ -68,7 +76,6 @@ public class Player implements Serializable{
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException
 				| SecurityException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		if(available){
@@ -88,7 +95,6 @@ public class Player implements Serializable{
 		}
 		return created;
 	}
-	
 	
 	public void createUnit(Class unitClass){
 		Unit unit = null;
@@ -115,14 +121,7 @@ public class Player implements Serializable{
 		}
 		if(unit!=null){
 			this.units.add(unit);
-			//this.unitsQueue.add(unitClass);
-			//this.BuyUnit(unitClass);
 		}
-		//WorldManager.getInstance().getAI().getUnits().add(unit2);
-		//WorldManager.getInstance().getAI().getUnitsQueue().add(unit2);
-		
-		// TODO Auto-generated catch block
-		
 
 	}
 	
@@ -137,6 +136,7 @@ public class Player implements Serializable{
 		}
 		return created;
 	}
+	
 	public void createTower(){
 		this.tower = new Tower(this);
 	}
@@ -174,6 +174,7 @@ public class Player implements Serializable{
 	public Integer getExp(){
 		return this.experience;
 	}
+	
 	public Tower getTower(){
 		return this.tower;
 	}
@@ -191,7 +192,6 @@ public class Player implements Serializable{
 		return this.base;
 	}
 	
-	
 	@Override
 	public String toString() {
 		return "Player [gold=" + gold + ", experience=" + experience
@@ -202,5 +202,30 @@ public class Player implements Serializable{
 		this.tower = null;
 	}
 	
-	
+	public void updateQueue(){
+		if(!this.getUnitsQueue().isEmpty()){
+
+			if(this.playerCreatingUnit && this.playerUnitCreationTime == 0){
+				this.getUnitsQueue().remove(0);
+				this.createUnit(unitToQueue);
+				this.playerCreatingUnit = false;
+			}else if(this.playerCreatingUnit){
+				this.playerUnitCreationTime-- ;
+			}else{
+				try {
+					unitToQueue = this.getUnitsQueue().get(0);
+					this.playerUnitCreationTime = (int) unitToQueue.getMethod("getCreationTime").invoke(null);
+					this.obs.update(null, null);
+					this.playerCreatingUnit = true;
+				} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
+						| SecurityException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public int getPlayerUnitCreationTime() {
+		return playerUnitCreationTime;
+	}
 }

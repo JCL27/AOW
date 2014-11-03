@@ -67,7 +67,7 @@ public abstract class Drawable {
 	public abstract int getScreenWidth();
 
 	public abstract int getScreenHeight();
-
+	
 	public int getTotalSprites() {
 		return totalSprites;
 	}

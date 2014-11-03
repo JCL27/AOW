@@ -62,57 +62,8 @@ public class WorldManager implements Serializable{
 	}
 	
 	public void updateUnitsQueue(){
-	
-		if(!this.player.getUnitsQueue().isEmpty()){
-			//System.out.println("Hay algo en cola");
-			Class unitClass = this.player.getUnitsQueue().get(0);
-			if(playerCreatingUnit && playerUnitCreationTime == 0){
-				this.player.getUnitsQueue().remove(0);
-				this.player.createUnit(unitClass);
-				playerCreatingUnit = false;
-
-			}
-			else if(playerCreatingUnit){
-				playerUnitCreationTime-- ;
-			}
-			else{
-				try {
-					//playerUnitCreationTime = (int) unitClass.getMethod("getCreationTime", null).invoke(null, null);
-					playerUnitCreationTime = (int) unitClass.getMethod("getCreationTime").invoke(null);
-					playerCreatingUnit = true;
-				} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
-						| SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				System.out.println(playerUnitCreationTime);
-			}
-		}
-		
-		if(!this.playerAI.getUnitsQueue().isEmpty()){
-			Class unitClass = this.playerAI.getUnitsQueue().get(0);
-			if(AICreatingUnit && AIUnitCreationTime == 0){
-				playerAI.createUnit(unitClass);
-				playerAI.getUnitsQueue().remove(0);
-				AICreatingUnit = false;
-			}
-			else if(AICreatingUnit){
-				AIUnitCreationTime-- ;
-			}
-			else{
-				try {
-					//AIUnitCreationTime = (int) unitClass.getMethod("getCreationTime", null).invoke(null, null);
-					AIUnitCreationTime = (int) unitClass.getMethod("getCreationTime").invoke(null);
-					AICreatingUnit = true;
-				} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
-						| SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		
+		this.player.updateQueue();
+		this.playerAI.updateQueue();
 	}
 	
 	public void checkCollisions(){

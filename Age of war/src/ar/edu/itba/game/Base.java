@@ -35,9 +35,14 @@ public class Base extends Observable implements Attackable, Serializable {
 		this.maxHP = MAX_HIT_POINTS;
 		this.HP = MAX_HIT_POINTS;
 		
-		this.addObserver(new BaseObserver(this));
+		this.observer = new BaseObserver(this);
+		this.addObserver(this.observer);
 	}
 	
+	public int getHP() {
+		return HP;
+	}
+
 	//TODO: ADD THROWS ENDGAMEEXCEPTION A LA INTERFAZ
 	@Override
 	public void receiveDamage(int damage) throws DeadUnitException {
@@ -50,9 +55,13 @@ public class Base extends Observable implements Attackable, Serializable {
 					//e.printStackTrace();
 				}
 			}	
-		
+			this.observer.update(null, null);
 	}
 	
+	public int getMaxHP() {
+		return maxHP;
+	}
+
 	@Override
 	public Element getElement() {
 		// TODO Auto-generated method stub
