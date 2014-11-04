@@ -5,10 +5,10 @@ import ar.edu.itba.game.Side;
 import com.badlogic.gdx.graphics.Texture;
 
 public class BaseDraw extends Drawable {
-	static Texture leftTexture = Textures.BLUE_BASE;
-	static Texture rightTexture = Textures.RED_BASE;
-	static int scale = 4;
-	static int totalSprites = 1;
+	private Texture leftTexture = Textures.BLUE_BASE;
+	private Texture rightTexture = Textures.RED_BASE;
+	private int scale = 4;
+	private int totalSprites = 1;
 	private Side side;
 	
 	public BaseDraw(float xPos, float yPos, int screenHeight, int screenWidth, Side side) {

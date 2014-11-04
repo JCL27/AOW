@@ -73,8 +73,9 @@ public class MeleeUnit extends Unit {
 	
 	public static boolean isPlayerAvailable() {
 		return playerAvailable;
-	}
 
+	}
+	
 	public static void setPlayerAvailable(boolean playerAvailable) {
 		MeleeUnit.playerAvailable = playerAvailable;
 	}

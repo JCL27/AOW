@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import Observers.PlayerObserver;
+import Observers.ProjectileObserver;
 import Units.Unit;
 import exceptions.NotEnoughExpException;
 import exceptions.NotEnoughGoldException;
@@ -25,8 +26,9 @@ public class Player extends Observable implements Serializable{
 	private ArrayList<Class> unitsQueue;
 	private boolean playerCreatingUnit = false;
 	private int playerUnitCreationTime = 0;
-	private PlayerObserver obs;
+	private transient PlayerObserver obs;
 	private Class unitToQueue = null;
+	private Side side;
 	
 	public Player (Side side){
 		this.gold = GameStats.INITIAL_GOLD;
@@ -37,6 +39,7 @@ public class Player extends Observable implements Serializable{
 		this.unitsQueue = new ArrayList<Class>();
 		obs = new PlayerObserver(this, side);
 		this.addObserver(this.obs);
+		this.side = side;
 	}
 	
 	public ArrayList<Projectile> getProjectiles(){
@@ -88,6 +91,7 @@ public class Player extends Observable implements Serializable{
 			try{
 				this.charge(unitCost);
 				this.unitsQueue.add(unitClass);
+				this.obs.addElementToQueue(unitClass);
 			}catch(NotEnoughGoldException e){
 				created = false;
 				e.printStackTrace();	
@@ -209,13 +213,14 @@ public class Player extends Observable implements Serializable{
 				this.getUnitsQueue().remove(0);
 				this.createUnit(unitToQueue);
 				this.playerCreatingUnit = false;
+				this.obs.removeElementFromQueue(0);
 			}else if(this.playerCreatingUnit){
-				this.playerUnitCreationTime-- ;
+				this.playerUnitCreationTime--;
+				this.obs.updateCurrentTime(this.playerUnitCreationTime);
 			}else{
 				try {
 					unitToQueue = this.getUnitsQueue().get(0);
 					this.playerUnitCreationTime = (int) unitToQueue.getMethod("getCreationTime").invoke(null);
-					this.obs.update(null, null);
 					this.playerCreatingUnit = true;
 				} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
 						| SecurityException e) {
@@ -225,7 +230,18 @@ public class Player extends Observable implements Serializable{
 		}
 	}
 
+	public Class getUnitToQueue() {
+		return unitToQueue;
+	}
+
 	public int getPlayerUnitCreationTime() {
 		return playerUnitCreationTime;
+	}
+	
+	public void reAssignObserver(){
+		this.deleteObservers();
+		this.obs = new PlayerObserver(this, this.side);
+		this.addObserver(this.obs);
+		
 	}
 }

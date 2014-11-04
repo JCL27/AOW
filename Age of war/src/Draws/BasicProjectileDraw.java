@@ -3,9 +3,9 @@ package Draws;
 import com.badlogic.gdx.graphics.Texture;
 
 public class BasicProjectileDraw extends Drawable{
-	static Texture leftTexture = Textures.GREEN_BUTTON;
-	static int scale = 8;
-	static int totalSprites = 1;
+	private Texture leftTexture = Textures.GREEN_BUTTON;
+	private int scale = 8;
+	private int totalSprites = 1;
 	
 	
 	public BasicProjectileDraw(float xPos, float yPos, int screenHeight, int screenWidth) {

@@ -8,11 +8,15 @@ import Draws.Drawable;
 import Draws.GrassDraw;
 import Draws.GroundDraw;
 import Draws.Textures;
+import Units.AntiaircraftUnit;
+import Units.FlyingUnit;
+import Units.MeleeUnit;
+import Units.RangedUnit;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
+import ar.edu.itba.game.Player;
 import ar.edu.itba.game.WorldManager;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -97,6 +101,69 @@ public class UIManager {
 		this.State.pop();
 	}
 	
+	public void updateButtonsState(){
+		Player player = WorldManager.getInstance().getPlayer();
+		for(Button button:this.buttons){
+			switch(button.getClass().getSimpleName()){
+			case("CreateAntiaircraftUnit"):
+				if(player.getGold()<AntiaircraftUnit.getCost(player))
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("CreateBasicTower"):
+				if((player.getGold()<GameStats.TOWER_COST) || (player.getTower()!=null))
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("CreateFlyingUnit"):
+				if(player.getGold()<FlyingUnit.getCost(player))
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("CreateMeleeUnit"):
+				
+				if(player.getGold()<MeleeUnit.getCost(player)){
+					button.getDraw().setDisabled();
+				}else{
+					button.getDraw().setEnabled();
+				}break;
+			case("CreateRangedUnit"):
+				if(player.getGold()<RangedUnit.getCost(player))
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("TowerAttackRangeUpgradeButton"):
+				if(player.getExp()<GameStats.TOWER_ATTACK_RANGE_UPGRADE_COST || (player.getTower()==null) || player.getTower().isUpgradedAttackRange())
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("TowerAttackSpeedUpgradeButton"):
+				if(player.getExp()<GameStats.TOWER_ATTACK_SPEED_UPGRADE_COST || (player.getTower()==null) || player.getTower().isUpgradedAttackSpeed())
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("TowerDamageUpgradeButton"):
+				if(player.getExp()<GameStats.TOWER_DAMAGE_UPGRADE_COST || (player.getTower()==null) || player.getTower().isUpgradedDamage())
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("DisposeTower"):
+				if(player.getTower()==null)
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			}
+		}
+	}
+	
 	public void updateButtons(){
 		int count = 0;
 		this.buttons.clear();
@@ -104,7 +171,8 @@ public class UIManager {
 		case DEFAULT:
 			this.buttons.add(new Buttons.CreateUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.Tower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.Upgrade(this.BUTTON_INITIAL_X + count++ *this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.UpgradeUnitButton(this.BUTTON_INITIAL_X + count++ *this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.UpgradeTowerButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.MenuButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case CREATE_UNIT:
@@ -113,18 +181,17 @@ public class UIManager {
 			this.buttons.add(new Buttons.CreateAntiaircraftUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.CreateMeleeUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
-		case TERRAIN_UNITS:
-			break;
 		case TOWER:
 			this.buttons.add(new Buttons.CreateBasicTower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.DisposeTower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
-		case FLYING_UNITS:
+		case UPGRADE_UNIT:
+			this.buttons.add(new Buttons.UpgradeMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.UpgradeRangedUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.UpgradeMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.UpgradeMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
-		case UNDERGROUND_UNITS:
-			break;
-		case UPGRADES:
-			this.buttons.add(new Buttons.UpgradeMeleeUnitDamage(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+		case UPGRADE_TOWER:
 			this.buttons.add(new Buttons.TowerDamageUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.TowerAttackSpeedUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.TowerAttackRangeUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
@@ -168,6 +235,7 @@ public class UIManager {
 	}
 	
 	public void drawButtons(){
+		this.updateButtonsState();
 		for(Button button: buttons){
 			this.drawButton(button);
 		}

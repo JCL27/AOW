@@ -12,6 +12,7 @@ public class UnitUpgrade extends Upgrade {
 		super(player);
 		this.available = true;
 		this.cost = GameStats.UNIT_UPGRADE_COST;
+		this.multiUpgradable = true;
 	}
 
 	@Override

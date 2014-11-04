@@ -23,5 +23,23 @@ public abstract class Textures{
 	public static Texture RANGED_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/icon (37).jpeg"));
 	public static Texture FLYING_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/icon (112).jpeg"));
 	public static Texture ANTIAIRCRAFT_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/icon (42).jpeg"));
+	public static Texture CREATE_UNITS_ICON = new Texture(Gdx.files.classpath("resources/icons/icon2 (3).jpeg"));
+	public static Texture RESEARCHS_ICON = new Texture(Gdx.files.classpath("resources/icons/icon (15).jpeg"));
+	public static Texture TOWERS_ICON = new Texture(Gdx.files.classpath("resources/icons/icon (19).jpeg"));
+	public static Texture TOWER_DAMAGE_UPGRADE_ICON = new Texture(Gdx.files.classpath("resources/icons/towerDamageUpgrade.jpeg"));
+	public static Texture TOWER_RANGE_UPGRADE_ICON = new Texture(Gdx.files.classpath("resources/icons/towerRangeUpgrade.jpeg"));
+	public static Texture TOWER_ATTACK_SPEED_UPGRADE_ICON = new Texture(Gdx.files.classpath("resources/icons/towerAttackSpeedUpgrade.jpeg"));
+	public static Texture SELL_TOWER_ICON = new Texture(Gdx.files.classpath("resources/icons/sell.jpeg"));
+
+	
+	public static Texture DARK_MELEE_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/disabledMelee.jpeg"));
+	public static Texture DARK_RANGED_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/disabledRanged.jpg"));
+	public static Texture DARK_FLYING_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/disabledFlying.jpg"));
+	public static Texture DARK_ANTIAIRCRAFT_UNIT_ICON = new Texture(Gdx.files.classpath("resources/icons/disabledAntiaircraft.jpg"));
+	public static Texture DARK_TOWER_DAMAGE_UPGRADE_ICON = new Texture(Gdx.files.classpath("resources/icons/disabledTowerDamage.jpg"));
+	public static Texture DARK_TOWER_RANGE_UPGRADE_ICON = new Texture(Gdx.files.classpath("resources/icons/disabledTowerRange.jpg"));
+	public static Texture DARK_TOWER_ATTACK_SPEED_UPGRADE_ICON = new Texture(Gdx.files.classpath("resources/icons/disabledTowerAttackSpeed.jpg"));
+	public static Texture DARK_SELL_TOWER_ICON = new Texture(Gdx.files.classpath("resources/icons/darkSell.jpg"));
+
 	
 }

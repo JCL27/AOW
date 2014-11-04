@@ -6,8 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 
 public abstract class Drawable {
 	protected static int scale;
-	protected static Texture leftTexture;
-	protected static Texture rightTexture;
+	protected Texture leftTexture;
+	protected Texture rightTexture;
+	protected Texture disabledTexture;
+	protected Texture enabledTexture;
+	
 	protected static int totalSprites;
 	
 	protected float xPos;
@@ -18,8 +21,19 @@ public abstract class Drawable {
 	protected int screenHeight;
 	protected int currentSprite;
 	
+	public Drawable(float xPos2, float yPos2, int screenHeight, int screenWidth,
+			Texture enabledTexture, Texture disabledTexture){
+		this.xPos = xPos2;
+		this.yPos = yPos2;
+		this.screenHeight = screenHeight;
+		this.screenWidth = screenWidth;
+		this.enabledTexture = enabledTexture;
+		this.disabledTexture = disabledTexture;
+		this.leftTexture = enabledTexture;
+	}
+	
+	
 	public Drawable(float xPos2, float yPos2, int screenHeight, int screenWidth){
-		
 		this.xPos = xPos2;
 		this.yPos = yPos2;
 		this.screenHeight = screenHeight;
@@ -27,11 +41,18 @@ public abstract class Drawable {
 	}
 	
 	public Drawable(float xPos2, float yPos2){
-		
 		this.xPos = xPos2;
 		this.yPos = yPos2;
 	}
 
+	public void setEnabled(){
+		this.leftTexture = this.enabledTexture;
+	}
+	
+	public void setDisabled(){
+		this.leftTexture = this.disabledTexture;
+	}
+	
 	public double getxPos() {
 		return xPos;
 	}
@@ -63,6 +84,7 @@ public abstract class Drawable {
 	public Texture getTexture() {
 		return leftTexture;
 	}
+	
 
 	public abstract int getScreenWidth();
 

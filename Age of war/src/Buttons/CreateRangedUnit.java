@@ -1,13 +1,15 @@
 package Buttons;
 
 import Draws.BigGreenButtonDraw;
+import Draws.Icon;
+import Draws.Textures;
 import Units.RangedUnit;
 import ar.edu.itba.game.*;
 
 public class CreateRangedUnit extends Button {
 
 	public CreateRangedUnit(float X, float Y) {
-		this.draw = new BigGreenButtonDraw(X, Y);
+		this.draw = new Icon(X, Y, 80, 80, Textures.RANGED_UNIT_ICON, Textures.DARK_RANGED_UNIT_ICON);
 	}
 
 	@Override

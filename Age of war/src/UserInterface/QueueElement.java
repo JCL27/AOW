@@ -30,10 +30,23 @@ public class QueueElement implements DrawableObject {
 		break;
 		}
 		bar = new Bar(creationTime, 1, 15, icon.getScreenWidth() ,(int)xPos, (int)yPos + icon.getScreenHeight());
+		this.xPos = xPos;
+		this.yPos = yPos;
 		draws.addAll(bar.getDraws());
 		draws.add(this.icon);
 	}
 	
+	public float getxPos() {
+		return xPos;
+	}
+	
+	public void setxPos(float xPos) {
+		this.xPos = xPos;
+		for(Drawable draw: this.draws){
+			draw.setxPos(xPos);
+		}
+	}
+
 	public void setCurrent(int current){
 		bar.setCurrent(current);
 	}

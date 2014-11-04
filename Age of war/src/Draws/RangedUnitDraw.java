@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class RangedUnitDraw extends Drawable{
 	
-	static Texture leftTexture = Textures.BLUE_BALL;
-	static Texture rightTexture = Textures.RED_BALL;
-	static int scale = 4;
-	static int totalSprites = 1;
+	private Texture leftTexture = Textures.BLUE_BALL;
+	private Texture rightTexture = Textures.RED_BALL;
+	private int scale = 4;
+	private int totalSprites = 1;
 	
 	public RangedUnitDraw(float xPos, float yPos, int screenHeight, int screenWidth, Player player) {
 			super(xPos, yPos, screenHeight, screenWidth);

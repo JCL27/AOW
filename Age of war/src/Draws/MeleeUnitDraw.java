@@ -9,10 +9,10 @@ public class MeleeUnitDraw extends Drawable {
 	
 	//DRAWABLE: BORRAR EL CONSTRUCTOR CON 2 PARAM, QUE RECIBA PLAYER
 	//BORRAR lefttexture y rightTexture, scale totalSprites de Drawable
-	static Texture leftTexture = Textures.BLUE_BALL;
-	static Texture rightTexture = Textures.RED_BALL;
-	static int scale = 4;
-	static int totalSprites = 1;
+	private Texture leftTexture = Textures.BLUE_BALL;
+	private Texture rightTexture = Textures.RED_BALL;
+	private int scale = 4;
+	private int totalSprites = 1;
 	
 	public MeleeUnitDraw(float xPos, float yPos, int screenHeight, int screenWidth, Player player){
 		super(xPos, yPos, screenHeight, screenWidth);

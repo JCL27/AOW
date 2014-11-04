@@ -21,7 +21,7 @@ public class Base extends Observable implements Attackable, Serializable {
 	private int HP;
 	private Element element;
 	private Side side;
-	private BaseObserver observer;
+	private transient BaseObserver observer;
 	
 	public Base(Side side){
 		int X;

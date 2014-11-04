@@ -287,6 +287,8 @@ public class WorldManager implements Serializable{
 		   player.getTower().reAssignObserver();
 	   if(playerAI.getTower()!=null)
 		   playerAI.getTower().reAssignObserver();
+	   player.reAssignObserver();
+	   playerAI.reAssignObserver();
 	   
    }
 }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class GreenSquareDraw extends Drawable {
 
-	Texture leftTexture = Textures.GREEN_SQUARE;
+	private Texture leftTexture = Textures.GREEN_SQUARE;
 	
 	public GreenSquareDraw(float xPos2, float yPos2, int screenHeight, int screenWidth) {
 		super(xPos2, yPos2, screenHeight, screenWidth);

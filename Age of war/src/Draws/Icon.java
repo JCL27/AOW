@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class Icon extends Drawable {
 
-Texture leftTexture;
 	
 	public Icon(float xPos2, float yPos2, Texture texture) {
 		super(xPos2, yPos2, 50, 50);
@@ -14,6 +13,25 @@ Texture leftTexture;
 		this.leftTexture = texture;
 	}
 
+	public Icon(float xPos2, float yPos2, int screenHeight, int screenWidth, Texture enabledTexture, Texture disabledTexture) {
+		super(xPos2, yPos2, screenHeight, screenWidth, enabledTexture, disabledTexture);
+		this.screenHeight = screenHeight;
+		this.screenWidth = screenWidth;
+		this.leftTexture = enabledTexture;
+		this.enabledTexture = enabledTexture;
+		this.disabledTexture = disabledTexture;
+		
+	}
+	
+	public Icon(float xPos2, float yPos2, int screenHeight, int screenWidth, Texture texture) {
+		super(xPos2, yPos2, screenHeight, screenWidth);
+		this.screenHeight = screenHeight;
+		this.screenWidth = screenWidth;
+		this.leftTexture = texture;
+		this.enabledTexture = texture;
+		this.disabledTexture = texture;
+	}
+	
 	@Override
 	public int getScreenWidth() {
 		return this.screenWidth;

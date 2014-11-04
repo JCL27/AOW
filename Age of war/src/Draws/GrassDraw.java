@@ -4,9 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class GrassDraw extends Drawable {
 
-	static Texture leftTexture = Textures.GRASS;
-	static int scale = 1;
-	static int totalSprites = 1;
+	private Texture leftTexture = Textures.GRASS;
+	private int scale = 1;
+	private int totalSprites = 1;
 	
 	private int screenHeight;
 	private int screenWidth;
