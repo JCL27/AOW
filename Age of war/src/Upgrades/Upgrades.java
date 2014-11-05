@@ -3,17 +3,17 @@ package Upgrades;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import exceptions.NotEnoughExpException;
-import exceptions.UnavailableUpgradeException;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.WorldManager;
+import exceptions.NotEnoughExpException;
+import exceptions.UnavailableUpgradeException;
 
 public class Upgrades {
 	
 	private static Upgrades instance = null;
 	
 	private Player player = WorldManager.getInstance().getPlayer();
-	private Player playerAI = WorldManager.getInstance().getplayerAI();
+	private Player playerAI = WorldManager.getInstance().getPlayerAI();
 	
 	private HashMap<String, Upgrade> upgradeListPlayer = new HashMap<String, Upgrade>();
 	private HashMap<String, Upgrade> upgradeListPlayerAI = new HashMap<String, Upgrade>();

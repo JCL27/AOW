@@ -1,7 +1,7 @@
 package Buttons;
 
-import ar.edu.itba.game.Game;
 import Draws.MainButtonDraw;
+import ar.edu.itba.game.Game;
 
 public class MenuButton extends Buttons.Button {
 	static boolean saved = false;

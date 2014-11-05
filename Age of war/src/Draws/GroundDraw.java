@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class GroundDraw extends Drawable{
 	private Texture leftTexture = Textures.GROUND;
-	private int scale = 1;
-	private int totalSprites = 1;
 	
 	private int screenHeight;
 	private int screenWidth;

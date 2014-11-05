@@ -10,6 +10,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import Observers.BaseObserver;
+import Observers.PlayerObserver;
+import Observers.ProjectileObserver;
+import Observers.TowerObserver;
+import Observers.UnitObserver;
 import Units.AntiaircraftUnit;
 import Units.FlyingUnit;
 import Units.MeleeUnit;
@@ -49,6 +54,7 @@ public class Game implements ApplicationListener {
 	public void create() {
 
 		Texture.setEnforcePotImages(false);
+		
 		Gdx.input.setInputProcessor(new MyInputProcessor());
 		SB = new SpriteBatch();
 		
@@ -59,10 +65,14 @@ public class Game implements ApplicationListener {
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, WIDTH, HEIGHT);
 
+		UnitFactory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+
 		UIManager.getInstance().setSpriteBatch(SB);
-		WorldManager.getInstance();
+		
+		UIManager.getInstance().initializeDraws();
+		
 		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayer().getBase().getElement());
-		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getplayerAI().getBase().getElement());
+		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayerAI().getBase().getElement());
 		
 		//System.out.println(WorldManager.getInstance().getElements().contains(WorldManager.getInstance().getPlayer().getBase().getElement()));
 		
@@ -101,16 +111,17 @@ public class Game implements ApplicationListener {
 		
 		SB.begin();
 		
+		UIManager.getInstance().drawBases();
 		UIManager.getInstance().drawTextures();
 		UIManager.getInstance().drawButtons();
 		UIManager.getInstance().drawObjects();
+		UIManager.getInstance().drawProjectiles();
 		
 		SB.end();
 		
 		b2dr.render(world, cam.combined);
-		
 		AI.getInstance().desitionMaker();
-
+		
 		oneSecondLoop();
 
 	}
@@ -194,9 +205,11 @@ public class Game implements ApplicationListener {
 		System.out.println(RangedUnit.getLevels()[0] + " " + RangedUnit.getLevels()[1]);
 			
 		   //System.out.println(WorldManager.getInstance().toString());
-		   UIManager.getInstance().clearDraws();
+			
+		   UIManager.getInstance().reset();
 		   UIManager.getInstance().initializeDraws();
-		   WorldManager.getInstance().reAssignObservers();
+		   UnitFactory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+		   UnitFactory.getInstance().reAssignObservers();
 	}
 	
 	private void oneSecondLoop(){
@@ -204,7 +217,7 @@ public class Game implements ApplicationListener {
 			secondCount = (int) (1/Gdx.graphics.getDeltaTime());
 			//System.out.println("renders/seg: " + 1/Gdx.graphics.getDeltaTime());
 			WorldManager.getInstance().getPlayer().addGold(10);
-			WorldManager.getInstance().getplayerAI().addGold(10);
+			WorldManager.getInstance().getPlayerAI().addGold(15);
 		}
 	}
 	

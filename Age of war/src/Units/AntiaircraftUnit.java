@@ -6,8 +6,8 @@ import ar.edu.itba.game.Element;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
-import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
+import ar.edu.itba.game.UnitFactory;
 import ar.edu.itba.game.WorldManager;
 
 public class AntiaircraftUnit extends Unit{
@@ -37,10 +37,9 @@ public class AntiaircraftUnit extends Unit{
 		AIAvailable = aIAvailable;
 	}
 
-	public AntiaircraftUnit(Player player){
-		this.player = player;
-		this.objective = null;
-		this.cooldown = 0;
+	public AntiaircraftUnit(Player player, UnitObserver observer){
+		super(player, observer);
+		
 		this.bounty = GameStats.ANTIAIRCRAFT_UNIT_BOUNTY;
 		this.cost = GameStats.ANTIAIRCRAFT_UNIT_COST;
 		this.exp = GameStats.ANTIAIRCRAFT_UNIT_EXP;
@@ -65,8 +64,6 @@ public class AntiaircraftUnit extends Unit{
 			this.dir = Side.RIGHT;
 		}
 		this.type = GameStats.ANTIAIRCRAFT_UNIT_TYPE;
-		this.observer = new UnitObserver(this);
-		this.addObserver(this.observer);
 		this.attackFlying = GameStats.ANTIAIRCRAFT_UNIT_ATTACK_FLYING;
 		WorldManager.getInstance().getElements().add(this.element);
 	}
@@ -97,7 +94,7 @@ public class AntiaircraftUnit extends Unit{
 					velX = (float)velY;
 			}
 			System.out.println("AntiairCraft pjt vel:" + velX + " " + velY);
-			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(),
+			this.player.getProjectiles().add(UnitFactory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
 			
 			//System.out.println("attack!");
@@ -120,7 +117,7 @@ public class AntiaircraftUnit extends Unit{
 	}
 	
 	public static int getCost(Player player){
-		if(player == WorldManager.getInstance().getplayerAI())
+		if(player == WorldManager.getInstance().getPlayerAI())
 			return (int) (GameStats.ANTIAIRCRAFT_UNIT_COST + Math.sqrt(AIUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE));
 		return (int) (GameStats.ANTIAIRCRAFT_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE));
 	}

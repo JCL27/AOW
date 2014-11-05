@@ -9,8 +9,6 @@ public class BasicTowerDraw extends Drawable{
 	
 	private Texture leftTexture = Textures.BASIC_TOWER;
 	private Texture rightTexture = Textures.BASIC_TOWER;
-	private int scale = 4;
-	private int totalSprites = 1;
 	
 	public BasicTowerDraw(float xPos, float yPos, int screenHeight, int screenWidth, Player player) {
 		super(xPos, yPos, screenHeight, screenWidth);

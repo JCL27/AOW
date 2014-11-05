@@ -11,15 +11,12 @@ public abstract class Drawable {
 	protected Texture disabledTexture;
 	protected Texture enabledTexture;
 	
-	protected static int totalSprites;
-	
 	protected float xPos;
 	protected float yPos;
 	protected Player player;
 	
 	protected int screenWidth;
 	protected int screenHeight;
-	protected int currentSprite;
 	
 	public Drawable(float xPos2, float yPos2, int screenHeight, int screenWidth,
 			Texture enabledTexture, Texture disabledTexture){
@@ -69,13 +66,6 @@ public abstract class Drawable {
 		this.yPos = yPos;
 	}
 
-	public int getCurrentSprite() {
-		return currentSprite;
-	}
-
-	public void setCurrentSprite(int currentSprite) {
-		this.currentSprite = currentSprite;
-	}
 
 	public int getScale() {
 		return scale;
@@ -85,14 +75,9 @@ public abstract class Drawable {
 		return leftTexture;
 	}
 	
-
 	public abstract int getScreenWidth();
 
 	public abstract int getScreenHeight();
-	
-	public int getTotalSprites() {
-		return totalSprites;
-	}
 
 	public int getSpriteWidth() {
 		return leftTexture.getWidth();
@@ -106,7 +91,6 @@ public abstract class Drawable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + currentSprite;
 		result = prime * result + ((player == null) ? 0 : player.hashCode());
 		result = prime * result + screenHeight;
 		result = prime * result + screenWidth;
@@ -127,8 +111,6 @@ public abstract class Drawable {
 		if (getClass() != obj.getClass())
 			return false;
 		Drawable other = (Drawable) obj;
-		if (currentSprite != other.currentSprite)
-			return false;
 		if (player == null) {
 			if (other.player != null)
 				return false;

@@ -4,9 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class BasicProjectileDraw extends Drawable{
 	private Texture leftTexture = Textures.GREEN_BUTTON;
-	private int scale = 8;
-	private int totalSprites = 1;
-	
 	
 	public BasicProjectileDraw(float xPos, float yPos, int screenHeight, int screenWidth) {
 		super(xPos, yPos, screenHeight, screenWidth);

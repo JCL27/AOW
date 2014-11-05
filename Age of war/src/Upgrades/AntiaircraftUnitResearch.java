@@ -1,6 +1,7 @@
 package Upgrades;
 
 import Units.AntiaircraftUnit;
+import Units.Unit;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.WorldManager;
@@ -15,7 +16,7 @@ public class AntiaircraftUnitResearch extends Upgrade {
 	}
 
 	@Override
-	public void applyUpgrade(Class classType) {
+	public void applyUpgrade(Class<Unit> classType) {
 		if(this.player.equals(WorldManager.getInstance().getPlayer()))
 			AntiaircraftUnit.setPlayerAvailable(true);
 		else

@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 public class GrassDraw extends Drawable {
 
 	private Texture leftTexture = Textures.GRASS;
-	private int scale = 1;
-	private int totalSprites = 1;
 	
 	private int screenHeight;
 	private int screenWidth;

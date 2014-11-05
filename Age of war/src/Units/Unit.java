@@ -1,7 +1,6 @@
 package Units;
 
 import java.io.Serializable;
-import java.util.Observable;
 
 import Observers.UnitObserver;
 import ar.edu.itba.game.Attackable;
@@ -9,20 +8,15 @@ import ar.edu.itba.game.CanAttack;
 import ar.edu.itba.game.Element;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.Player;
-import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
 import ar.edu.itba.game.Type;
+import ar.edu.itba.game.UnitFactory;
 import ar.edu.itba.game.WorldManager;
 import exceptions.DeadUnitException;
 
 
-public abstract class Unit extends Observable implements CanAttack, Attackable, Serializable{
+public abstract class Unit implements CanAttack, Attackable, Serializable{
 	
-
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7429831188289779363L;
 	protected Type type;
 	protected boolean attackFlying;
@@ -37,6 +31,9 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 	protected Side dir;
 	protected Attackable objective;
 	protected transient UnitObserver observer;
+	static int count = 1;
+	
+	protected int ID;
 	
 	protected int cooldown;
 	protected Element element;
@@ -44,6 +41,14 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 	protected int bounty;
 	protected int exp;
 	protected int cost;
+	
+	public Unit(Player player, UnitObserver observer){
+		this.player = player;
+		this.objective = null;
+		this.cooldown = 0;
+		this.observer = observer;
+		this.ID = count++;
+	}
 	
 	public int getGold() {
 		return this.bounty;
@@ -137,10 +142,6 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 		return observer;
 	}
 
-	public void setObserver(UnitObserver observer) {
-		this.observer = observer;
-	}
-
 	public int getCooldown() {
 		return cooldown;
 	}
@@ -197,7 +198,7 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 				velX = (float)-velY;
 			else
 				velX = (float)velY;
-			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(),
+			this.player.getProjectiles().add(UnitFactory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
 			
 			//System.out.println("attack!");
@@ -210,32 +211,9 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 		}
 	}
 	
-	
-	public Unit(){
-		
-	}
-	
-	public Unit(int maxHp, double attackSpeed, int attackRange, int movementSpeed, int damage, Element element, Side dir, Player player){
-		this.maxHp = maxHp;
-		this.hp = maxHp;
-		this.attackSpeed = attackSpeed;
-		this.attackRange = attackRange;
-		this.movementSpeed = movementSpeed;
-		this.damage = damage;
-		this.element = element;
-		WorldManager.getInstance().getElements().add(element);
-		this.dir = dir;
-		this.objective = null;
-		this.cooldown = 0;
-		this.player = player;
-	}
-	
-	
 	@Override
 	public void receiveDamage(int damage) throws DeadUnitException{
-		// TODO Auto-generated method stub
 		this.hp-= damage;
-		//System.out.println(this.hp + " " + this.getSide());
 		if(this.hp <= 0){
 			throw new DeadUnitException(this);
 		}
@@ -306,7 +284,7 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
+		/*final int prime = 31;
 		int result = 1;
 		result = prime * result + attackRange;
 		long temp;
@@ -317,7 +295,8 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 		result = prime * result + hp;
 		result = prime * result + maxHp;
 		result = prime * result + movementSpeed;
-		return result;
+		return result;*/
+		return this.ID;
 	}
 
 	@Override
@@ -347,27 +326,26 @@ public abstract class Unit extends Observable implements CanAttack, Attackable, 
 			return false;
 		if (movementSpeed != other.movementSpeed)
 			return false;
+		if	(hashCode() != other.hashCode())
+			return false;
 		return true;
 	}
 
 	@Override
 	public int getAttackRange() {
-		// TODO Auto-generated method stub
 		return this.attackRange;
 	}
 
 	public void notifyObservers(){
-		this.observer.update(null, null);
+		this.observer.update(this);
 	}
 	
 	public void notifyDelete() {
-		this.observer.dispose();	
+		this.observer.dispose(this);	
 	}
 	
-	public void reAssignObserver(){
-		this.deleteObservers();
-		this.observer = new UnitObserver(this);
-		this.addObserver(this.observer);
+	public void setObserver(UnitObserver observer){
+		this.observer = observer;
 	}
 	
 	@Override

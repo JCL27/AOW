@@ -1,15 +1,15 @@
 package Units;
 
-import exceptions.UnavailableUnitException;
+import Observers.UnitObserver;
 import ar.edu.itba.game.Attackable;
 import ar.edu.itba.game.Element;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
-import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
+import ar.edu.itba.game.UnitFactory;
 import ar.edu.itba.game.WorldManager;
-import Observers.UnitObserver;
+import exceptions.UnavailableUnitException;
 
 public class FlyingUnit extends Unit{
 	
@@ -22,11 +22,9 @@ public class FlyingUnit extends Unit{
 	private static Integer AIUnitLevel = 0;
 	private static boolean AIAvailable = false;
 	
-	public FlyingUnit(Player player) throws UnavailableUnitException{
+	public FlyingUnit(Player player, UnitObserver observer) throws UnavailableUnitException{
+		super(player, observer);
 		checkIfAvailable(player);
-		this.player = player;
-		this.objective = null;
-		this.cooldown = 0;
 		this.bounty = GameStats.FLYING_UNIT_BOUNTY;
 		this.cost = GameStats.FLYING_UNIT_COST;
 		this.exp = GameStats.FLYING_UNIT_EXP;
@@ -52,8 +50,6 @@ public class FlyingUnit extends Unit{
 		}
 		
 		this.type = GameStats.FLYING_UNIT_TYPE;
-		this.observer = new UnitObserver(this);
-		this.addObserver(this.observer);
 		this.attackFlying = false;
 		WorldManager.getInstance().getElements().add(this.element);
 	}
@@ -80,7 +76,7 @@ public class FlyingUnit extends Unit{
 			//System.out.println("velocidad " + velX);			
 			if(this.getSide()==Side.RIGHT)
 				velX = -velX;
-			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(),
+			this.player.getProjectiles().add(UnitFactory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getY()-30, velX , (float)velY , true, this.damage));
 			
 			this.cooldown = (int)(1000/this.attackSpeed);		
@@ -109,7 +105,7 @@ public class FlyingUnit extends Unit{
 	}
 	
 	public static int getCost(Player player){
-		if(player == WorldManager.getInstance().getplayerAI())
+		if(player == WorldManager.getInstance().getPlayerAI())
 			return (int) (GameStats.FLYING_UNIT_COST + Math.sqrt(AIUnitLevel * GameStats.FLYING_UNIT_COST_UPGRADE_RATE));
 		return (int) (GameStats.FLYING_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.FLYING_UNIT_COST_UPGRADE_RATE));
 	}

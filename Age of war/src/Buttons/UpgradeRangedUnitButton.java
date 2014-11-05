@@ -2,7 +2,8 @@ package Buttons;
 
 import Draws.Icon;
 import Draws.Textures;
-import Upgrades.TowerDamageUpgrade;
+import Units.RangedUnit;
+import Upgrades.UnitUpgrade;
 import ar.edu.itba.game.WorldManager;
 
 public class UpgradeRangedUnitButton  extends Button{
@@ -12,6 +13,6 @@ public class UpgradeRangedUnitButton  extends Button{
 	
 	@Override
 	public void Click() {
-		WorldManager.getInstance().getPlayer().research(TowerDamageUpgrade.class);
+		WorldManager.getInstance().getPlayer().research(UnitUpgrade.class, RangedUnit.class);
 	}
 }

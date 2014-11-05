@@ -1,6 +1,5 @@
 package Units;
 
-import exceptions.DeadUnitException;
 import Observers.UnitObserver;
 import ar.edu.itba.game.Attackable;
 import ar.edu.itba.game.Element;
@@ -9,6 +8,7 @@ import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.Side;
 import ar.edu.itba.game.WorldManager;
+import exceptions.DeadUnitException;
  //TODO: ADD UPGRADES
 public class MeleeUnit extends Unit {
 	/**
@@ -20,10 +20,8 @@ public class MeleeUnit extends Unit {
 	private static Integer AIUnitLevel = 0;
 	private static boolean AIAvailable = true;
 	
-	public MeleeUnit(Player player){
-		this.player = player;
-		this.objective = null;
-		this.cooldown = 0;
+	public MeleeUnit(Player player, UnitObserver observer){
+		super(player, observer);
 		this.bounty = GameStats.MELEE_UNIT_BOUNTY;
 		this.cost = GameStats.MELEE_UNIT_COST;
 		this.exp = GameStats.MELEE_UNIT_EXP;
@@ -49,8 +47,6 @@ public class MeleeUnit extends Unit {
 			}
 			
 			this.type = GameStats.MELEE_UNIT_TYPE;
-			this.observer = new UnitObserver(this);
-			this.addObserver(this.observer);
 			this.attackFlying = false;
 			WorldManager.getInstance().getElements().add(this.element);
 		}
@@ -66,7 +62,7 @@ public class MeleeUnit extends Unit {
 	}
 	
 	public static int getCost(Player player){
-		if(player == WorldManager.getInstance().getplayerAI())
+		if(player == WorldManager.getInstance().getPlayerAI())
 			return (int) (GameStats.MELEE_UNIT_COST + Math.sqrt(AIUnitLevel * GameStats.MELEE_UNIT_COST_UPGRADE_RATE));
 		return (int) (GameStats.MELEE_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.MELEE_UNIT_COST_UPGRADE_RATE));
 	}

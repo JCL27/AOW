@@ -1,6 +1,21 @@
 package ar.edu.itba.game;
 
 public class GameStats {
+	/////////////////////////////////////
+	/////	BASE	/////////////////////
+	////////////////////////////////////
+	
+		public final static int BASE_PLAYER_X = -10;
+		public final static int BASE_AI_X = 954;
+		public final static int BASE_WIDTH = 256;
+		public final static int BASE_HEIGHT = 282;
+		public final static int BASE_MAX_HP = 15000;
+	
+	
+	/////////////////////////////////////
+	/////	UNITS	////////////////////
+	////////////////////////////////////
+	
 	//RANGED Unit Stats
 	
 		public final static Type RANGED_UNIT_TYPE = Type.GROUND;
@@ -35,7 +50,7 @@ public class GameStats {
 		public final static float FLYING_UNIT_ATTACK_SPEED = 5.0f;
 		public final static int FLYING_UNIT_ATTACK_RANGE = 300;
 		public final static int FLYING_UNIT_MOVEMENT_SPEED = 4;
-		public final static int FLYING_UNIT_DAMAGE = 80;
+		public final static int FLYING_UNIT_DAMAGE = 130;
 		public final static int FLYING_UNIT_BOUNTY = 300;
 		public final static int FLYING_UNIT_COST = 180;
 		public final static int FLYING_UNIT_EXP = 70;
@@ -45,7 +60,7 @@ public class GameStats {
 		public final static double FLYING_UNIT_ATTACK_SPEED_UPGRADE_RATE = 0.1;
 		public final static int FLYING_UNIT_ATTACK_RANGE_UPGRADE_RATE = 0;
 		public final static int FLYING_UNIT_MOVEMENT_SPEED_UPGRADE_RATE = 1;
-		public final static int FLYING_UNIT_DAMAGE_UPGRADE_RATE = 5;
+		public final static int FLYING_UNIT_DAMAGE_UPGRADE_RATE = 900;
 		public final static int FLYING_UNIT_BOUNTY_UPGRADE_RATE = 10;
 		public final static int FLYING_UNIT_COST_UPGRADE_RATE = 7;
 		
@@ -90,7 +105,7 @@ public class GameStats {
 		public final static int MELEE_UNIT_EXP = 70;
 		public final static int MELEE_UNIT_CREATION_TIME = 280;
 		
-		public final static int MELEE_UNIT_MAX_HP_UPGRADE_RATE = 1;
+		public final static int MELEE_UNIT_MAX_HP_UPGRADE_RATE = 1500;
 		public final static float MELEE_UNIT_ATTACK_SPEED_UPGRADE_RATE = 0.5f;
 		public final static int MELEE_UNIT_ATTACK_RANGE_UPGRADE_RATE = 5;
 		public final static int MELEE_UNIT_MOVEMENT_SPEED_UPGRADE_RATE = 0;
@@ -126,5 +141,5 @@ public class GameStats {
 		public final static int FLYING_UNIT_RESEARCH_COST = 130;
 		
 		
-		public final static int INITIAL_GOLD = 400;
+		public final static int INITIAL_GOLD = 700;
 }	

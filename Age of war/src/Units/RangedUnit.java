@@ -20,11 +20,8 @@ public class RangedUnit extends Unit implements Serializable{
 	private static Integer AIUnitLevel = 0;
 	private static boolean AIAvailable = true;
 	
-	public RangedUnit(Player player){
-		
-		this.player = player;
-		this.objective = null;
-		this.cooldown = 0;
+	public RangedUnit(Player player, UnitObserver observer){
+		super(player, observer);
 		this.bounty = GameStats.RANGED_UNIT_BOUNTY;
 		this.cost = GameStats.RANGED_UNIT_COST;
 		this.exp = GameStats.RANGED_UNIT_EXP;
@@ -49,8 +46,6 @@ public class RangedUnit extends Unit implements Serializable{
 			this.dir = Side.RIGHT;
 		}
 		this.type = GameStats.RANGED_UNIT_TYPE;
-		this.observer = new UnitObserver(this);
-		this.addObserver(this.observer);
 		this.attackFlying = false;
 		WorldManager.getInstance().getElements().add(this.element);
 		
@@ -76,7 +71,7 @@ public class RangedUnit extends Unit implements Serializable{
 	}
 	
 	public static int getCost(Player player){
-		if(player == WorldManager.getInstance().getplayerAI())
+		if(player == WorldManager.getInstance().getPlayerAI())
 			return (int) (GameStats.RANGED_UNIT_COST + Math.sqrt(AIUnitLevel * GameStats.RANGED_UNIT_COST_UPGRADE_RATE));
 		return (int) (GameStats.RANGED_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.RANGED_UNIT_COST_UPGRADE_RATE));
 	}

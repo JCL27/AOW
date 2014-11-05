@@ -1,9 +1,15 @@
 package UserInterface;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 import Buttons.Button;
+import DrawableObjects.BaseDrawableObject;
+import DrawableObjects.DrawableObject;
+import DrawableObjects.Queue;
+import DrawableObjects.UnitDraw;
+import Draws.BasicTowerDraw;
 import Draws.Drawable;
 import Draws.GrassDraw;
 import Draws.GroundDraw;
@@ -12,9 +18,12 @@ import Units.AntiaircraftUnit;
 import Units.FlyingUnit;
 import Units.MeleeUnit;
 import Units.RangedUnit;
+import Units.Unit;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
+import ar.edu.itba.game.Projectile;
+import ar.edu.itba.game.Side;
 import ar.edu.itba.game.WorldManager;
 
 import com.badlogic.gdx.graphics.Color;
@@ -24,7 +33,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-//import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+
 
 
 public class UIManager {
@@ -36,17 +45,29 @@ public class UIManager {
 	private final int BUTTON_SEPARATION = 150;
 	private SpriteBatch SB;
 	private ArrayList<Button> buttons = new ArrayList<Button>();
+	private HashMap<Unit, UnitDraw> unitsDraws = new HashMap<Unit, UnitDraw>();
+	private HashMap<Projectile, Drawable> projectilesDraws = new HashMap<Projectile, Drawable>();
 	private ArrayList<DrawableObject> DOs = new ArrayList<DrawableObject>();
 	private ArrayList<Drawable> drawables = new ArrayList<Drawable>();
 	private Stack<GameUIState> State = new Stack<GameUIState>();
 	
+	private Queue playerQueue = new Queue(Side.LEFT);
+	private Queue AIQueue = new Queue(Side.RIGHT);
+	private BaseDrawableObject playerBase;
+	private BaseDrawableObject AIBase;
+	private BasicTowerDraw playerTower;
+	private BasicTowerDraw AITower;	
+
 	private BitmapFont font;
 	private LabelStyle style;
 	private NinePatch labelBackground;
 	private Skin labelSkin;
 	private Label goldLabel;
 	private Label xpLabel;
-
+	
+	public HashMap<Unit, UnitDraw> getUnitsDraws() {
+		return unitsDraws;
+	}
 	
 	public static UIManager getInstance() {
 	      if(instance == null) {
@@ -59,17 +80,23 @@ public class UIManager {
 		return DOs;
 	}
 
-	public void setDOs(ArrayList<DrawableObject> dOs) {
-		DOs = dOs;
+	private UIManager(){
+		
 	}
-
-	public UIManager(){
-		this.initializeDraws();
+	
+	public void reset(){
+		this.DOs.clear();
+		this.drawables.clear();
+		this.projectilesDraws.clear();
+		this.unitsDraws.clear();
 	}
 	
 	public void initializeDraws(){
 		drawables.add(new GroundDraw(0,0));
 		drawables.add(new GrassDraw(270f , Game.GROUND_HEIGHT - 10, 50, 50));
+		
+		DOs.add(this.playerQueue);
+		DOs.add(this.AIQueue);
 		
 		font = new BitmapFont(false);
 		style = new LabelStyle(font, Color.MAGENTA);
@@ -83,12 +110,18 @@ public class UIManager {
 		goldLabel.setPosition(15, 750);
 		xpLabel.setPosition(15, 700);
 		
-		
-		
 		State.add(State.push(GameUIState.DEFAULT));
 		this.updateButtons();
 	}
 	
+	public void setPlayerBase(BaseDrawableObject playerBase) {
+		this.playerBase = playerBase;
+	}
+
+	public void setAIBase(BaseDrawableObject aIBase) {
+		this.AIBase = aIBase;
+	}
+
 	public void setSpriteBatch(SpriteBatch SB){
 		this.SB = SB;
 	}
@@ -188,8 +221,11 @@ public class UIManager {
 		case UPGRADE_UNIT:
 			this.buttons.add(new Buttons.UpgradeMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new Buttons.UpgradeRangedUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.UpgradeMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.UpgradeMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.UpgradeFlyingUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.UpgradeAntiaircraftUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.ResearchAntiaircraftUnitsButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new Buttons.ResearchFlyingUnitsButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+
 			break;
 		case UPGRADE_TOWER:
 			this.buttons.add(new Buttons.TowerDamageUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
@@ -211,8 +247,15 @@ public class UIManager {
 		return this.buttons;
 	}
 	
-	public void clearDraws(){
-		this.drawables.clear();
+	public void drawBases(){
+		this.drawObject(this.playerBase);
+		this.drawObject(this.AIBase);
+	}
+	
+	public void drawProjectiles(){
+		for(Drawable draw:this.projectilesDraws.values()){
+			this.drawTexture(draw);
+		}
 	}
 	
 	public void drawTextures(){
@@ -229,7 +272,6 @@ public class UIManager {
 	private void drawTexture(Drawable draw){
 		
 		//System.out.println(draw.getClass().getSimpleName() + " " + draw.getxPos() + " " + draw.getScreenHeight() + " " + draw.getSpriteHeight());
-		
 		SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
 				draw.getScreenHeight(), 0, 0, draw.getSpriteWidth(), draw.getSpriteHeight(), false, false);
 	}
@@ -247,14 +289,56 @@ public class UIManager {
 	}
 	
 	public void drawObjects(){
-		for(DrawableObject DO: DOs){
+		for(DrawableObject DO: this.DOs){
 			this.drawObject(DO);
 		}
+		
+		for(DrawableObject DO: this.unitsDraws.values()){
+			this.drawObject(DO);
+		}
+		
 	}
 	
+	public BasicTowerDraw getPlayerTower() {
+		return playerTower;
+	}
+
+	public BasicTowerDraw getAITower() {
+		return AITower;
+	}
+
 	private void drawObject(DrawableObject DO){
 		for(Drawable draw:DO.getDraws()){
 			this.drawTexture(draw);
 		}
 	}
+	
+	public Queue getPlayerQueue() {
+		return playerQueue;
+	}
+
+	public Queue getAIQueue() {
+		return AIQueue;
+	}
+
+	public BaseDrawableObject getPlayerBase() {
+		return playerBase;
+	}
+
+	public BaseDrawableObject getAIBase() {
+		return AIBase;
+	}
+
+	public void setPlayerTower(BasicTowerDraw playerTower) {
+		this.playerTower = playerTower;
+	}
+
+	public void setAITower(BasicTowerDraw aITower) {
+		AITower = aITower;
+	}
+
+	public HashMap<Projectile, Drawable> getProjectilesDraws() {
+		return projectilesDraws;
+	}
+
 }

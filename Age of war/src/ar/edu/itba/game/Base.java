@@ -13,7 +13,7 @@ public class Base extends Observable implements Attackable, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -4883608043561346759L;
-	static int MAX_HIT_POINTS = 5000;
+
 	static int HEIGHT = 282;
 	static int WIDTH = 180;
 	
@@ -23,7 +23,7 @@ public class Base extends Observable implements Attackable, Serializable {
 	private Side side;
 	private transient BaseObserver observer;
 	
-	public Base(Side side){
+	public Base(Side side, BaseObserver	baseObserver){
 		int X;
 		this.side = side;
 		if(side==Side.LEFT){
@@ -32,11 +32,9 @@ public class Base extends Observable implements Attackable, Serializable {
 			X = Game.WIDTH * Game.SCALE - WIDTH + 10 + 76/2;
 		}
 		element = new Element(X, Game.GROUND_HEIGHT, WIDTH, HEIGHT);
-		this.maxHP = MAX_HIT_POINTS;
-		this.HP = MAX_HIT_POINTS;
-		
-		this.observer = new BaseObserver(this);
-		this.addObserver(this.observer);
+		this.maxHP = GameStats.BASE_MAX_HP;
+		this.HP = GameStats.BASE_MAX_HP;
+		this.observer = baseObserver;
 	}
 	
 	public int getHP() {
@@ -54,8 +52,8 @@ public class Base extends Observable implements Attackable, Serializable {
 					// TODO Auto-generated catch block
 					//e.printStackTrace();
 				}
-			}	
-			this.observer.update(null, null);
+			}
+			this.observer.update(this);
 	}
 	
 	public int getMaxHP() {
@@ -76,8 +74,8 @@ public class Base extends Observable implements Attackable, Serializable {
 
 	public float getX() {
 		if(this.side == Side.LEFT)
-			return this.element.getX() -76/2;
-		return this.element.getX() - 3 * 76/2;
+			return this.element.getX() -38;
+		return this.element.getX() - 3 * 38;
 	}
 	
 	public float getY() {
@@ -95,11 +93,9 @@ public class Base extends Observable implements Attackable, Serializable {
 	public Side getSide() {
 		return this.side;
 	}
-	
-	public void reAssignObserver(){
-		this.deleteObservers();
-		this.observer = new BaseObserver(this);
-		this.addObserver(this.observer);
+
+	public void setObserver(BaseObserver baseObserver) {
+		this.observer = baseObserver;
 	}
 	
 	

@@ -2,9 +2,10 @@ package Upgrades;
 
 import java.util.ArrayList;
 
+import Units.Unit;
+import ar.edu.itba.game.Player;
 import exceptions.NotEnoughExpException;
 import exceptions.UnavailableUpgradeException;
-import ar.edu.itba.game.Player;
 
 public abstract class Upgrade {
 	protected ArrayList<Upgrade> needs;
@@ -16,13 +17,13 @@ public abstract class Upgrade {
 	protected int cost;
 	protected Player player;
 	
-	public abstract void applyUpgrade(Class classType);
+	public abstract void applyUpgrade(Class<Unit> classType);
 	
 	public Upgrade(Player player){
 		this.player = player;
 	}
 	
-	public void chargeAndApply(Class classType) throws UnavailableUpgradeException, NotEnoughExpException {
+	public void chargeAndApply(Class<Unit> classType) throws UnavailableUpgradeException, NotEnoughExpException {
 		if (this.isAvailable() == false)
 			throw new UnavailableUpgradeException();
 		useExp();

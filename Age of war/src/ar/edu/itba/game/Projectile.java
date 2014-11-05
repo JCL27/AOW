@@ -2,11 +2,10 @@ package ar.edu.itba.game;
 
 import java.awt.geom.Point2D;
 import java.io.Serializable;
-import java.util.Observable;
 
 import Observers.ProjectileObserver;
 
-public class Projectile extends Observable implements Serializable{
+public class Projectile implements Serializable{
 	/**
 	 * 
 	 */
@@ -35,26 +34,22 @@ public class Projectile extends Observable implements Serializable{
 		return new Point2D.Double(this.getMiddleX(), this.element.getY() + this.element.getHeight());
 	}
 	
-	public Projectile(float X, float Y, float velX, float velY, boolean gravity, int damage){
+	public Projectile(float X, float Y, float velX, float velY, boolean gravity, int damage, ProjectileObserver observer){
 		this.element = new Element((X - 15) , Y, velX, velY, 20, 20, true);
 		this.damage = damage;
 		WorldManager.getInstance().getElements().add(this.element);
-		this.observer = new ProjectileObserver(this);
-		this.addObserver(this.observer);
+		this.observer = observer;
 	}
 	
 	public void notifyObservers(){
-		this.observer.update(null, null);
+		this.observer.update(this);
 	}
 
 	public void notifyDelete() {
-		this.observer.dispose();	
+		this.observer.dispose(this);	
 	}
-	
-	public void reAssignObserver(){
-		this.deleteObservers();
-		this.observer = new ProjectileObserver(this);
-		this.addObserver(this.observer);
-		
+
+	public void setObserver(ProjectileObserver observer) {
+		this.observer = observer;
 	}
 }

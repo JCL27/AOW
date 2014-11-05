@@ -1,7 +1,7 @@
 package Buttons;
 
-import UserInterface.UIManager;
 import Draws.ArrowDraw;
+import UserInterface.UIManager;
 
 public class Back extends Button{
 

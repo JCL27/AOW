@@ -2,7 +2,6 @@ package ar.edu.itba.game;
 
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import Units.Unit;
@@ -14,10 +13,6 @@ public class WorldManager implements Serializable{
 	 */
 	private static final long serialVersionUID = -4035477768723084005L;
 	public static float MINDISTANCE = 25;
-	private static boolean playerCreatingUnit = false;
-	private static boolean AICreatingUnit = false;
-	private static int playerUnitCreationTime = 0;
-	private static int AIUnitCreationTime = 0;
 	
 	private Player player;
 	private Player playerAI;
@@ -27,8 +22,8 @@ public class WorldManager implements Serializable{
 	private static WorldManager instance = null;
 
 	private WorldManager() {
-		player = new Player(Side.LEFT);
-		playerAI = new Player(Side.RIGHT);
+		player = UnitFactory.getInstance().createPlayer(Side.LEFT);
+		playerAI = UnitFactory.getInstance().createPlayer(Side.RIGHT);
 		ground = new Element(-Game.WIDTH * 10, 0, Game.WIDTH * 21,  Game.GROUND_HEIGHT);
 	}
 	
@@ -40,16 +35,15 @@ public class WorldManager implements Serializable{
    }
 	
 	public void notifyObservers(){
-		for(Unit unit:player.getUnits())
+		for(Unit unit:player.getUnits()){
 			unit.notifyObservers();
+			}
 		for(Unit unit:playerAI.getUnits())
 			unit.notifyObservers();
 		for(Projectile pjt:player.getProjectiles())
 			pjt.notifyObservers();
 		for(Projectile pjt:playerAI.getProjectiles())
 			pjt.notifyObservers();
-		if (this.player.getTower() != null)
-			player.getTower().notifyObservers();
 	}
 	
 	public void updateElements(){
@@ -244,7 +238,7 @@ public class WorldManager implements Serializable{
 	   return player;
    }
    
-   public Player getplayerAI(){
+   public Player getPlayerAI(){
 	   return playerAI;
    }
    
@@ -266,29 +260,5 @@ public class WorldManager implements Serializable{
    public String toString(){
 	   String str = player.toString() + " " +playerAI.toString() + " " + elements.toString();
 	   return str;
-   }
-   
-   public void reAssignObservers(){
-	   for(Unit unit:player.getUnits()){
-		   unit.reAssignObserver();
-	   }
-	   for(Unit unit:playerAI.getUnits()){
-		   unit.reAssignObserver();
-	   }
-	   for(Projectile pjt:player.getProjectiles()){
-		   pjt.reAssignObserver();
-	   }
-	   for(Projectile pjt:playerAI.getProjectiles()){
-		   pjt.reAssignObserver();
-	   }
-	   player.getBase().reAssignObserver();
-	   playerAI.getBase().reAssignObserver();
-	   if(player.getTower()!=null)
-		   player.getTower().reAssignObserver();
-	   if(playerAI.getTower()!=null)
-		   playerAI.getTower().reAssignObserver();
-	   player.reAssignObserver();
-	   playerAI.reAssignObserver();
-	   
    }
 }

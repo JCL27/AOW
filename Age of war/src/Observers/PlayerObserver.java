@@ -2,54 +2,28 @@ package Observers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
-import UserInterface.Queue;
+import DrawableObjects.Queue;
+import Units.Unit;
 import UserInterface.UIManager;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.Side;
-import ar.edu.itba.game.WorldManager;
 
-public class PlayerObserver implements Observer {
-
-	private Side side;
-	private Player player;
-	private Queue queue;
-	ArrayList<Class> unitsQueue; 
+public class PlayerObserver{
 	
-	public PlayerObserver(Player player, Side side){
-		this.side = side;
-		if(side.equals(Side.LEFT))
-			queue = new Queue(this.side);
-		else
-			queue = new Queue(this.side);
-		UIManager.getInstance().getDOs().add(queue);
+	public PlayerObserver(){
+
 	}
 	
-	@Override
-	public void update(Observable arg0, Object arg1) {
-		if(this.player == null){
-			if(this.side == Side.LEFT)
-				this.player = WorldManager.getInstance().getPlayer();
-			else
-				this.player = WorldManager.getInstance().getplayerAI();
-		}
-		int creationTime =	this.player.getPlayerUnitCreationTime();
-		this.queue.addElement(this.player.getUnitToQueue(), creationTime);
-	}
-	
-	public void addElementToQueue(Class unitClass){
-		if(this.player == null){
-			if(this.side == Side.LEFT)
-				this.player = WorldManager.getInstance().getPlayer();
-			else
-				this.player = WorldManager.getInstance().getplayerAI();
-		}
+	public void addElementToQueue(Player player, Class unitClass){
 		int creationTime;
+		Side side = player.getSide();
 		try {
 			creationTime = (int) unitClass.getMethod("getCreationTime").invoke(null);
-			this.queue.addElement(unitClass, creationTime);
+			if(side.equals(Side.LEFT))
+				UIManager.getInstance().getPlayerQueue().addElement(unitClass, creationTime);
+			else
+				UIManager.getInstance().getAIQueue().addElement(unitClass, creationTime);
 		} catch (IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException
 				| SecurityException e) {
@@ -58,12 +32,28 @@ public class PlayerObserver implements Observer {
 
 	}
 	
-	public void updateCurrentTime(int current){
-		this.queue.updateTime(current);
+	public void updateCurrentTime(Player player, int current){
+		if(player.getSide().equals(Side.LEFT))
+			UIManager.getInstance().getPlayerQueue().setCurrent(current);
+		else
+			UIManager.getInstance().getAIQueue().setCurrent(current);
 	}
 	
-	public void removeElementFromQueue(int index){
-		this.queue.removeElement(index);
+	public void removeElementFromQueue(Player player, int index){
+		if(player.getSide().equals(Side.LEFT))
+			UIManager.getInstance().getPlayerQueue().removeElement(index);
+		else
+			UIManager.getInstance().getAIQueue().removeElement(index);
+	}
+
+	public void loadQueue(Player player, ArrayList<Class<Unit>> unitsQueue,
+			int playerUnitCreationTime) {
+		Queue queue;
+		if(player.getSide().equals(Side.LEFT)){
+			queue = UIManager.getInstance().getPlayerQueue();
+		}else
+			queue = UIManager.getInstance().getAIQueue();
+		queue.loadQueue(unitsQueue, playerUnitCreationTime);
 	}
 	
 	

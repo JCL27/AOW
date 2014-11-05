@@ -1,12 +1,11 @@
 package ar.edu.itba.game;
 
 import java.io.Serializable;
-import java.util.Observable;
 
-import exceptions.AlreadyAppliedUpgradeException;
 import Observers.TowerObserver;
+import exceptions.AlreadyAppliedUpgradeException;
 
-public class Tower extends Observable implements CanAttack, Serializable{
+public class Tower implements CanAttack, Serializable{
 	
 	private static final long serialVersionUID = 6947500221042518381L;
 	
@@ -16,15 +15,7 @@ public class Tower extends Observable implements CanAttack, Serializable{
 	private int cooldown;
 	private Side side;
 	private float attackSpeed;
-	public boolean isUpgradedDamage() {
-		return upgradedDamage;
-	}
-	public boolean isUpgradedAttackRange() {
-		return upgradedAttackRange;
-	}
-	public boolean isUpgradedAttackSpeed() {
-		return upgradedAttackSpeed;
-	}
+	
 
 	private int attackRange;
 	private Attackable objective;
@@ -37,6 +28,16 @@ public class Tower extends Observable implements CanAttack, Serializable{
 	private boolean upgradedAttackSpeed = false;
 	
 	
+	public boolean isUpgradedDamage() {
+		return upgradedDamage;
+	}
+	public boolean isUpgradedAttackRange() {
+		return upgradedAttackRange;
+	}
+	public boolean isUpgradedAttackSpeed() {
+		return upgradedAttackSpeed;
+	}
+	
 	public void updateAttackObjective(){
 		if (this.objective == null || !WorldManager.getInstance().getElements().contains(this.objective.getElement())){
 			this.objective = WorldManager.getInstance().isInRange(this);
@@ -45,9 +46,6 @@ public class Tower extends Observable implements CanAttack, Serializable{
 			this.attack(this.objective);
 		}
 		//System.out.println("Torre: " + this.player + " Objetivo: " + this.objective);
-	}
-	public void notifyObservers(){
-		this.observer.update(null, null);
 	}
 	
 	public void Sell(){
@@ -60,7 +58,7 @@ public class Tower extends Observable implements CanAttack, Serializable{
 	}
 	/////////////////////
 
-	public Tower(Player player){
+	public Tower(Player player, TowerObserver observer){
 		this.player = player;
 		this.objective = null;
 		this.attackFlying = true;
@@ -80,8 +78,7 @@ public class Tower extends Observable implements CanAttack, Serializable{
 			this.element = new Element(1000, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, 100, 100);
 		}
 		
-		this.observer = new TowerObserver(this);
-		this.addObserver(this.observer);
+		this.observer = observer;
 		
 		Upgrades.Upgrades.getInstance().setAvailable("TowerDamageUpgrade", this.player);
 		Upgrades.Upgrades.getInstance().setAvailable("TowerAttackSpeedUpgrade", this.player);
@@ -112,7 +109,7 @@ public class Tower extends Observable implements CanAttack, Serializable{
 				velX = -velX;
 			}
 			
-			this.player.getProjectiles().add(new Projectile(this.getElement().getMiddleX(),
+			this.player.getProjectiles().add(UnitFactory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
 
 			this.cooldown = (int)(1000/this.attackSpeed);		
@@ -188,13 +185,11 @@ public class Tower extends Observable implements CanAttack, Serializable{
 	}
 	
 	public void notifyDelete() {
-		this.observer.dispose();	
+		this.observer.dispose(this);	
 	}
-	
-	public void reAssignObserver(){
-		this.deleteObservers();
-		this.observer = new TowerObserver(this);
-		this.addObserver(this.observer);
+	public void setObserver(TowerObserver towerObserver) {
+		this.observer = towerObserver;
+		
 	}
 	
 }

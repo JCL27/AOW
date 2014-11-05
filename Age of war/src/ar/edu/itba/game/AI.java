@@ -25,7 +25,7 @@ public class AI {
 	private int upgradeChoice;
 	
 	private AI() {
-		this.player = WorldManager.getInstance().getplayerAI();
+		this.player = WorldManager.getInstance().getPlayerAI();
 	}
 	
 	public static AI getInstance() {

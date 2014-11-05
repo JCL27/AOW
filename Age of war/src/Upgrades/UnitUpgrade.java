@@ -2,6 +2,7 @@ package Upgrades;
 
 import java.lang.reflect.InvocationTargetException;
 
+import Units.Unit;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.WorldManager;
@@ -16,7 +17,7 @@ public class UnitUpgrade extends Upgrade {
 	}
 
 	@Override
-	public void applyUpgrade(Class classType) {
+	public void applyUpgrade(Class<Unit> classType) {
 		try {
 			if(this.player.equals(WorldManager.getInstance().getPlayer())){
 				classType.getMethod("playerLevelUp").invoke(classType);

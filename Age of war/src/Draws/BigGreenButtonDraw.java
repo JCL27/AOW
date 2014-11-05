@@ -9,7 +9,6 @@ public class BigGreenButtonDraw extends Drawable{
 	
 	private Texture leftTexture = Textures.GREEN_BUTTON;
 	private int scale = 2;
-	private int totalSprites = 1;
 	
 	private int screenHeight;
 	private int screenWidth;

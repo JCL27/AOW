@@ -1,10 +1,9 @@
 package Buttons;
 
-import Draws.BigGreenButtonDraw;
 import Draws.Icon;
 import Draws.Textures;
-import UserInterface.UIManager;
 import UserInterface.GameUIState;
+import UserInterface.UIManager;
 
 public class Tower extends Button{
 

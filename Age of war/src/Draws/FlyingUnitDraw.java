@@ -8,8 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class FlyingUnitDraw extends Drawable {
 	private Texture leftTexture = Textures.AIR_UNIT;
 	private Texture rightTexture = Textures.AIR_UNIT;
-	private int scale = 4;
-	private int totalSprites = 1;
+
 	
 	public FlyingUnitDraw(float xPos, float yPos, int screenHeight, int screenWidth, Player player) {
 			super(xPos, yPos, screenHeight, screenWidth);

@@ -2,7 +2,7 @@ package Buttons;
 
 import Draws.Icon;
 import Draws.Textures;
-import Upgrades.TowerDamageUpgrade;
+import Upgrades.FlyingUnitResearch;
 import ar.edu.itba.game.WorldManager;
 
 public class ResearchFlyingUnitsButton  extends Button{
@@ -12,6 +12,9 @@ public class ResearchFlyingUnitsButton  extends Button{
 	
 	@Override
 	public void Click() {
-		WorldManager.getInstance().getPlayer().research(TowerDamageUpgrade.class);
+		System.out.println("investiga fly");
+		WorldManager.getInstance().getPlayer().research(FlyingUnitResearch.class);
+
+
 	}
 }

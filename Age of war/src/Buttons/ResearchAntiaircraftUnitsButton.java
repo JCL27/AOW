@@ -2,8 +2,9 @@ package Buttons;
 
 import Draws.Icon;
 import Draws.Textures;
-import Upgrades.TowerDamageUpgrade;
+import Upgrades.AntiaircraftUnitResearch;
 import ar.edu.itba.game.WorldManager;
+
 
 public class ResearchAntiaircraftUnitsButton  extends Button{
 	public ResearchAntiaircraftUnitsButton(float X, float Y) {
@@ -12,6 +13,8 @@ public class ResearchAntiaircraftUnitsButton  extends Button{
 	
 	@Override
 	public void Click() {
-		WorldManager.getInstance().getPlayer().research(TowerDamageUpgrade.class);
+		System.out.println("investiga anti");
+
+		WorldManager.getInstance().getPlayer().research(AntiaircraftUnitResearch.class);
 	}
 }
