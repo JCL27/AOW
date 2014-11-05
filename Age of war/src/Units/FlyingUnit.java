@@ -103,6 +103,9 @@ public class FlyingUnit extends Unit{
 		playerUnitLevel = Integer.parseInt(row[0]);
 		AIUnitLevel = Integer.parseInt(row[1]);
 	}
+	public static Integer getPlayerUnitLevel(){ 
+		return playerUnitLevel;
+	}
 	
 	public static int getCost(Player player){
 		if(player == WorldManager.getInstance().getPlayerAI())

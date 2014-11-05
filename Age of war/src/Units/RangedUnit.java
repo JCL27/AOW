@@ -76,6 +76,10 @@ public class RangedUnit extends Unit implements Serializable{
 		return (int) (GameStats.RANGED_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.RANGED_UNIT_COST_UPGRADE_RATE));
 	}
 	
+	public static Integer getPlayerUnitLevel(){ 
+		return playerUnitLevel;
+	}
+	
 	public static boolean isPlayerAvailable() {
 		return playerAvailable;
 	}

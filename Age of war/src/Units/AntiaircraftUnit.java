@@ -131,6 +131,10 @@ public class AntiaircraftUnit extends Unit{
 		playerUnitLevel = Integer.parseInt(row[0]);
 		AIUnitLevel = Integer.parseInt(row[1]);
 	}
+	public static Integer getPlayerUnitLevel(){ 
+		return playerUnitLevel;
+	}
+	
 	public static int getCreationTime() {
 		return GameStats.ANTIAIRCRAFT_UNIT_CREATION_TIME;
 	}

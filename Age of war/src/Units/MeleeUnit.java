@@ -56,6 +56,9 @@ public class MeleeUnit extends Unit {
 		return str;
 	}
 	
+	public static Integer getPlayerUnitLevel(){ 
+		return playerUnitLevel;
+	}
 	public static void setLevels(String[] row){
 		playerUnitLevel = Integer.parseInt(row[0]);
 		AIUnitLevel = Integer.parseInt(row[1]);
@@ -108,4 +111,5 @@ public class MeleeUnit extends Unit {
 	public static int getCreationTime() {
 		return GameStats.MELEE_UNIT_CREATION_TIME;
 	}
+	
 }
