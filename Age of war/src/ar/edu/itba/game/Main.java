@@ -15,6 +15,7 @@ public class Main{
 		cfg.height = Game.HEIGHT * Game.SCALE;
 		cfg.initialBackgroundColor.add(Color.valueOf("B2FFFF"));
 		cfg.resizable = true;
+		cfg.vSyncEnabled = true;
 		new LwjglApplication(new Game(), cfg);
 	}
 	

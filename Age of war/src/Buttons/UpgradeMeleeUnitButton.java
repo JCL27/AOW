@@ -8,7 +8,7 @@ import ar.edu.itba.game.WorldManager;
 
 public class UpgradeMeleeUnitButton extends Button{
 	public UpgradeMeleeUnitButton(float X, float Y) {
-		this.draw = new Icon(X, Y, 80, 80, Textures.TOWER_DAMAGE_UPGRADE_ICON, Textures.DARK_TOWER_DAMAGE_UPGRADE_ICON);
+		this.draw = new Icon(X, Y, 80, 80, Textures.MELEE_UNIT_UPGRADE_ICON, Textures.DARK_MELEE_UNIT_UPGRADE_ICON);
 	}
 	
 	@Override

@@ -60,7 +60,7 @@ public class GameStats {
 		public final static double FLYING_UNIT_ATTACK_SPEED_UPGRADE_RATE = 0.1;
 		public final static int FLYING_UNIT_ATTACK_RANGE_UPGRADE_RATE = 0;
 		public final static int FLYING_UNIT_MOVEMENT_SPEED_UPGRADE_RATE = 1;
-		public final static int FLYING_UNIT_DAMAGE_UPGRADE_RATE = 900;
+		public final static int FLYING_UNIT_DAMAGE_UPGRADE_RATE = 1500;
 		public final static int FLYING_UNIT_BOUNTY_UPGRADE_RATE = 10;
 		public final static int FLYING_UNIT_COST_UPGRADE_RATE = 7;
 		
@@ -105,7 +105,7 @@ public class GameStats {
 		public final static int MELEE_UNIT_EXP = 70;
 		public final static int MELEE_UNIT_CREATION_TIME = 280;
 		
-		public final static int MELEE_UNIT_MAX_HP_UPGRADE_RATE = 1500;
+		public final static int MELEE_UNIT_MAX_HP_UPGRADE_RATE = 15000;
 		public final static float MELEE_UNIT_ATTACK_SPEED_UPGRADE_RATE = 0.5f;
 		public final static int MELEE_UNIT_ATTACK_RANGE_UPGRADE_RATE = 5;
 		public final static int MELEE_UNIT_MOVEMENT_SPEED_UPGRADE_RATE = 0;

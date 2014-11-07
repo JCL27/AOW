@@ -45,7 +45,7 @@ public class MeleeUnit extends Unit {
 				this.movementSpeed = (-1) * (int) (GameStats.MELEE_UNIT_MOVEMENT_SPEED + Math.sqrt(AIUnitLevel * GameStats.MELEE_UNIT_MOVEMENT_SPEED_UPGRADE_RATE));
 				this.dir = Side.RIGHT;
 			}
-			
+			System.out.println("meleeUnit: " + this.maxHp);
 			this.type = GameStats.MELEE_UNIT_TYPE;
 			this.attackFlying = false;
 			WorldManager.getInstance().getElements().add(this.element);

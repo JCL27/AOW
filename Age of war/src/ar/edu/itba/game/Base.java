@@ -96,6 +96,7 @@ public class Base extends Observable implements Attackable, Serializable {
 
 	public void setObserver(BaseObserver baseObserver) {
 		this.observer = baseObserver;
+		this.observer.update(this);
 	}
 	
 	

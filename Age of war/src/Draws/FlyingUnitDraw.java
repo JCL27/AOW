@@ -6,8 +6,8 @@ import ar.edu.itba.game.WorldManager;
 import com.badlogic.gdx.graphics.Texture;
 
 public class FlyingUnitDraw extends Drawable {
-	private Texture leftTexture = Textures.AIR_UNIT;
-	private Texture rightTexture = Textures.AIR_UNIT;
+	private Texture leftTexture = Textures.BLUE_AIR_UNIT;
+	private Texture rightTexture = Textures.RED_AIR_UNIT;
 
 	
 	public FlyingUnitDraw(float xPos, float yPos, int screenHeight, int screenWidth, Player player) {

@@ -8,7 +8,7 @@ import UserInterface.UIManager;
 public class UpgradeUnitButton extends Button {
 
 	public UpgradeUnitButton(float X, float Y) {
-		this.draw = new Icon(X, Y, 80, 80, Textures.TOWER_DAMAGE_UPGRADE_ICON, Textures.DARK_TOWER_DAMAGE_UPGRADE_ICON);
+		this.draw = new Icon(X, Y, 80, 80, Textures.UNIT_UPGRADE_ICON, Textures.UNIT_UPGRADE_ICON);
 	}
 	
 	@Override

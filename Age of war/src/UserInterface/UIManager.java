@@ -214,7 +214,7 @@ public class UIManager {
 		for(Button button:this.buttons){
 			switch(button.getClass().getSimpleName()){
 			case("CreateAntiaircraftUnit"):
-				if(player.getGold()<AntiaircraftUnit.getCost(player))
+				if(player.getGold()<AntiaircraftUnit.getCost(player) || !AntiaircraftUnit.isPlayerAvailable())
 					button.getDraw().setDisabled();
 				else
 					button.getDraw().setEnabled();
@@ -226,7 +226,7 @@ public class UIManager {
 					button.getDraw().setEnabled();
 				break;
 			case("CreateFlyingUnit"):
-				if(player.getGold()<FlyingUnit.getCost(player))
+				if(player.getGold()<FlyingUnit.getCost(player) || !FlyingUnit.isPlayerAvailable())
 					button.getDraw().setDisabled();
 				else
 					button.getDraw().setEnabled();
@@ -264,6 +264,42 @@ public class UIManager {
 				break;
 			case("DisposeTower"):
 				if(player.getTower()==null)
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("ResearchAntiaircraftUnitsButton"):
+				if(player.getExp()<GameStats.ANTIAIRCRAFT_UNIT_RESEARCH_COST || AntiaircraftUnit.isPlayerAvailable())
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("ResearchFlyingUnitsButton"):
+				if(player.getExp()<GameStats.FLYING_UNIT_RESEARCH_COST || FlyingUnit.isPlayerAvailable())
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("UpgradeAntiaircraftUnitButton"):
+				if(player.getExp()<GameStats.UNIT_UPGRADE_COST)
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("UpgradeFlyingUnitButton"):
+				if(player.getExp()<GameStats.UNIT_UPGRADE_COST)
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("UpgradeMeleeUnitButton"):
+				if(player.getExp()<GameStats.UNIT_UPGRADE_COST)
+					button.getDraw().setDisabled();
+				else
+					button.getDraw().setEnabled();
+				break;
+			case("UpgradeRangedUnitButton"):
+				if(player.getExp()<GameStats.UNIT_UPGRADE_COST)
 					button.getDraw().setDisabled();
 				else
 					button.getDraw().setEnabled();
