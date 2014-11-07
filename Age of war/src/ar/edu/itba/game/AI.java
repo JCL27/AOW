@@ -42,8 +42,12 @@ public class AI {
 	public void desitionMaker(){
 	
 		if((player.getUnits().size() + player.getUnitsQueue().size()) < 2){
-			player.buyUnit(Units.MeleeUnit.class);
-			player.buyUnit(Units.RangedUnit.class);
+			if(player.getGold()>MeleeUnit.getCost(player)){
+				player.buyUnit(MeleeUnit.class);
+			}
+			if(player.getGold()>RangedUnit.getCost(player)){
+				player.buyUnit(RangedUnit.class);
+			}	
 		}else{
 			if(objectiveAccomplished == true){
 				choice = rand.nextInt(9);

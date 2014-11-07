@@ -77,7 +77,7 @@ public class MyInputProcessor implements InputProcessor{
 			}
 		}
 		if(buttonClicked!=null){
-			buttonClicked.Click();
+			buttonClicked.checkAndClick();
 		}
 		return false;
 	}

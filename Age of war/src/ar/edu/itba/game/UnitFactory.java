@@ -18,18 +18,18 @@ public class UnitFactory {
 	private PlayerObserver playerObserver;
 	private BaseObserver baseObserver;
 	private ProjectileObserver projectileObserver;
-	
-	
+
+
 	public static UnitFactory getInstance() {
-	      if(instance == null) {
-	         instance = new UnitFactory();
-	      }
-	      return instance;
-	   }
-	
+		if(instance == null) {
+			instance = new UnitFactory();
+		}
+		return instance;
+	}
+
 	private UnitFactory(){
 	}
-	
+
 	public void setObservers(BaseObserver baseObserver, UnitObserver unitObserver, 
 			PlayerObserver playerObserver, TowerObserver towerObserver, ProjectileObserver projectileObserver){
 		this.unitObserver = unitObserver;
@@ -38,30 +38,30 @@ public class UnitFactory {
 		this.playerObserver = playerObserver;
 		this.projectileObserver = projectileObserver;
 	}
-	
+
 	public Player createPlayer(Side side){
 		Player player = new Player(side, this.playerObserver);
 		System.out.println(this.playerObserver);
 		return player;
 	}
-	
+
 	public Projectile createProjectile(float X, float Y, float velX, float velY, boolean gravity, int damage){
 		Projectile pjt = new Projectile(X, Y, velX, velY, gravity, damage, this.projectileObserver);
 		this.projectileObserver.addProjectile(pjt);
 		return pjt;
 	}
-	
+
 	public Tower createTower(Player player){
 		Tower tower = new Tower(player, this.towerObserver);
 		towerObserver.createTower(tower);
 		return tower;
 	}
-	
+
 	public Base createBase(Side side){
 		Base base = new Base(side, this.baseObserver);
 		return base;
 	}
-	
+
 	public Unit createUnit(Class unitClass, Player player){
 		Unit unit = null;
 		try {
@@ -84,38 +84,43 @@ public class UnitFactory {
 		this.unitObserver.addUnit(unit);
 		return unit;
 	}
-	
-	 public void reAssignObservers(){
-		   
-		 Player player = WorldManager.getInstance().getPlayer();
-		 Player playerAI = WorldManager.getInstance().getPlayerAI();
 
-		 for(Unit unit:WorldManager.getInstance().getPlayer().getUnits()){
-			   unit.setObserver(this.unitObserver);
-			   this.unitObserver.addUnit(unit);
-		   }
-		   for(Unit unit:playerAI.getUnits()){
-			   unit.setObserver(this.unitObserver);
-			   this.unitObserver.addUnit(unit);
-		   }
-		   for(Projectile pjt:player.getProjectiles()){
-			   pjt.setObserver(this.projectileObserver);
-			   projectileObserver.addProjectile(pjt);
-		   }
-		   for(Projectile pjt:playerAI.getProjectiles()){
-			   pjt.setObserver(this.projectileObserver);
-			   projectileObserver.addProjectile(pjt);
-		   }
-		   player.getBase().setObserver(this.baseObserver);
-		   playerAI.getBase().setObserver(this.baseObserver);
-		   if(player.getTower()!=null)
-			   player.getTower().setObserver(this.towerObserver);
-		   if(playerAI.getTower()!=null)
-			   playerAI.getTower().setObserver(this.towerObserver);
-		   player.setObserver(this.playerObserver);
-		   playerAI.setObserver(this.playerObserver);
-		   
-	   }
-	 
-	 
+	public void reAssignObservers(){
+
+		Player player = WorldManager.getInstance().getPlayer();
+		Player playerAI = WorldManager.getInstance().getPlayerAI();
+
+		for(Unit unit:WorldManager.getInstance().getPlayer().getUnits()){
+			unit.setObserver(this.unitObserver);
+			this.unitObserver.addUnit(unit);
+		}
+		for(Unit unit:playerAI.getUnits()){
+			unit.setObserver(this.unitObserver);
+			this.unitObserver.addUnit(unit);
+		}
+		for(Projectile pjt:player.getProjectiles()){
+			pjt.setObserver(this.projectileObserver);
+			projectileObserver.addProjectile(pjt);
+		}
+		for(Projectile pjt:playerAI.getProjectiles()){
+			pjt.setObserver(this.projectileObserver);
+			projectileObserver.addProjectile(pjt);
+		}
+		player.getBase().setObserver(this.baseObserver);
+		playerAI.getBase().setObserver(this.baseObserver);
+		if(player.getTower()!=null)
+			player.getTower().setObserver(this.towerObserver);
+		if(playerAI.getTower()!=null)
+			playerAI.getTower().setObserver(this.towerObserver);
+		player.setObserver(this.playerObserver);
+		playerAI.setObserver(this.playerObserver);
+		if(player.getTower()!=null){
+			this.towerObserver.createTower(player.getTower());
+			if(playerAI.getTower()!=null)
+				this.towerObserver.createTower(playerAI.getTower());
+		}
+
+	}
+
+
 }

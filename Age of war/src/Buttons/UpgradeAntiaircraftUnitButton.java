@@ -4,13 +4,26 @@ import Draws.Icon;
 import Draws.Textures;
 import Units.AntiaircraftUnit;
 import Upgrades.UnitUpgrade;
+import ar.edu.itba.game.GameStats;
+import ar.edu.itba.game.Player;
 import ar.edu.itba.game.WorldManager;
 
 public class UpgradeAntiaircraftUnitButton extends Button {
 	public UpgradeAntiaircraftUnitButton(float X, float Y) {
 		this.draw = new Icon(X, Y, 80, 80, Textures.ANTIAIRCRAFT_UNIT_UPGRADE_ICON, Textures.DARK_ANTIAIRCRAFT_UNIT_UPGRADE_ICON);
 	}
-	
+
+	public boolean checkAvailability(){
+		Player player = WorldManager.getInstance().getPlayer();
+		if(player.getExp()<GameStats.UNIT_UPGRADE_COST){
+			this.getDraw().setDisabled();
+			return false;
+		}
+		this.getDraw().setEnabled();
+		return true;
+	}
+
+
 	@Override
 	public void Click() {
 		WorldManager.getInstance().getPlayer().research(UnitUpgrade.class, AntiaircraftUnit.class);
