@@ -10,9 +10,9 @@ import Observers.TowerObserver;
 import Observers.UnitObserver;
 import Units.Unit;
 
-public class UnitFactory {
+public class Factory {
 
-	private static UnitFactory instance = null;
+	private static Factory instance = null;
 	private UnitObserver unitObserver;
 	private TowerObserver towerObserver;
 	private PlayerObserver playerObserver;
@@ -20,14 +20,14 @@ public class UnitFactory {
 	private ProjectileObserver projectileObserver;
 
 
-	public static UnitFactory getInstance() {
+	public static Factory getInstance() {
 		if(instance == null) {
-			instance = new UnitFactory();
+			instance = new Factory();
 		}
 		return instance;
 	}
 
-	private UnitFactory(){
+	private Factory(){
 	}
 
 	public void setObservers(BaseObserver baseObserver, UnitObserver unitObserver, 

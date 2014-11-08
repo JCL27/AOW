@@ -109,7 +109,7 @@ public class Tower implements CanAttack, Serializable{
 				velX = -velX;
 			}
 			
-			this.player.getProjectiles().add(UnitFactory.getInstance().createProjectile(this.getElement().getMiddleX(),
+			this.player.getProjectiles().add(Factory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
 
 			this.cooldown = (int)(1000/this.attackSpeed);		

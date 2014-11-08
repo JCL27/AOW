@@ -78,7 +78,7 @@ public class Game implements ApplicationListener {
 		
 		WorldManager.disposeWM();
 		UIManager.getInstance().reset();
-		UnitFactory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+		Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
 		UIManager.getInstance().initializeDraws();
 		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayer().getBase().getElement());
 		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayerAI().getBase().getElement());
@@ -86,7 +86,7 @@ public class Game implements ApplicationListener {
 		FlyingUnit.setPlayerAvailable(false);
 		AntiaircraftUnit.setAIAvailable(false);
 		AntiaircraftUnit.setPlayerAvailable(false);
-		UnitFactory.getInstance().reAssignObservers();
+		Factory.getInstance().reAssignObservers();
 		AI.reset();
 		Upgrades.reset();
 		gameState = GameState.GAME;
@@ -244,8 +244,8 @@ public class Game implements ApplicationListener {
 			
 		   UIManager.getInstance().reset();
 		   UIManager.getInstance().initializeDraws();
-		   UnitFactory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
-		   UnitFactory.getInstance().reAssignObservers();
+		   Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+		   Factory.getInstance().reAssignObservers();
 		   AI.reset();
 		   Upgrades.reset();
 		   onGame = true;

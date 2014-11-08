@@ -23,8 +23,8 @@ public class WorldManager implements Serializable{
 	private static WorldManager instance = null;
 
 	private WorldManager() {
-		player = UnitFactory.getInstance().createPlayer(Side.LEFT);
-		playerAI = UnitFactory.getInstance().createPlayer(Side.RIGHT);
+		player = Factory.getInstance().createPlayer(Side.LEFT);
+		playerAI = Factory.getInstance().createPlayer(Side.RIGHT);
 		ground = new Element(-Game.WIDTH * 10, 0, Game.WIDTH * 21,  Game.GROUND_HEIGHT);
 	}
 
