@@ -7,7 +7,7 @@ import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.Side;
-import ar.edu.itba.game.UnitFactory;
+import ar.edu.itba.game.Factory;
 import ar.edu.itba.game.WorldManager;
 
 public class AntiaircraftUnit extends Unit{
@@ -93,7 +93,7 @@ public class AntiaircraftUnit extends Unit{
 				else
 					velX = (float)velY;
 			}
-			this.player.getProjectiles().add(UnitFactory.getInstance().createProjectile(this.getElement().getMiddleX(),
+			this.player.getProjectiles().add(Factory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
 			
 			//System.out.println("attack!");

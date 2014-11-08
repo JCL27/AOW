@@ -7,7 +7,7 @@ import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Player;
 import ar.edu.itba.game.Side;
-import ar.edu.itba.game.UnitFactory;
+import ar.edu.itba.game.Factory;
 import ar.edu.itba.game.WorldManager;
 import exceptions.UnavailableUnitException;
 
@@ -76,7 +76,7 @@ public class FlyingUnit extends Unit{
 			//System.out.println("velocidad " + velX);			
 			if(this.getSide()==Side.RIGHT)
 				velX = -velX;
-			this.player.getProjectiles().add(UnitFactory.getInstance().createProjectile(this.getElement().getMiddleX(),
+			this.player.getProjectiles().add(Factory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getY()-30, velX , (float)velY , true, this.damage));
 			
 			this.cooldown = (int)(1000/this.attackSpeed);		

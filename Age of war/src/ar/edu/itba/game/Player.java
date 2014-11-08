@@ -30,7 +30,7 @@ public class Player implements Serializable{
 	public Player (Side side, PlayerObserver playerObserver){
 		this.gold = GameStats.INITIAL_GOLD;
 		this.experience = 0;
-		this.base = UnitFactory.getInstance().createBase(side);
+		this.base = Factory.getInstance().createBase(side);
 		this.units = new ArrayList<Unit>();
 		this.projectiles = new ArrayList<Projectile>();
 		this.unitsQueue = new ArrayList<Class<Unit>>();
@@ -102,7 +102,7 @@ public class Player implements Serializable{
 	}
 	
 	public void createUnit(Class unitClass){
-		Unit unit = UnitFactory.getInstance().createUnit(unitClass, this);
+		Unit unit = Factory.getInstance().createUnit(unitClass, this);
 		if(unit!=null){
 			this.units.add(unit);
 		}
@@ -121,7 +121,7 @@ public class Player implements Serializable{
 	}
 	
 	public void createTower(){
-		this.tower = UnitFactory.getInstance().createTower(this);
+		this.tower = Factory.getInstance().createTower(this);
 	}
 	
 	public void addGold(int gold){
