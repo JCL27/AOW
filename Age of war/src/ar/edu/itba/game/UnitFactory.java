@@ -112,12 +112,11 @@ public class UnitFactory {
 			playerAI.getTower().setObserver(this.towerObserver);
 		player.setObserver(this.playerObserver);
 		playerAI.setObserver(this.playerObserver);
-		if(player.getTower()!=null){
+		if(player.getTower()!=null)
 			this.towerObserver.createTower(player.getTower());
-			if(playerAI.getTower()!=null)
-				this.towerObserver.createTower(playerAI.getTower());
-		}
-
+		if(playerAI.getTower()!=null)
+			this.towerObserver.createTower(playerAI.getTower());
+		
 	}
 
 

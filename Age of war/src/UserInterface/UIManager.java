@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import Buttons.Button;
+import Buttons.ContinueButton;
 import Buttons.ExitButton;
 import Buttons.LoadButton;
 import Buttons.NewGameButton;
@@ -14,11 +15,6 @@ import DrawableObjects.DrawableObject;
 import DrawableObjects.Queue;
 import DrawableObjects.UnitDraw;
 import Draws.BasicTowerDraw;
-
-import java.util.Set;
-
-import Buttons.CreateRangedUnit;
-
 import Draws.Drawable;
 import Draws.GrassDraw;
 import Draws.GroundDraw;
@@ -32,7 +28,6 @@ import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
-
 import ar.edu.itba.game.WorldManager;
 
 import com.badlogic.gdx.graphics.Color;
@@ -442,11 +437,20 @@ public class UIManager {
 	public void drawMenu() {
 		
 		buttons.clear();
-		buttons.add(new NewGameButton(430, 650));
-		buttons.add(new ExitButton(430, 50));
-		buttons.add(new SaveButton(430, 450));
+		if(Game.isOnGame()){
+		buttons.add(new ContinueButton(430, 625));
+		buttons.add(new NewGameButton(430, 500));
+		buttons.add(new SaveButton(430, 375));
 		buttons.add(new LoadButton(430, 250));
+		buttons.add(new ExitButton(480, 125));
 		
+		}else{
+		
+		buttons.add(new NewGameButton(430, 425));
+		buttons.add(new LoadButton(430, 250));
+		buttons.add(new ExitButton(480, 75));
+		
+		}
 	}
 
 

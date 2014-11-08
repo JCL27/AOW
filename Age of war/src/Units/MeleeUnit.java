@@ -87,11 +87,8 @@ public class MeleeUnit extends Unit {
 	}	
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
-			try {
-				this.objective.receiveDamage(this.damage);
-			} catch (DeadUnitException e) {
-				WorldManager.getInstance().killUnit((Unit)this.objective);
-			}
+			this.objective.receiveDamage(this.damage);
+
 			this.cooldown = (int)(1000/this.attackSpeed);		
 
 		}

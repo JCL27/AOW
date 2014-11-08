@@ -1,10 +1,10 @@
 package Buttons;
 
+import Draws.LoadDraw;
 import UserInterface.GameUIState;
 import UserInterface.UIManager;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameState;
-import Draws.LoadDraw;
 
 public class LoadButton extends Button {
 

@@ -1,7 +1,5 @@
 package Draws;
 
-import ar.edu.itba.game.Game;
-
 import com.badlogic.gdx.graphics.Texture;
 
 public class MainButtonDraw extends Drawable {

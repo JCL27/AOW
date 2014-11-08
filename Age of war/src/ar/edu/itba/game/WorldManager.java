@@ -7,18 +7,19 @@ import java.util.ArrayList;
 import Units.Unit;
 
 public class WorldManager implements Serializable{
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4035477768723084005L;
 	public static float MINDISTANCE = 25;
-	
+
 	private Player player;
 	private Player playerAI;
 	private ArrayList<Element> elements = new ArrayList<Element>();
+	private ArrayList<Unit> unitsToKill = new ArrayList<Unit>();
 	private Element ground;
-	
+
 	private static WorldManager instance = null;
 
 	private WorldManager() {
@@ -26,18 +27,18 @@ public class WorldManager implements Serializable{
 		playerAI = UnitFactory.getInstance().createPlayer(Side.RIGHT);
 		ground = new Element(-Game.WIDTH * 10, 0, Game.WIDTH * 21,  Game.GROUND_HEIGHT);
 	}
-	
+
 	public static WorldManager getInstance() {
-      if(instance == null) {
-         instance = new WorldManager();
-      }
-      return instance;
-   }
-	
+		if(instance == null) {
+			instance = new WorldManager();
+		}
+		return instance;
+	}
+
 	public void notifyObservers(){
 		for(Unit unit:player.getUnits()){
 			unit.notifyObservers();
-			}
+		}
 		for(Unit unit:playerAI.getUnits())
 			unit.notifyObservers();
 		for(Projectile pjt:player.getProjectiles())
@@ -45,7 +46,7 @@ public class WorldManager implements Serializable{
 		for(Projectile pjt:playerAI.getProjectiles())
 			pjt.notifyObservers();
 	}
-	
+
 	public void updateElements(){
 		for(Element elem: this.elements){
 			elem.setX(elem.getX()+elem.getVelX());
@@ -54,12 +55,12 @@ public class WorldManager implements Serializable{
 				elem.setVelY(elem.getVelY()- Game.GRAVITY);
 		}
 	}
-	
+
 	public void updateUnitsQueue(){
 		this.player.updateQueue();
 		this.playerAI.updateQueue();
 	}
-	
+
 	public void checkCollisions(){
 		ArrayList<Collision> cols = new ArrayList<Collision>();
 		ArrayList<Projectile> toDispose = new ArrayList<Projectile>();
@@ -100,7 +101,7 @@ public class WorldManager implements Serializable{
 			disposeProjectile(pjt);
 		}
 	}
-	
+
 	public void updateAttackObjectives(){
 		for(Unit unit:player.getUnits()){
 			unit.updateAttackObjective();
@@ -124,7 +125,7 @@ public class WorldManager implements Serializable{
 		this.player.getProjectiles().remove(pjt);
 		this.playerAI.getProjectiles().remove(pjt);
 	}
-	
+
 	public void disposeTower(Tower tower){
 		tower.notifyDelete();
 		if (tower.getPlayer() == this.player){
@@ -135,31 +136,30 @@ public class WorldManager implements Serializable{
 			this.playerAI.disposeTower();
 			this.elements.remove(playerAI.getTower());
 		}	
-		
+
 	}
-	
+
+	public void killUnits(){
+		for(Unit unit:this.unitsToKill){
+			this.killUnit(unit);
+		}
+		unitsToKill.clear();
+	}
+
 	public void killUnit(Unit thisUnit){
 		//thisUnit.removeElement();
-		
-		
+
+
 		this.elements.remove(thisUnit.getElement());
 		if(thisUnit.getSide()==Side.LEFT){
 			playerAI.addGold(thisUnit.getGold());
 			playerAI.addExp(thisUnit.getExp());
 			player.getUnits().remove(thisUnit);
-			//System.out.println("playerAI gold is: " + playerAI.getGold());
-//			for(Unit unit: player.getUnits())
-//				if (unit.equals(thisUnit))
-//					player.getUnits().iterator().remove();
 		}
 		else{
 			player.addGold(thisUnit.getGold());
 			player.addExp(thisUnit.getExp());
-			playerAI.getUnits().remove(thisUnit);
-			//System.out.println("player gold is: " + player.getGold());
-//			for(Unit unit: playerAI.getUnits())
-//				if (unit.equals(thisUnit))
-//					playerAI.getUnits().iterator().remove();	
+			playerAI.getUnits().remove(thisUnit);	
 		}
 		thisUnit.notifyDelete();
 	}
@@ -182,51 +182,51 @@ public class WorldManager implements Serializable{
 			for(Unit unit:player.getUnits()){
 				float distance = attacker.getX() - unit.getX() - unit.getWidth();
 				if (distance < range && distance > 0 && (attacker.canAttackFlying() || (!unit.doesFly()))) {
-							return unit;
-					}
+					return unit;
 				}
-			
+			}
+
 			if (((attacker.getX() - player.getBase().getX() - player.getBase().getWidth()) < range)) {
 				return player.getBase();
 			}
 		}
 		return null;
 	}
-	
+
 	public boolean canAdvance(Unit thisUnit){
-	   if (!measureDistance(player, thisUnit, MINDISTANCE))
-		   return false;
-	   if (!measureDistance(playerAI, thisUnit, MINDISTANCE))
-		   return false;
-	   return true;
-   }
-	
+		if (!measureDistance(player, thisUnit, MINDISTANCE))
+			return false;
+		if (!measureDistance(playerAI, thisUnit, MINDISTANCE))
+			return false;
+		return true;
+	}
+
 	private boolean measureDistance(Player player, Unit thisUnit, double minDistance){
 		double distance;
 		for(Unit unit: player.getUnits()){
-			   if(thisUnit.doesFly() == unit.doesFly()){
-				   if (thisUnit.getSide() == Side.RIGHT)
-					   distance = thisUnit.getX() - unit.getX() - unit.getWidth();
-				   else
-					   distance = unit.getX() - thisUnit.getX() - thisUnit.getWidth();
+			if(thisUnit.doesFly() == unit.doesFly()){
+				if (thisUnit.getSide() == Side.RIGHT)
+					distance = thisUnit.getX() - unit.getX() - unit.getWidth();
+				else
+					distance = unit.getX() - thisUnit.getX() - thisUnit.getWidth();
 
-				   if (!unit.equals(thisUnit) && (distance > 0) && (distance < minDistance))
-				   {
-					   return false;
-				   }
-			   }
-		   }
+				if (!unit.equals(thisUnit) && (distance > 0) && (distance < minDistance))
+				{
+					return false;
+				}
+			}
+		}
 		if (thisUnit.getSide() == Side.RIGHT)
-			   distance = thisUnit.getX() - player.getBase().getX() - player.getBase().getWidth();
-		   else
-			   distance = player.getBase().getX() - thisUnit.getX() - thisUnit.getWidth();
+			distance = thisUnit.getX() - player.getBase().getX() - player.getBase().getWidth();
+		else
+			distance = player.getBase().getX() - thisUnit.getX() - thisUnit.getWidth();
 		if ((distance > 0) && (distance < minDistance))
-		   {
-			   return false;
-		   }
+		{
+			return false;
+		}
 		return true;
 	}
-	
+
 	public void updateUnitsSpeed(){
 		for(Unit unit:player.getUnits())
 			unit.updateSpeed();
@@ -234,31 +234,38 @@ public class WorldManager implements Serializable{
 			unit.updateSpeed();
 	}
 
-   public Player getPlayer(){
-	   return player;
-   }
-   
-   public Player getPlayerAI(){
-	   return playerAI;
-   }
-   
-   public ArrayList<Element> getElements(){
-	   return elements;
-   }
-   
-   public void endGame(){
-   }
-   
-   public static void disposeWM(){
-	   instance = null;
-   }
-   
-   public static void setInstance(WorldManager WM){
-	   instance = WM;
-   }
-   
-   public String toString(){
-	   String str = player.toString() + " " +playerAI.toString() + " " + elements.toString();
-	   return str;
-   }
+	public Player getPlayer(){
+		return player;
+	}
+
+	public Player getPlayerAI(){
+		return playerAI;
+	}
+
+	public ArrayList<Element> getElements(){
+		return elements;
+	}
+
+	public void endGame(){
+		Game.gameState = GameState.MENU;
+		Game.setOnGame(false);
+	}
+
+	public static void disposeWM(){
+		instance = null;
+	}
+
+	public static void setInstance(WorldManager WM){
+		instance = WM;
+	}
+
+	public String toString(){
+		String str = player.toString() + " " +playerAI.toString() + " " + elements.toString();
+		return str;
+	}
+
+
+	public void addToKillList(Unit unit) {
+		this.unitsToKill.add(unit);
+	}
 }

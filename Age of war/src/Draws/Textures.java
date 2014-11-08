@@ -22,6 +22,7 @@ public abstract class Textures{
 	public static Texture LOAD_BUTTON = new Texture(Gdx.files.classpath("resources/loadButton.png"));
 	public static Texture EXIT_BUTTON = new Texture(Gdx.files.classpath("resources/exitButton.png"));
 	public static Texture NEW_GAME_BUTTON = new Texture(Gdx.files.classpath("resources/newGameButton.png"));
+	public static Texture CONTINUE_BUTTON = new Texture(Gdx.files.classpath("resources/continue.png"));
 	
 	public static Texture SEMI_TRANSPARENT = new Texture(Gdx.files.classpath("resources/semi_transparent.png"));
 	

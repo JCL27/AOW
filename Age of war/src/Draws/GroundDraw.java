@@ -13,8 +13,8 @@ public class GroundDraw extends Drawable{
 	
 	public GroundDraw(float xPos, float yPos) {
 		super(xPos, yPos);
-		this.screenHeight = Game.GROUND_HEIGHT * Gdx.graphics.getHeight() / (Game.HEIGHT * Game.SCALE);
-		this.screenWidth = Gdx.graphics.getWidth();
+		this.screenHeight = Game.GROUND_HEIGHT;
+		this.screenWidth = Gdx.graphics.getWidth() * Game.SCALE;
 	}
 	
 	public int getScreenHeight(){

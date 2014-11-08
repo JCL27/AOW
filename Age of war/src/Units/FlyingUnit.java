@@ -18,9 +18,9 @@ public class FlyingUnit extends Unit{
 	 */
 	private static final long serialVersionUID = -7357772180229981544L;
 	private static Integer playerUnitLevel = 0;
-	private static boolean playerAvailable = false;
+	private static Boolean playerAvailable = false;
 	private static Integer AIUnitLevel = 0;
-	private static boolean AIAvailable = false;
+	private static Boolean AIAvailable = false;
 	
 	public FlyingUnit(Player player, UnitObserver observer) throws UnavailableUnitException{
 		super(player, observer);
@@ -99,10 +99,21 @@ public class FlyingUnit extends Unit{
 		return str;
 	}
 	
+	public static String[] getResearch(){
+		String[] str = {playerAvailable.toString(), AIAvailable.toString()};
+		return str;
+	}
+	
 	public static void setLevels(String[] row){
 		playerUnitLevel = Integer.parseInt(row[0]);
 		AIUnitLevel = Integer.parseInt(row[1]);
 	}
+	
+	public static void setResearch(String[] row){
+		playerAvailable = Boolean.parseBoolean(row[0]);
+		AIAvailable = Boolean.parseBoolean(row[1]);
+	}
+	
 	public static Integer getPlayerUnitLevel(){ 
 		return playerUnitLevel;
 	}

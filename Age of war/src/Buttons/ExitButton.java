@@ -1,14 +1,14 @@
 package Buttons;
 
-import com.badlogic.gdx.Gdx;
-
 import Draws.ExitDraw;
+
+import com.badlogic.gdx.Gdx;
 
 
 public class ExitButton extends Button{
 
 	public ExitButton(float X, float Y){
-		this.draw = new ExitDraw(X, Y, 100, 300);
+		this.draw = new ExitDraw(X, Y, 100, 200);
 	}
 
 	@Override

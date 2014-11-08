@@ -53,10 +53,9 @@ public class Game implements ApplicationListener {
 	private SpriteBatch SB;
 	private int secondCount = 0;
 	private boolean menuDisplayed = false;
+	private static boolean onGame = false;
 	
 	public void create() {
-
-		
 		
 		Texture.setEnforcePotImages(false);
 		
@@ -82,10 +81,15 @@ public class Game implements ApplicationListener {
 		UIManager.getInstance().initializeDraws();
 		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayer().getBase().getElement());
 		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayerAI().getBase().getElement());
+		FlyingUnit.setAIAvailable(false);
+		FlyingUnit.setPlayerAvailable(false);
+		AntiaircraftUnit.setAIAvailable(false);
+		AntiaircraftUnit.setPlayerAvailable(false);
 		UnitFactory.getInstance().reAssignObservers();
 		AI.reset();
 		Upgrades.reset();
 		gameState = GameState.GAME;
+		onGame = true;
 	}
 	
 	public OrthographicCamera getCam(){
@@ -120,6 +124,8 @@ public class Game implements ApplicationListener {
 		WorldManager.getInstance().checkCollisions();
 		
 		WorldManager.getInstance().updateAttackObjectives();
+		
+		WorldManager.getInstance().killUnits();
 		
 		AI.getInstance().desitionMaker();
 		
@@ -181,6 +187,10 @@ public class Game implements ApplicationListener {
 			   data.add(levels);
 			   levels = RangedUnit.getLevels();
 			   data.add(levels);
+			   levels = AntiaircraftUnit.getResearch();
+			   data.add(levels);
+			   levels = FlyingUnit.getResearch();
+			   data.add(levels);
 			   writer.writeAll(data);
 			   writer.close();
 		   } catch (IOException e) {
@@ -220,13 +230,16 @@ public class Game implements ApplicationListener {
 			MeleeUnit.setLevels(row);
 			row = csvReader.readNext();
 			RangedUnit.setLevels(row);
+			row = csvReader.readNext();
+			AntiaircraftUnit.setResearch(row);
+			row = csvReader.readNext();
+			FlyingUnit.setResearch(row);
 			csvReader.close();
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		System.out.println(RangedUnit.getLevels()[0] + " " + RangedUnit.getLevels()[1]);
 			
 		   UIManager.getInstance().reset();
 		   UIManager.getInstance().initializeDraws();
@@ -234,6 +247,7 @@ public class Game implements ApplicationListener {
 		   UnitFactory.getInstance().reAssignObservers();
 		   AI.reset();
 		   Upgrades.reset();
+		   onGame = true;
 	}
 	
 	private void oneSecondLoop(){
@@ -254,6 +268,13 @@ public class Game implements ApplicationListener {
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	public static void setOnGame(boolean value){
+		onGame = value;
+	}
+	
+	public static boolean isOnGame(){
+		return onGame;
 	}
 }

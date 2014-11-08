@@ -212,10 +212,10 @@ public abstract class Unit implements CanAttack, Attackable, Serializable{
 	}
 	
 	@Override
-	public void receiveDamage(int damage) throws DeadUnitException{
+	public void receiveDamage(int damage){
 		this.hp-= damage;
 		if(this.hp <= 0){
-			throw new DeadUnitException(this);
+			WorldManager.getInstance().addToKillList(this);
 		}
 	}
 	
