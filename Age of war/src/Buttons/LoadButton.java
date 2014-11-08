@@ -15,7 +15,6 @@ public class LoadButton extends Button {
 	@Override
 	public void Click() {
 		Game.loadGame();
-		Game.gameState = GameState.GAME;
 		UIManager.getInstance().pushState(GameUIState.DEFAULT);
 		UIManager.getInstance().updateButtons();
 

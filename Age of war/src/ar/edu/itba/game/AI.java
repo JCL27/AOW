@@ -34,11 +34,7 @@ public class AI {
       }
       return instance;
    }
-	
-	public void updateAI(){
-		
-	}
-	
+
 	public void desitionMaker(){
 		
 		if((player.getUnits().size() + player.getUnitsQueue().size()) < 2){

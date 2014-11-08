@@ -60,7 +60,6 @@ public class MyInputProcessor implements InputProcessor{
 		
 		for(Button button : UIManager.getInstance().getButtons()){
 			if(button.isClicked(scaledX, scaledY)){
-					System.out.println("MyInputProcessor: Oh nooo");
 					button.setMessageVisibility(true);
 			}
 			else

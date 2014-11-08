@@ -28,7 +28,6 @@ import Units.RangedUnit;
 import Units.Unit;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
-import ar.edu.itba.game.Player;
 import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
 import ar.edu.itba.game.WorldManager;
@@ -478,6 +477,10 @@ public class UIManager {
 			buttons.add(new ExitButton(480, 75));
 
 		}
+	}
+
+	public HashMap<Unit, UnitDraw> getUnitsDraws() {
+		return this.unitsDraws;
 	}
 
 

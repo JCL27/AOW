@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 
+
 import Draws.Textures;
 import Observers.BaseObserver;
 import Observers.PlayerObserver;
@@ -220,14 +221,7 @@ public class Game implements ApplicationListener {
 			WorldManager.setInstance((WorldManager)objO.readObject());
 			objO.close();
 			fileO.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e){
-			e.printStackTrace();
-		}
-		try{
+			
 			String csvFilename = "levels.csv";
 			CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
 			String[] row = null;
@@ -244,19 +238,60 @@ public class Game implements ApplicationListener {
 			row = csvReader.readNext();
 			FlyingUnit.setResearch(row);
 			csvReader.close();
-		}catch(FileNotFoundException e){
+			
+			UIManager.getInstance().reset();
+			UIManager.getInstance().initializeDraws();
+			Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+			Factory.getInstance().reAssignObservers();
+			AI.reset();
+			Upgrades.reset();
+			onGame = true;
+			Game.gameState = GameState.GAME;
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		}catch(IOException e){
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e){
 			e.printStackTrace();
 		}
-
-		UIManager.getInstance().reset();
-		UIManager.getInstance().initializeDraws();
-		Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
-		Factory.getInstance().reAssignObservers();
-		AI.reset();
-		Upgrades.reset();
-		onGame = true;
+//		try{
+//			String csvFilename = "levels.csv";
+//			CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
+//			String[] row = null;
+//			row = csvReader.readNext();
+//			AntiaircraftUnit.setLevels(row);
+//			row = csvReader.readNext();
+//			FlyingUnit.setLevels(row);
+//			row = csvReader.readNext();
+//			MeleeUnit.setLevels(row);
+//			row = csvReader.readNext();
+//			RangedUnit.setLevels(row);
+//			row = csvReader.readNext();
+//			AntiaircraftUnit.setResearch(row);
+//			row = csvReader.readNext();
+//			FlyingUnit.setResearch(row);
+//			csvReader.close();
+//			
+//			UIManager.getInstance().reset();
+//			UIManager.getInstance().initializeDraws();
+//			Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+//			Factory.getInstance().reAssignObservers();
+//			AI.reset();
+//			Upgrades.reset();
+//			onGame = true;
+//		}catch(FileNotFoundException e){
+//			e.printStackTrace();
+//		}catch(IOException e){
+//			e.printStackTrace();
+//		}
+//
+//		UIManager.getInstance().reset();
+//		UIManager.getInstance().initializeDraws();
+//		Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+//		Factory.getInstance().reAssignObservers();
+//		AI.reset();
+//		Upgrades.reset();
+//		onGame = true;
 	}
 
 	private void oneSecondLoop(){

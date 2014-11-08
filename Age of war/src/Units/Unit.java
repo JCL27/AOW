@@ -283,18 +283,6 @@ public abstract class Unit implements CanAttack, Attackable, Serializable{
 
 	@Override
 	public int hashCode() {
-		/*final int prime = 31;
-		int result = 1;
-		result = prime * result + attackRange;
-		long temp;
-		temp = Double.doubleToLongBits(attackSpeed);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + damage;
-		result = prime * result + ((element == null) ? 0 : element.hashCode());
-		result = prime * result + hp;
-		result = prime * result + maxHp;
-		result = prime * result + movementSpeed;
-		return result;*/
 		return this.ID;
 	}
 
