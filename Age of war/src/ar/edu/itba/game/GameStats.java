@@ -1,5 +1,9 @@
 package ar.edu.itba.game;
 
+/**
+ * @author mati
+ *
+ */
 public class GameStats {
 	/////////////////////////////////////
 	/////	BASE	/////////////////////
@@ -141,9 +145,29 @@ public class GameStats {
 		public final static int FLYING_UNIT_RESEARCH_COST = 130;
 		
 		
-
-		public final static int INITIAL_GOLD = 700;		
-		public final static int LEVEL_LABEL_HEIGHT = 750;
-		public final static int LEVEL_LABEL_WIDTH = 145;
+		public final static int INITIAL_GOLD = 700;
 		
+		/**
+		 * Labels
+		 */
+		
+		public final static int BACKGROUND_LEFT = 10;
+		public final static int BACKGROUND_RIGHT = 145;
+		public final static int BACKGROUND_BOTTOM = 10;
+		public final static int BACKGROUND_TOP = 10;
+		public final static int HIDDEN_BACKGROUND_BOTTOM = 120;
+		
+		public final static int LABEL_SEPARATION = 15;
+		
+		public final static int GOLD_LABEL_X = 15;
+		public final static int GOLD_LABEL_Y = 750;
+		public final static int EXP_LABEL_X = 15;
+		public final static int EXP_LABEL_Y = 690;
+		
+		public final static int LABEL_UNITS_Y = 750;
+		public final static int LABEL_FLYING_X = 400;
+		public final static int LABEL_RANGED_X = 200;
+		public final static int LABEL_MELEE_X = 800;
+		public final static int LABEL_ANTIAIRCRAFT_X = 600;
+				
 }	

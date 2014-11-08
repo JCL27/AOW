@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Buttons.Button;
 import ar.edu.itba.game.Game;
+import ar.edu.itba.game.GameStats;
 import ar.edu.itba.game.Type;
 
 import com.badlogic.gdx.Gdx;
@@ -35,17 +36,21 @@ public class MyInputProcessor implements InputProcessor{
 		double scaledX = arg0 * (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth();
 		double scaledY = Game.HEIGHT * Game.SCALE - arg1 * (Game.HEIGHT * Game.SCALE)/ Gdx.graphics.getHeight();
 		
-		if (scaledY>740 && scaledY<770 && scaledX>200 && scaledX<345 ){
+		if (scaledY>(GameStats.LABEL_UNITS_Y - 10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
+				scaledX>GameStats.LABEL_RANGED_X && scaledX<(GameStats.LABEL_RANGED_X + GameStats.BACKGROUND_RIGHT) ){
 			System.out.println("Hello");
 			UIManager.getInstance().setRangedLabelvisible(true);
 		}
-		else if (scaledY>740 && scaledY<770 && scaledX>(400-10) && scaledX<545 ){
+		else if (scaledY>(GameStats.LABEL_UNITS_Y -10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
+				scaledX>GameStats.LABEL_MELEE_X && scaledX<(GameStats.LABEL_MELEE_X + GameStats.BACKGROUND_RIGHT)){
 			UIManager.getInstance().setMeleeLabelvisible(true);
 		}
-		else if (scaledY>740 && scaledY<770 && scaledX>(600-10) && scaledX<745 ){
+		else if (scaledY>(GameStats.LABEL_UNITS_Y -10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
+				scaledX>GameStats.LABEL_ANTIAIRCRAFT_X && scaledX<(GameStats.LABEL_ANTIAIRCRAFT_X + GameStats.BACKGROUND_RIGHT)){
 			UIManager.getInstance().setAntiaircraftLabelvisible(true);
 		}
-		else if (scaledY>740 && scaledY<770 && scaledX>(800-10) && scaledX<945 ){
+		else if (scaledY>(GameStats.LABEL_UNITS_Y -10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
+				scaledX>GameStats.LABEL_FLYING_X && scaledX<(GameStats.LABEL_FLYING_X + GameStats.BACKGROUND_RIGHT)){
 			UIManager.getInstance().setFlyingLabelvisible(true);
 		}
 		else{

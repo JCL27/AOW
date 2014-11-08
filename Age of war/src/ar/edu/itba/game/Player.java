@@ -81,7 +81,7 @@ public class Player implements Serializable{
 				| SecurityException e1) {
 			e1.printStackTrace();
 		}
-		if(available){
+		if(available && this.unitsQueue.size()<5){
 			try {
 				unitCost = (Integer)unitClass.getMethod("getCost", Player.class).invoke(null, this);
 			} catch (IllegalAccessException | IllegalArgumentException
