@@ -1,5 +1,7 @@
 package Buttons;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import Draws.Icon;
 import Draws.Textures;
 import Units.RangedUnit;
@@ -21,6 +23,10 @@ public class UpgradeRangedUnitButton  extends Button{
 		}
 		this.getDraw().setEnabled();
 		return true;
+	}
+	
+	public void showMessage(SpriteBatch SB){
+		this.font.draw(SB, "Upgrade Ranged", this.draw.getxPos(), this.draw.getyPos());
 	}
 
 

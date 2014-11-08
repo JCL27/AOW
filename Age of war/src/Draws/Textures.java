@@ -15,7 +15,7 @@ public abstract class Textures{
 	public static Texture ARROW = new Texture(Gdx.files.classpath("resources/Arrow.png"));
 	public static Texture RED_BASE = new Texture(Gdx.files.classpath("resources/RedBase.png"));
 	public static Texture BLUE_BASE = new Texture(Gdx.files.classpath("resources/BlueBase.png"));
-	public static Texture BASIC_TOWER = new Texture(Gdx.files.classpath("resources/Arrow.png"));
+	public static Texture BASIC_TOWER = new Texture(Gdx.files.classpath("resources/EraserCannon.png"));
 	public static Texture GRASS = new Texture(Gdx.files.classpath("resources/pastito.png"));
 	public static Texture MAIN_BUTTON = new Texture(Gdx.files.classpath("resources/menuButton.png"));
 	public static Texture SAVE_BUTTON = new Texture(Gdx.files.classpath("resources/saveButton.png"));

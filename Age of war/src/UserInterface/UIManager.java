@@ -44,7 +44,7 @@ public class UIManager {
 
 	private static UIManager instance = null;
 
-	private final int BUTTON_HEIGHT = 150;
+	private final int BUTTON_HEIGHT = 170;
 	private final int BUTTON_INITIAL_X = 200;
 	private final int BUTTON_SEPARATION = 150;
 	private SpriteBatch SB;
@@ -61,10 +61,6 @@ public class UIManager {
 	private BaseDrawableObject AIBase;
 	private BasicTowerDraw playerTower;
 	private BasicTowerDraw AITower;	
-
-	public HashMap<Unit, UnitDraw> getUnitsDraws() {
-		return unitsDraws;
-	}
 
 	//Labels
 	private Label goldLabel;
@@ -109,7 +105,12 @@ public class UIManager {
 	private UIManager(){
 
 	}
+	
+	public HashMap<Unit, UnitDraw> getUnitsDraws() {
+		return unitsDraws;
+	}
 
+	
 	public void reset(){
 		this.DOs.clear();
 		this.drawables.clear();
@@ -283,12 +284,13 @@ public class UIManager {
 		for(Drawable draw:this.drawables){
 			this.drawTexture(draw);
 		}
-
+		drawButtonsMessage();
+		
 		this.setDefaultLabels();
 		this.goldLabel.draw(SB, 1);
 		this.xpLabel.draw(SB, 1);
 
-		if(flyingLabelvisible){
+		if(this.flyingLabelvisible){
 			int level = RangedUnit.getPlayerUnitLevel();
         	this.flyingUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
         	this.flyingUnitLabel.draw(SB, 1);
@@ -303,7 +305,7 @@ public class UIManager {
 		else
 			this.flyingUnitLabel.draw(SB, 1);
 
-		if(meleeLabelvisible){
+		if(this.meleeLabelvisible){
 			int level = MeleeUnit.getPlayerUnitLevel();
         	this.meleeUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
         	this.meleeUnitLabel.draw(SB, 1);
@@ -317,7 +319,7 @@ public class UIManager {
 		else
 			this.meleeUnitLabel.draw(SB, 1);
 
-		if(rangedLabelvisible){
+		if(this.rangedLabelvisible){
 			int level = RangedUnit.getPlayerUnitLevel();
         	this.rangedUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
         	this.rangedUnitLabel.draw(SB, 1);
@@ -332,7 +334,7 @@ public class UIManager {
 			this.rangedUnitLabel.draw(SB, 1);
 
 
-		if(antiaircraftLabelvisible){
+		if(this.antiaircraftLabelvisible){
 			int level = RangedUnit.getPlayerUnitLevel();
         	this.antiaircraftUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
         	this.antiaircraftUnitLabel.draw(SB, 1);
@@ -344,25 +346,32 @@ public class UIManager {
         	font.draw(SB, "Gold Cost: " + (int) (GameStats.ANTIAIRCRAFT_UNIT_COST + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -80);
 		}
 		else
-			this.antiaircraftUnitLabel.draw(SB, 1);
+			this.antiaircraftUnitLabel.draw(this.SB, 1);
 
 	}
 
 	private void drawTexture(Drawable draw){
-		SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
+		this.SB.draw(draw.getTexture(), (float)draw.getxPos(), (float) draw.getyPos(), draw.getScreenWidth(), 
 				draw.getScreenHeight(), 0, 0, draw.getSpriteWidth(), draw.getSpriteHeight(), false, false);
 	}
 
 	public void drawButtons(){
 		this.updateButtonsState();
-		for(Button button: buttons){
+		for(Button button: this.buttons){
 			this.drawButton(button);
+		}
+	}
+	
+	public void drawButtonsMessage(){
+		for(Button button : this.buttons){
+			if(button.getMessageVisibility())
+				button.showMessage(this.SB);
 		}
 	}
 
 	private void drawButton(Button button){
-		SB.draw(button.getDraw().getTexture(), (float)button.getDraw().getxPos(), (float)button.getDraw().getyPos(), 
-				button.getDraw().getScreenWidth(), button.getDraw().getScreenHeight());
+		this.SB.draw(button.getDraw().getTexture(), button.getDraw().getxPos(), button.getDraw().getyPos(), 
+				button.getDraw().getScreenWidth() ,button.getDraw().getScreenHeight());
 	}
 
 	public void drawObjects(){

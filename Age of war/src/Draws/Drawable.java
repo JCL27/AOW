@@ -50,7 +50,7 @@ public abstract class Drawable {
 		this.leftTexture = this.disabledTexture;
 	}
 	
-	public double getxPos() {
+	public float getxPos() {
 		return xPos;
 	}
 
@@ -58,14 +58,13 @@ public abstract class Drawable {
 		this.xPos = xPos;
 	}
 
-	public double getyPos() {
+	public float getyPos() {
 		return yPos;
 	}
 
 	public void setyPos(float yPos) {
 		this.yPos = yPos;
 	}
-
 
 	public int getScale() {
 		return scale;

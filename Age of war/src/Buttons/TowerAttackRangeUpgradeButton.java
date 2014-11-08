@@ -1,5 +1,7 @@
 package Buttons;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import Draws.Icon;
 import Draws.Textures;
 import Upgrades.TowerAttackRangeUpgrade;
@@ -23,6 +25,10 @@ public class TowerAttackRangeUpgradeButton extends Button {
 		}
 		this.getDraw().setEnabled();
 		return true;
+	}
+	
+	public void showMessage(SpriteBatch SB){
+		this.font.draw(SB, "Upgrade Attack Range",this.draw.getxPos(), this.draw.getyPos());
 	}
 
 

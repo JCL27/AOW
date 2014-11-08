@@ -1,5 +1,7 @@
 package Buttons;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import Draws.Icon;
 import Draws.Textures;
 import Units.FlyingUnit;
@@ -21,14 +23,14 @@ public class CreateFlyingUnit extends Button {
 		this.getDraw().setEnabled();
 		return true;
 	}
-
+	
+	public void showMessage(SpriteBatch SB){
+		this.font.draw(SB, "Buy Flying Unit", this.draw.getxPos(), this.draw.getyPos());
+	}	
 	
 	@Override
 	public void Click() {
-		// TODO Auto-generated method stub
-		//WorldManager.getInstance().getPlayer().createUnit(FlyingUnit.class);
 		WorldManager.getInstance().getPlayer().buyUnit(FlyingUnit.class);
-		//WorldManager.getInstance().getplayerAI().buyUnit(FlyingUnit.class);
 	}
 
 }

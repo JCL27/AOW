@@ -1,5 +1,7 @@
 package Buttons;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import Draws.Icon;
 import Draws.Textures;
 import Upgrades.TowerAttackSpeedUpgrade;
@@ -23,7 +25,10 @@ public class TowerAttackSpeedUpgradeButton extends Button {
 		this.getDraw().setEnabled();
 		return true;
 	}
-
+	
+	public void showMessage(SpriteBatch SB){
+			this.font.draw(SB, "Upgrade Attack Speed", this.draw.getxPos(), this.draw.getyPos());
+	}
 
 	@Override
 	public void Click() {

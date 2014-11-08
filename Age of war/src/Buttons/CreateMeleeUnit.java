@@ -1,5 +1,7 @@
 package Buttons;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import Draws.Icon;
 import Draws.Textures;
 import Units.MeleeUnit;
@@ -21,15 +23,13 @@ public class CreateMeleeUnit extends Button{
 			this.getDraw().setEnabled();
 			return true;
 		}
-
+		
+		public void showMessage(SpriteBatch SB){
+			this.font.draw(SB, "Buy Melee Unit", this.draw.getxPos(), this.draw.getyPos());
+		}
 		
 	@Override
 	public void Click() {
-
-		//WorldManager.getInstance().getPlayer().createUnit(MeleeUnit.class);
 		WorldManager.getInstance().getPlayer().buyUnit(MeleeUnit.class);
-		//WorldManager.getInstance().getplayerAI().buyUnit(MeleeUnit.class);
-
-
 	}
 }

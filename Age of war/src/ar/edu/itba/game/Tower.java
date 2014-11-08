@@ -71,7 +71,7 @@ public class Tower implements CanAttack, Serializable{
 		
 		if (this.player.equals(WorldManager.getInstance().getPlayer())){
 			this.side = Side.LEFT;
-			this.element = new Element(50, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, 100, 100);
+			this.element = new Element(50, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, 200, 100);
 		} 
 		else{
 			this.side = Side.RIGHT;
