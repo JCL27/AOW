@@ -40,7 +40,7 @@ public class AI {
 	}
 	
 	public void desitionMaker(){
-	
+		
 		if((player.getUnits().size() + player.getUnitsQueue().size()) < 2){
 			if(player.getGold()>MeleeUnit.getCost(player)){
 				player.buyUnit(MeleeUnit.class);
@@ -109,6 +109,7 @@ public class AI {
 		switch(upgradeChoice){
 		case(0):
 			if(player.getExp()> GameStats.UNIT_UPGRADE_COST){
+				System.out.println("AI: intenta "+ player.getExp() + " cost " + GameStats.UNIT_UPGRADE_COST);
 				player.research(UnitUpgrade.class, MeleeUnit.class);
 				upgradeResearched = true;
 			}	
@@ -213,5 +214,9 @@ public class AI {
 		
 		}
 		
+	}
+
+	public static void reset() {
+		instance = null;
 	}
 }

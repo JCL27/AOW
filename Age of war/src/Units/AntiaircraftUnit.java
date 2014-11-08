@@ -93,7 +93,6 @@ public class AntiaircraftUnit extends Unit{
 				else
 					velX = (float)velY;
 			}
-			System.out.println("AntiairCraft pjt vel:" + velX + " " + velY);
 			this.player.getProjectiles().add(UnitFactory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
 			

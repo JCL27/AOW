@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.Stack;
 
 import Buttons.Button;
+import Buttons.ExitButton;
+import Buttons.LoadButton;
+import Buttons.NewGameButton;
+import Buttons.SaveButton;
 import DrawableObjects.BaseDrawableObject;
 import DrawableObjects.DrawableObject;
 import DrawableObjects.Queue;
@@ -14,6 +18,7 @@ import Draws.BasicTowerDraw;
 import java.util.Set;
 
 import Buttons.CreateRangedUnit;
+
 import Draws.Drawable;
 import Draws.GrassDraw;
 import Draws.GroundDraw;
@@ -25,11 +30,9 @@ import Units.RangedUnit;
 import Units.Unit;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
-import ar.edu.itba.game.Player;
 import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
-import ar.edu.itba.game.Element;
-import ar.edu.itba.game.Type;
+
 import ar.edu.itba.game.WorldManager;
 
 import com.badlogic.gdx.graphics.Color;
@@ -117,6 +120,8 @@ public class UIManager {
 		this.drawables.clear();
 		this.projectilesDraws.clear();
 		this.unitsDraws.clear();
+//		this.AIQueue. = new Queue(Side.RIGHT);
+//		this.playerQueue = new Queue(Side.LEFT);
 	}
 
 	public void initializeDraws(){
@@ -362,7 +367,7 @@ public class UIManager {
 
 	private void drawButton(Button button){
 		SB.draw(button.getDraw().getTexture(), (float)button.getDraw().getxPos(), (float)button.getDraw().getyPos(), 
-				button.getDraw().getScreenHeight(), button.getDraw().getScreenWidth());
+				button.getDraw().getScreenWidth(), button.getDraw().getScreenHeight());
 	}
 
 	public void drawObjects(){
@@ -432,6 +437,16 @@ public class UIManager {
 
 	public void setMeleeLabelvisible(boolean meleeLabelvisible) {
 		this.meleeLabelvisible = meleeLabelvisible;
+	}
+	
+	public void drawMenu() {
+		
+		buttons.clear();
+		buttons.add(new NewGameButton(430, 650));
+		buttons.add(new ExitButton(430, 50));
+		buttons.add(new SaveButton(430, 450));
+		buttons.add(new LoadButton(430, 250));
+		
 	}
 
 

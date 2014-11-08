@@ -47,11 +47,12 @@ public class Player implements Serializable{
 	}
 	
 	public void research(Class upgradeType){
+		
 		this.research(upgradeType, null);
 	}
 	
 	public void research(Class class1, Class class2){
-		
+		System.out.println("player: exp: "+ this.experience);
 		try {
 			Upgrades.Upgrades.getInstance().applyUpgrade(class1.getSimpleName(), this, class2);
 		} catch (UnavailableUpgradeException e) {
@@ -135,7 +136,7 @@ public class Player implements Serializable{
 	
 	public void useExp(int exp) throws NotEnoughExpException{
 		if (this.experience < exp){
-			System.out.println("Player: playerExp: " + this.experience + " cost: " + exp);
+			System.out.println("player: "+ exp +  " " + this.experience);
 			throw new NotEnoughExpException();
 		}
 		this.experience -= exp;

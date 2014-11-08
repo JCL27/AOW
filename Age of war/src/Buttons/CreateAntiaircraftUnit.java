@@ -12,7 +12,7 @@ public class CreateAntiaircraftUnit extends Button {
 	
 	public CreateAntiaircraftUnit(float X, float Y) {
 		this.draw = new Icon(X, Y, 80, 80, Textures.ANTIAIRCRAFT_UNIT_ICON, Textures.DARK_ANTIAIRCRAFT_UNIT_ICON);
-	}
+	}	
 	
 	public boolean checkAvailability(){
 		Player player = WorldManager.getInstance().getPlayer();

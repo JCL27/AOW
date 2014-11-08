@@ -147,7 +147,7 @@ public class WorldManager implements Serializable{
 			playerAI.addGold(thisUnit.getGold());
 			playerAI.addExp(thisUnit.getExp());
 			player.getUnits().remove(thisUnit);
-			System.out.println("playerAI gold is: " + playerAI.getGold());
+			//System.out.println("playerAI gold is: " + playerAI.getGold());
 //			for(Unit unit: player.getUnits())
 //				if (unit.equals(thisUnit))
 //					player.getUnits().iterator().remove();
@@ -156,7 +156,7 @@ public class WorldManager implements Serializable{
 			player.addGold(thisUnit.getGold());
 			player.addExp(thisUnit.getExp());
 			playerAI.getUnits().remove(thisUnit);
-			System.out.println("player gold is: " + player.getGold());
+			//System.out.println("player gold is: " + player.getGold());
 //			for(Unit unit: playerAI.getUnits())
 //				if (unit.equals(thisUnit))
 //					playerAI.getUnits().iterator().remove();	

@@ -81,5 +81,9 @@ public class Upgrades {
 		else
 			this.upgradeListPlayerAI.get(name).setUnavailable();
 	}
+
+	public static void reset() {
+		instance = null;
+	}
 	
 }

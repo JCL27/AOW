@@ -41,6 +41,7 @@ public abstract class Upgrade {
 	
 	public void useExp() throws NotEnoughExpException{
 		this.player.useExp(this.cost);
+		System.out.println("Upgrade: " + player.getExp());
 	}
 	
 	public void checkNewUpgrades(){

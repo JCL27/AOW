@@ -41,7 +41,6 @@ public class UnitFactory {
 
 	public Player createPlayer(Side side){
 		Player player = new Player(side, this.playerObserver);
-		System.out.println(this.playerObserver);
 		return player;
 	}
 
@@ -65,7 +64,6 @@ public class UnitFactory {
 	public Unit createUnit(Class unitClass, Player player){
 		Unit unit = null;
 		try {
-			System.out.println(unitClass.getSimpleName());
 			Constructor cons = unitClass.getConstructor(new Class[] { Player.class, UnitObserver.class});
 			unit = (Unit) cons.newInstance(new Object[] {player, this.unitObserver});
 		} catch (InstantiationException e) {

@@ -3,7 +3,6 @@ package UserInterface;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 //Borrar esta clase.
 //Ir a Myinput processor, que llame al metodo drawLabel de UI manager mientras el boton este encima de esas coordenadas.

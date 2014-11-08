@@ -2,23 +2,21 @@ package Draws;
 
 import ar.edu.itba.game.Game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 public class MainButtonDraw extends Drawable {
 
-	private Texture leftTexture = Textures.MAIN_BUTTON;
 	private int scale = 2;
 	
 	private int screenHeight;
 	private int screenWidth;
 	
 	
-	public MainButtonDraw(float xPos, float yPos) {
+	public MainButtonDraw(float xPos, float yPos, int screenHeight, int screenWidth) {
 		super(xPos, yPos);
-
-		this.screenHeight = leftTexture.getHeight() * (Game.HEIGHT * Game.SCALE)/Gdx.graphics.getHeight()/scale * 5;
-		this.screenWidth = leftTexture.getWidth()* (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth()/scale;
+		this.leftTexture = Textures.MAIN_BUTTON;
+		this.screenHeight = screenHeight;
+		this.screenWidth = screenWidth;
 	}
 	
 	@Override

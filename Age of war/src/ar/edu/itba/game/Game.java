@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import Draws.Textures;
 import Observers.BaseObserver;
 import Observers.PlayerObserver;
 import Observers.ProjectileObserver;
@@ -19,6 +20,7 @@ import Units.AntiaircraftUnit;
 import Units.FlyingUnit;
 import Units.MeleeUnit;
 import Units.RangedUnit;
+import Upgrades.Upgrades;
 import UserInterface.MyInputProcessor;
 import UserInterface.UIManager;
 import au.com.bytecode.opencsv.CSVReader;
@@ -50,9 +52,12 @@ public class Game implements ApplicationListener {
 	private World world;
 	private SpriteBatch SB;
 	private int secondCount = 0;
+	private boolean menuDisplayed = false;
 	
 	public void create() {
 
+		
+		
 		Texture.setEnforcePotImages(false);
 		
 		Gdx.input.setInputProcessor(new MyInputProcessor());
@@ -63,19 +68,24 @@ public class Game implements ApplicationListener {
 		this.world = new World(new Vector2(0,0),true);
 		
 		cam = new OrthographicCamera();
-		cam.setToOrtho(false, WIDTH, HEIGHT);
-
-		UnitFactory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		UIManager.getInstance().setSpriteBatch(SB);
 		
-		UIManager.getInstance().initializeDraws();
+	}
+	
+	public static void newGame(){
 		
+		WorldManager.disposeWM();
+		UIManager.getInstance().reset();
+		UnitFactory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+		UIManager.getInstance().initializeDraws();
 		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayer().getBase().getElement());
 		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayerAI().getBase().getElement());
-		
-		//System.out.println(WorldManager.getInstance().getElements().contains(WorldManager.getInstance().getPlayer().getBase().getElement()));
-		
+		UnitFactory.getInstance().reAssignObservers();
+		AI.reset();
+		Upgrades.reset();
+		gameState = GameState.GAME;
 	}
 	
 	public OrthographicCamera getCam(){
@@ -91,12 +101,14 @@ public class Game implements ApplicationListener {
 	public void pause() {
 
 	}
-
+	
 	@Override
 	public void render() {		
 		
 		Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
+		if(gameState == GameState.GAME){
+		
 		WorldManager.getInstance().updateUnitsQueue();
 		
 		WorldManager.getInstance().notifyObservers();
@@ -109,6 +121,10 @@ public class Game implements ApplicationListener {
 		
 		WorldManager.getInstance().updateAttackObjectives();
 		
+		AI.getInstance().desitionMaker();
+		
+		oneSecondLoop();
+		
 		SB.begin();
 		
 		UIManager.getInstance().drawBases();
@@ -119,10 +135,20 @@ public class Game implements ApplicationListener {
 		
 		SB.end();
 		
-		b2dr.render(world, cam.combined);
-		AI.getInstance().desitionMaker();
+		}else{
+			SB.begin();
+			SB.draw(Textures.SEMI_TRANSPARENT, 0f, 0f, Game.WIDTH * Game.SCALE, 
+					Game.HEIGHT * Game.SCALE, 0, 0, Textures.SEMI_TRANSPARENT.getWidth(), Textures.SEMI_TRANSPARENT.getHeight(), false, false);
+			if(!menuDisplayed)
+				UIManager.getInstance().drawMenu();
+			UIManager.getInstance().drawButtons();
+			SB.end();
+		}
 		
-		oneSecondLoop();
+		
+		
+		b2dr.render(world, cam.combined);
+		
 
 	}
 	
@@ -167,9 +193,7 @@ public class Game implements ApplicationListener {
 	}
 	
 	public static void loadGame(){
-		System.out.println("carga");
-		//System.out.println(WorldManager.getInstance().toString());
-		System.out.println(RangedUnit.getLevels()[0] + " " + RangedUnit.getLevels()[1]);	
+
 		try {
 			   WorldManager.disposeWM();
 			   FileInputStream fileO = new FileInputStream("WM.ser");
@@ -204,12 +228,12 @@ public class Game implements ApplicationListener {
 		}
 		System.out.println(RangedUnit.getLevels()[0] + " " + RangedUnit.getLevels()[1]);
 			
-		   //System.out.println(WorldManager.getInstance().toString());
-			
 		   UIManager.getInstance().reset();
 		   UIManager.getInstance().initializeDraws();
 		   UnitFactory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
 		   UnitFactory.getInstance().reAssignObservers();
+		   AI.reset();
+		   Upgrades.reset();
 	}
 	
 	private void oneSecondLoop(){

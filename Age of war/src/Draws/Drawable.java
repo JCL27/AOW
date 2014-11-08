@@ -18,10 +18,10 @@ public abstract class Drawable {
 	protected int screenWidth;
 	protected int screenHeight;
 	
-	public Drawable(float xPos2, float yPos2, int screenHeight, int screenWidth,
+	public Drawable(float xPos, float yPos, int screenHeight, int screenWidth,
 			Texture enabledTexture, Texture disabledTexture){
-		this.xPos = xPos2;
-		this.yPos = yPos2;
+		this.xPos = xPos;
+		this.yPos = yPos;
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enabledTexture = enabledTexture;

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Buttons.Button;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
-import ar.edu.itba.game.Type;
+
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -38,7 +38,6 @@ public class MyInputProcessor implements InputProcessor{
 		
 		if (scaledY>(GameStats.LABEL_UNITS_Y - 10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
 				scaledX>GameStats.LABEL_RANGED_X && scaledX<(GameStats.LABEL_RANGED_X + GameStats.BACKGROUND_RIGHT) ){
-			System.out.println("Hello");
 			UIManager.getInstance().setRangedLabelvisible(true);
 		}
 		else if (scaledY>(GameStats.LABEL_UNITS_Y -10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
@@ -75,7 +74,9 @@ public class MyInputProcessor implements InputProcessor{
 		ArrayList<Button> buttons = UIManager.getInstance().getButtons();
 		double scaledX = arg0 * (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth();
 		double scaledY = Game.HEIGHT * Game.SCALE - arg1 * (Game.HEIGHT * Game.SCALE)/ Gdx.graphics.getHeight();
+		//System.out.println(Gdx.graphics.getHeight());
 		Button buttonClicked = null;
+		//System.out.println("MyInput: " + scaledX + " " + scaledY);
 		for(Button button: buttons){
 			if(button.isClicked(scaledX, scaledY)){
 				buttonClicked = button;
