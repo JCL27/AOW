@@ -45,35 +45,36 @@ public class Game implements ApplicationListener {
 	public static final float GRAVITY = 0.1f;
 	public static final int GROUND_HEIGHT = 300;
 	public static final int FLYING_HEIGHT = 300;
-	
+
 	public static GameState gameState = GameState.MENU;
-	
+
 	private OrthographicCamera cam;
 	private Box2DDebugRenderer b2dr;
 	private World world;
 	private SpriteBatch SB;
 	private int secondCount = 0;
 	private boolean menuDisplayed = false;
+	private static boolean firstTimeMenu = true;
 	private static boolean onGame = false;
-	
+
 	public void create() {
-		
+
 		Texture.setEnforcePotImages(false);
-		
+
 		Gdx.input.setInputProcessor(new MyInputProcessor());
 		SB = new SpriteBatch();
-		
+
 		b2dr = new Box2DDebugRenderer();
-		
+
 		this.world = new World(new Vector2(0,0),true);
-		
+
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		UIManager.getInstance().setSpriteBatch(SB);
-		
+
 	}
-	
+
 	public static void newGame(){
 		
 		WorldManager.disposeWM();
@@ -92,11 +93,11 @@ public class Game implements ApplicationListener {
 		gameState = GameState.GAME;
 		onGame = true;
 	}
-	
+
 	public OrthographicCamera getCam(){
 		return this.cam;
 	}
-	
+
 	@Override
 	public void dispose() {
 
@@ -106,44 +107,51 @@ public class Game implements ApplicationListener {
 	public void pause() {
 
 	}
-	
+
 	@Override
 	public void render() {		
-		
+
 		Gdx.gl10.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		if(gameState == GameState.GAME){
-		
-		WorldManager.getInstance().updateUnitsQueue();
-		
-		WorldManager.getInstance().notifyObservers();
-		
-		WorldManager.getInstance().updateUnitsSpeed();
-		
-		WorldManager.getInstance().updateElements();
-		
-		WorldManager.getInstance().checkCollisions();
-		
-		WorldManager.getInstance().updateAttackObjectives();
-		
-		WorldManager.getInstance().killUnits();
-		
-		AI.getInstance().desitionMaker();
-		
-		oneSecondLoop();
-		
-		SB.begin();
-		
-		UIManager.getInstance().drawBases();
-		UIManager.getInstance().drawTextures();
-		UIManager.getInstance().drawButtons();
-		UIManager.getInstance().drawObjects();
-		UIManager.getInstance().drawProjectiles();
-		
-		SB.end();
-		
+
+			WorldManager.getInstance().updateUnitsQueue();
+
+			WorldManager.getInstance().notifyObservers();
+
+			WorldManager.getInstance().updateUnitsSpeed();
+
+			WorldManager.getInstance().updateElements();
+
+			WorldManager.getInstance().checkCollisions();
+
+			WorldManager.getInstance().updateAttackObjectives();
+
+			WorldManager.getInstance().killUnits();
+
+			AI.getInstance().desitionMaker();
+
+			oneSecondLoop();
+
+			SB.begin();
+
+			UIManager.getInstance().drawBases();
+			UIManager.getInstance().drawTextures();
+			UIManager.getInstance().drawButtons();
+			UIManager.getInstance().drawObjects();
+			UIManager.getInstance().drawProjectiles();
+
+			SB.end();
+
 		}else{
 			SB.begin();
+			if(!firstTimeMenu){
+				UIManager.getInstance().drawBases();
+				UIManager.getInstance().drawTextures();
+				UIManager.getInstance().drawButtons();
+				UIManager.getInstance().drawObjects();
+				UIManager.getInstance().drawProjectiles();
+			}
 			SB.draw(Textures.SEMI_TRANSPARENT, 0f, 0f, Game.WIDTH * Game.SCALE, 
 					Game.HEIGHT * Game.SCALE, 0, 0, Textures.SEMI_TRANSPARENT.getWidth(), Textures.SEMI_TRANSPARENT.getHeight(), false, false);
 			if(!menuDisplayed)
@@ -151,74 +159,74 @@ public class Game implements ApplicationListener {
 			UIManager.getInstance().drawButtons();
 			SB.end();
 		}
-		
-		
-		
+
+
+
 		b2dr.render(world, cam.combined);
-		
+
 
 	}
-	
+
 	public static void saveGame(){
-		
+
 		//System.out.println("guarda");
-			
-		   try {
-			   FileOutputStream fileO = new FileOutputStream("WM.ser");
-			   ObjectOutputStream objO = new ObjectOutputStream(fileO);
-			   objO.writeObject(WorldManager.getInstance());
-			   objO.close();
-			   fileO.close();
-		   } catch (FileNotFoundException e) {
-				e.printStackTrace();
-		   } catch (IOException e) {
-			   	e.printStackTrace();
-		   }
-		   String csv = "levels.csv";
-		   CSVWriter writer;
-		   try {
-			   String[] levels;
-			   ArrayList<String[]> data = new ArrayList<String[]>();
-			   writer = new CSVWriter(new FileWriter(csv));
-			   levels = AntiaircraftUnit.getLevels();
-			   data.add(levels);
-			   levels = FlyingUnit.getLevels();
-			   data.add(levels);
-			   levels = MeleeUnit.getLevels();
-			   data.add(levels);
-			   levels = RangedUnit.getLevels();
-			   data.add(levels);
-			   levels = AntiaircraftUnit.getResearch();
-			   data.add(levels);
-			   levels = FlyingUnit.getResearch();
-			   data.add(levels);
-			   writer.writeAll(data);
-			   writer.close();
-		   } catch (IOException e) {
-			   e.printStackTrace();
-		   }
-		    
-		   
-		   //System.out.println(WorldManager.getInstance().toString());
-	
+
+		try {
+			FileOutputStream fileO = new FileOutputStream("WM.ser");
+			ObjectOutputStream objO = new ObjectOutputStream(fileO);
+			objO.writeObject(WorldManager.getInstance());
+			objO.close();
+			fileO.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String csv = "levels.csv";
+		CSVWriter writer;
+		try {
+			String[] levels;
+			ArrayList<String[]> data = new ArrayList<String[]>();
+			writer = new CSVWriter(new FileWriter(csv));
+			levels = AntiaircraftUnit.getLevels();
+			data.add(levels);
+			levels = FlyingUnit.getLevels();
+			data.add(levels);
+			levels = MeleeUnit.getLevels();
+			data.add(levels);
+			levels = RangedUnit.getLevels();
+			data.add(levels);
+			levels = AntiaircraftUnit.getResearch();
+			data.add(levels);
+			levels = FlyingUnit.getResearch();
+			data.add(levels);
+			writer.writeAll(data);
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
+		//System.out.println(WorldManager.getInstance().toString());
+
 	}
-	
+
 	public static void loadGame(){
 
 		try {
-			   WorldManager.disposeWM();
-			   FileInputStream fileO = new FileInputStream("WM.ser");
-			   ObjectInputStream objO = new ObjectInputStream(fileO);
-			   WorldManager.setInstance((WorldManager)objO.readObject());
-			   objO.close();
-			   fileO.close();
-		   } catch (FileNotFoundException e) {
-				e.printStackTrace();
-		   } catch (IOException e) {
-			   	e.printStackTrace();
-		   } catch (ClassNotFoundException e){
-			   e.printStackTrace();
-		   }
+			WorldManager.disposeWM();
+			FileInputStream fileO = new FileInputStream("WM.ser");
+			ObjectInputStream objO = new ObjectInputStream(fileO);
+			WorldManager.setInstance((WorldManager)objO.readObject());
+			objO.close();
+			fileO.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		}
 		try{
 			String csvFilename = "levels.csv";
 			CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
@@ -241,16 +249,16 @@ public class Game implements ApplicationListener {
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-			
-		   UIManager.getInstance().reset();
-		   UIManager.getInstance().initializeDraws();
-		   Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
-		   Factory.getInstance().reAssignObservers();
-		   AI.reset();
-		   Upgrades.reset();
-		   onGame = true;
+
+		UIManager.getInstance().reset();
+		UIManager.getInstance().initializeDraws();
+		Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+		Factory.getInstance().reAssignObservers();
+		AI.reset();
+		Upgrades.reset();
+		onGame = true;
 	}
-	
+
 	private void oneSecondLoop(){
 		if(secondCount--<=0){
 			secondCount = (int) (1/Gdx.graphics.getDeltaTime());
@@ -259,23 +267,31 @@ public class Game implements ApplicationListener {
 			WorldManager.getInstance().getPlayerAI().addGold(15);
 		}
 	}
-	
+
 	@Override
 	public void resize(int arg0, int arg1) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
 	}
-	
+
 	public static void setOnGame(boolean value){
 		onGame = value;
 	}
-	
+
 	public static boolean isOnGame(){
 		return onGame;
+	}
+
+	public static void setFirstTimeMenu(boolean b) {
+		firstTimeMenu = b;
+	}
+
+	public static boolean isFisrtTimeMenu() {
+		return firstTimeMenu;
 	}
 }

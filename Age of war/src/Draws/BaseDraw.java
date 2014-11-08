@@ -13,8 +13,7 @@ public class BaseDraw extends Drawable {
 	public BaseDraw(float xPos, float yPos, int screenHeight, int screenWidth, Side side) {
 			super(xPos, yPos, screenHeight, screenWidth);
 			this.side = side;
-			//this.screenHeight = leftTexture.getHeight()/scale;
-			//this.screenWidth = leftTexture.getWidth()/scale;
+
 			this.screenHeight = screenHeight;
 			this.screenWidth = screenWidth;
 	}
@@ -43,4 +42,5 @@ public class BaseDraw extends Drawable {
 	public int getSpriteHeight() {
 		return this.getTexture().getHeight();
 	}
+	
 }

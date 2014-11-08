@@ -26,5 +26,9 @@ public class BaseObserver{
 	
 	public void dispose() {
 	}
+
+	public void setLooser(Side side) {
+		UIManager.getInstance().setLooser(side);
+	}
 	
 }

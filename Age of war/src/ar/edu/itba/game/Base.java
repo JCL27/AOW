@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Observable;
 
 import Observers.BaseObserver;
-import exceptions.DeadUnitException;
 
 public class Base extends Observable implements Attackable, Serializable {
 
@@ -46,6 +45,7 @@ public class Base extends Observable implements Attackable, Serializable {
 			this.HP -=damage;
 			this.observer.update(this);
 			if(this.HP <= 0){
+				this.observer.setLooser(this.side);
 				WorldManager.getInstance().endGame();
 			}
 			

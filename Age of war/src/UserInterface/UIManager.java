@@ -19,6 +19,8 @@ import Draws.Drawable;
 import Draws.GrassDraw;
 import Draws.GroundDraw;
 import Draws.Textures;
+import Draws.youLostDraw;
+import Draws.youWonDraw;
 import Units.AntiaircraftUnit;
 import Units.FlyingUnit;
 import Units.MeleeUnit;
@@ -26,6 +28,7 @@ import Units.RangedUnit;
 import Units.Unit;
 import ar.edu.itba.game.Game;
 import ar.edu.itba.game.GameStats;
+import ar.edu.itba.game.Player;
 import ar.edu.itba.game.Projectile;
 import ar.edu.itba.game.Side;
 import ar.edu.itba.game.WorldManager;
@@ -60,7 +63,10 @@ public class UIManager {
 	private BaseDrawableObject playerBase;
 	private BaseDrawableObject AIBase;
 	private BasicTowerDraw playerTower;
-	private BasicTowerDraw AITower;	
+
+	private BasicTowerDraw AITower;
+	private Side looser;
+
 
 	//Labels
 	private Label goldLabel;
@@ -103,12 +109,9 @@ public class UIManager {
 	}
 
 	private UIManager(){
-
+		this.looser = null;
 	}
 	
-	public HashMap<Unit, UnitDraw> getUnitsDraws() {
-		return unitsDraws;
-	}
 
 	
 	public void reset(){
@@ -116,11 +119,18 @@ public class UIManager {
 		this.drawables.clear();
 		this.projectilesDraws.clear();
 		this.unitsDraws.clear();
-//		this.AIQueue. = new Queue(Side.RIGHT);
-//		this.playerQueue = new Queue(Side.LEFT);
+		//		this.AIQueue. = new Queue(Side.RIGHT);
+		//		this.playerQueue = new Queue(Side.LEFT);
+	}
+
+	public void setLooser(Side side){
+		System.out.println("UIManager: " + side);
+		this.looser = side;
 	}
 
 	public void initializeDraws(){
+		Game.setFirstTimeMenu(false);
+
 		this.drawables.add(new GroundDraw(0,0));
 		this.drawables.add(new GrassDraw(270f , Game.GROUND_HEIGHT - 10, 50, 50));
 
@@ -169,15 +179,15 @@ public class UIManager {
 		this.flyingUnitLabel = new Label("", this.flyingLabelStyle);
 
 		//The background is drawn with the origin set in the give position.
-        this.goldLabel.setPosition(GameStats.GOLD_LABEL_X, GameStats.GOLD_LABEL_Y);
-        this.xpLabel.setPosition(GameStats.EXP_LABEL_X, GameStats.EXP_LABEL_Y);
-        this.rangedUnitLabel.setPosition(GameStats.LABEL_RANGED_X, GameStats.LABEL_UNITS_Y);
-        this.meleeUnitLabel.setPosition(GameStats.LABEL_MELEE_X, GameStats.LABEL_UNITS_Y);
-        this.antiaircraftUnitLabel.setPosition(GameStats.LABEL_ANTIAIRCRAFT_X, GameStats.LABEL_UNITS_Y);
-        this.flyingUnitLabel.setPosition(GameStats.LABEL_FLYING_X, GameStats.LABEL_UNITS_Y);
-		
+		this.goldLabel.setPosition(GameStats.GOLD_LABEL_X, GameStats.GOLD_LABEL_Y);
+		this.xpLabel.setPosition(GameStats.EXP_LABEL_X, GameStats.EXP_LABEL_Y);
+		this.rangedUnitLabel.setPosition(GameStats.LABEL_RANGED_X, GameStats.LABEL_UNITS_Y);
+		this.meleeUnitLabel.setPosition(GameStats.LABEL_MELEE_X, GameStats.LABEL_UNITS_Y);
+		this.antiaircraftUnitLabel.setPosition(GameStats.LABEL_ANTIAIRCRAFT_X, GameStats.LABEL_UNITS_Y);
+		this.flyingUnitLabel.setPosition(GameStats.LABEL_FLYING_X, GameStats.LABEL_UNITS_Y);
+
 	}
-	
+
 	private void setDefaultLabels(){
 		this.rangedLabelStyle.background = labelSkin.getDrawable("background");
 		this.meleeLabelStyle.background = labelSkin.getDrawable("background");
@@ -292,14 +302,14 @@ public class UIManager {
 
 		if(this.flyingLabelvisible){
 			int level = RangedUnit.getPlayerUnitLevel();
-        	this.flyingUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
-        	this.flyingUnitLabel.draw(SB, 1);
-        	font.draw(SB, "HP: " + (int)(GameStats.FLYING_UNIT_MAX_HP + Math.sqrt(level * GameStats.FLYING_UNIT_MAX_HP_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y -5);
-        	font.draw(SB, "Attack Speed: " + (int)(GameStats.FLYING_UNIT_ATTACK_SPEED + Math.sqrt(level * GameStats.FLYING_UNIT_ATTACK_SPEED_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y -20);
-        	font.draw(SB, "Attack Range: " + (int)(GameStats.FLYING_UNIT_ATTACK_RANGE + Math.sqrt(level * GameStats.FLYING_UNIT_ATTACK_RANGE_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y - 35);
-        	font.draw(SB, "Attack Damage: " + (int)(GameStats.FLYING_UNIT_DAMAGE + Math.sqrt(level * GameStats.FLYING_UNIT_DAMAGE_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y - 50);
-        	font.draw(SB, "Movement Speed: " + (int)(GameStats.FLYING_UNIT_MOVEMENT_SPEED + Math.sqrt(level * GameStats.FLYING_UNIT_MOVEMENT_SPEED_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y - 65);
-        	font.draw(SB, "Gold Cost: " + (int) (GameStats.FLYING_UNIT_COST + Math.sqrt(level * GameStats.FLYING_UNIT_COST_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y - 80);
+			this.flyingUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
+			this.flyingUnitLabel.draw(SB, 1);
+			font.draw(SB, "HP: " + (int)(GameStats.FLYING_UNIT_MAX_HP + Math.sqrt(level * GameStats.FLYING_UNIT_MAX_HP_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y -5);
+			font.draw(SB, "Attack Speed: " + (int)(GameStats.FLYING_UNIT_ATTACK_SPEED + Math.sqrt(level * GameStats.FLYING_UNIT_ATTACK_SPEED_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y -20);
+			font.draw(SB, "Attack Range: " + (int)(GameStats.FLYING_UNIT_ATTACK_RANGE + Math.sqrt(level * GameStats.FLYING_UNIT_ATTACK_RANGE_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y - 35);
+			font.draw(SB, "Attack Damage: " + (int)(GameStats.FLYING_UNIT_DAMAGE + Math.sqrt(level * GameStats.FLYING_UNIT_DAMAGE_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y - 50);
+			font.draw(SB, "Movement Speed: " + (int)(GameStats.FLYING_UNIT_MOVEMENT_SPEED + Math.sqrt(level * GameStats.FLYING_UNIT_MOVEMENT_SPEED_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y - 65);
+			font.draw(SB, "Gold Cost: " + (int) (GameStats.FLYING_UNIT_COST + Math.sqrt(level * GameStats.FLYING_UNIT_COST_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y - 80);
 
 		}
 		else
@@ -307,28 +317,28 @@ public class UIManager {
 
 		if(this.meleeLabelvisible){
 			int level = MeleeUnit.getPlayerUnitLevel();
-        	this.meleeUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
-        	this.meleeUnitLabel.draw(SB, 1);
-        	font.draw(SB, "HP: " + (int)(GameStats.MELEE_UNIT_MAX_HP + Math.sqrt(level * GameStats.MELEE_UNIT_MAX_HP_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -5);
-        	font.draw(SB, "Attack Speed: " + (int)(GameStats.MELEE_UNIT_ATTACK_SPEED + Math.sqrt(level * GameStats.MELEE_UNIT_ATTACK_SPEED_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -20);
-        	font.draw(SB, "Attack Range: " + (int)(GameStats.MELEE_UNIT_ATTACK_RANGE + Math.sqrt(level * GameStats.MELEE_UNIT_ATTACK_RANGE_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -35);
-        	font.draw(SB, "Attack Damage: " + (int)(GameStats.MELEE_UNIT_DAMAGE + Math.sqrt(level * GameStats.MELEE_UNIT_DAMAGE_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -50);
-        	font.draw(SB, "Movement Speed: " + (int)(GameStats.MELEE_UNIT_MOVEMENT_SPEED + Math.sqrt(level * GameStats.MELEE_UNIT_MOVEMENT_SPEED_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -65);
-        	font.draw(SB, "Gold Cost: " + (int) (GameStats.MELEE_UNIT_COST + Math.sqrt(level * GameStats.MELEE_UNIT_COST_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -80);
+			this.meleeUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
+			this.meleeUnitLabel.draw(SB, 1);
+			font.draw(SB, "HP: " + (int)(GameStats.MELEE_UNIT_MAX_HP + Math.sqrt(level * GameStats.MELEE_UNIT_MAX_HP_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -5);
+			font.draw(SB, "Attack Speed: " + (int)(GameStats.MELEE_UNIT_ATTACK_SPEED + Math.sqrt(level * GameStats.MELEE_UNIT_ATTACK_SPEED_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -20);
+			font.draw(SB, "Attack Range: " + (int)(GameStats.MELEE_UNIT_ATTACK_RANGE + Math.sqrt(level * GameStats.MELEE_UNIT_ATTACK_RANGE_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -35);
+			font.draw(SB, "Attack Damage: " + (int)(GameStats.MELEE_UNIT_DAMAGE + Math.sqrt(level * GameStats.MELEE_UNIT_DAMAGE_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -50);
+			font.draw(SB, "Movement Speed: " + (int)(GameStats.MELEE_UNIT_MOVEMENT_SPEED + Math.sqrt(level * GameStats.MELEE_UNIT_MOVEMENT_SPEED_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -65);
+			font.draw(SB, "Gold Cost: " + (int) (GameStats.MELEE_UNIT_COST + Math.sqrt(level * GameStats.MELEE_UNIT_COST_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -80);
 		}
 		else
 			this.meleeUnitLabel.draw(SB, 1);
 
 		if(this.rangedLabelvisible){
 			int level = RangedUnit.getPlayerUnitLevel();
-        	this.rangedUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
-        	this.rangedUnitLabel.draw(SB, 1);
-        	font.draw(SB, "HP: " + (int)(GameStats.RANGED_UNIT_MAX_HP + Math.sqrt(level * GameStats.RANGED_UNIT_MAX_HP_UPGRADE_RATE)),GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -5);
-        	font.draw(SB, "Attack Speed: " + (int)(GameStats.RANGED_UNIT_ATTACK_SPEED + Math.sqrt(level * GameStats.RANGED_UNIT_ATTACK_SPEED_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -20);
-        	font.draw(SB, "Attack Range: " + (int)(GameStats.RANGED_UNIT_ATTACK_RANGE + Math.sqrt(level * GameStats.RANGED_UNIT_ATTACK_RANGE_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -35);
-        	font.draw(SB, "Attack Damage: " + (int)(GameStats.RANGED_UNIT_DAMAGE + Math.sqrt(level * GameStats.RANGED_UNIT_DAMAGE_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -50);
-        	font.draw(SB, "Movement Speed: " + (int)(GameStats.RANGED_UNIT_MOVEMENT_SPEED + Math.sqrt(level * GameStats.RANGED_UNIT_MOVEMENT_SPEED_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -65);
-        	font.draw(SB, "Gold Cost: " + (int) (GameStats.RANGED_UNIT_COST + Math.sqrt(level * GameStats.RANGED_UNIT_COST_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -80);
+			this.rangedUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
+			this.rangedUnitLabel.draw(SB, 1);
+			font.draw(SB, "HP: " + (int)(GameStats.RANGED_UNIT_MAX_HP + Math.sqrt(level * GameStats.RANGED_UNIT_MAX_HP_UPGRADE_RATE)),GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -5);
+			font.draw(SB, "Attack Speed: " + (int)(GameStats.RANGED_UNIT_ATTACK_SPEED + Math.sqrt(level * GameStats.RANGED_UNIT_ATTACK_SPEED_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -20);
+			font.draw(SB, "Attack Range: " + (int)(GameStats.RANGED_UNIT_ATTACK_RANGE + Math.sqrt(level * GameStats.RANGED_UNIT_ATTACK_RANGE_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -35);
+			font.draw(SB, "Attack Damage: " + (int)(GameStats.RANGED_UNIT_DAMAGE + Math.sqrt(level * GameStats.RANGED_UNIT_DAMAGE_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -50);
+			font.draw(SB, "Movement Speed: " + (int)(GameStats.RANGED_UNIT_MOVEMENT_SPEED + Math.sqrt(level * GameStats.RANGED_UNIT_MOVEMENT_SPEED_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -65);
+			font.draw(SB, "Gold Cost: " + (int) (GameStats.RANGED_UNIT_COST + Math.sqrt(level * GameStats.RANGED_UNIT_COST_UPGRADE_RATE)), GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -80);
 		}
 		else
 			this.rangedUnitLabel.draw(SB, 1);
@@ -336,14 +346,14 @@ public class UIManager {
 
 		if(this.antiaircraftLabelvisible){
 			int level = RangedUnit.getPlayerUnitLevel();
-        	this.antiaircraftUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
-        	this.antiaircraftUnitLabel.draw(SB, 1);
-        	font.draw(SB, "HP: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_MAX_HP + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_MAX_HP_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -5);
-        	font.draw(SB, "Attack Speed: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -20);
-        	font.draw(SB, "Attack Range: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -35);
-        	font.draw(SB, "Attack Damage: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_DAMAGE + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_DAMAGE_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -50);
-        	font.draw(SB, "Movement Speed: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -65);
-        	font.draw(SB, "Gold Cost: " + (int) (GameStats.ANTIAIRCRAFT_UNIT_COST + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -80);
+			this.antiaircraftUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
+			this.antiaircraftUnitLabel.draw(SB, 1);
+			font.draw(SB, "HP: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_MAX_HP + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_MAX_HP_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -5);
+			font.draw(SB, "Attack Speed: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -20);
+			font.draw(SB, "Attack Range: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -35);
+			font.draw(SB, "Attack Damage: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_DAMAGE + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_DAMAGE_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -50);
+			font.draw(SB, "Movement Speed: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -65);
+			font.draw(SB, "Gold Cost: " + (int) (GameStats.ANTIAIRCRAFT_UNIT_COST + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -80);
 		}
 		else
 			this.antiaircraftUnitLabel.draw(this.SB, 1);
@@ -442,23 +452,31 @@ public class UIManager {
 	public void setMeleeLabelvisible(boolean meleeLabelvisible) {
 		this.meleeLabelvisible = meleeLabelvisible;
 	}
-	
+
 	public void drawMenu() {
-		
+
 		buttons.clear();
 		if(Game.isOnGame()){
-		buttons.add(new ContinueButton(430, 625));
-		buttons.add(new NewGameButton(430, 500));
-		buttons.add(new SaveButton(430, 375));
-		buttons.add(new LoadButton(430, 250));
-		buttons.add(new ExitButton(480, 125));
-		
+			buttons.add(new ContinueButton(430, 625));
+			buttons.add(new NewGameButton(430, 500));
+			buttons.add(new SaveButton(430, 375));
+			buttons.add(new LoadButton(430, 250));
+			buttons.add(new ExitButton(480, 125));
+
 		}else{
-		
-		buttons.add(new NewGameButton(430, 425));
-		buttons.add(new LoadButton(430, 250));
-		buttons.add(new ExitButton(480, 75));
-		
+			
+			if(!Game.isFisrtTimeMenu()){
+				if(this.looser==Side.LEFT){
+					System.out.println("UIManger: " + Game.isFisrtTimeMenu());
+					this.drawTexture(new youLostDraw(380, 550, 150, 400));
+				}else{
+					this.drawTexture(new youWonDraw(380, 550, 150, 400));
+				}
+			}
+			buttons.add(new NewGameButton(430, 425));
+			buttons.add(new LoadButton(430, 250));
+			buttons.add(new ExitButton(480, 75));
+
 		}
 	}
 

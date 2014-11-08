@@ -103,7 +103,7 @@ public class GameStats {
 		public final static float MELEE_UNIT_ATTACK_SPEED = 9.0f;
 		public final static int MELEE_UNIT_ATTACK_RANGE = 25;
 		public final static int MELEE_UNIT_MOVEMENT_SPEED = 4;
-		public final static int MELEE_UNIT_DAMAGE = 170;
+		public final static int MELEE_UNIT_DAMAGE = 6000;//170;
 		public final static int MELEE_UNIT_BOUNTY = 300;
 		public final static int MELEE_UNIT_COST = 95;
 		public final static int MELEE_UNIT_EXP = 70;

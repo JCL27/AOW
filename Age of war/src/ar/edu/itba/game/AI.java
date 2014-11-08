@@ -109,7 +109,6 @@ public class AI {
 		switch(upgradeChoice){
 		case(0):
 			if(player.getExp()> GameStats.UNIT_UPGRADE_COST){
-				System.out.println("AI: intenta "+ player.getExp() + " cost " + GameStats.UNIT_UPGRADE_COST);
 				player.research(UnitUpgrade.class, MeleeUnit.class);
 				upgradeResearched = true;
 			}	

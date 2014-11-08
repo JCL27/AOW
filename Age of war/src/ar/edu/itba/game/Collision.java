@@ -1,6 +1,5 @@
 package ar.edu.itba.game;
 
-import exceptions.DeadUnitException;
 
 public class Collision {
 	Projectile pjt;

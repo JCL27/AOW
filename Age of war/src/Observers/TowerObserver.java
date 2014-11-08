@@ -8,13 +8,6 @@ import ar.edu.itba.game.Tower;
 public class TowerObserver{
 
 	public TowerObserver (){
-		/*
-		Tower tower = WorldManager.getInstance().getPlayer().getTower();
-		BasicTowerDraw draw = new BasicTowerDraw(tower.getX(), tower.getY(), tower.getHeight(), tower.getWidth(), tower.getPlayer());
-		UIManager.getInstance().setPlayerTower(draw);
-		tower = WorldManager.getInstance().getPlayerAI().getTower();
-		draw = new BasicTowerDraw(tower.getX(), tower.getY(), tower.getHeight(), tower.getWidth(), tower.getPlayer());
-		UIManager.getInstance().setPlayerTower(draw);*/
 	}
 
 	public void createTower(Tower tower){

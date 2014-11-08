@@ -19,7 +19,6 @@ public class MainButtonDraw extends Drawable {
 	
 	@Override
 	public int getScreenWidth() {
-		// TODO Auto-generated method stub
 		return this.screenWidth;
 	}
 
