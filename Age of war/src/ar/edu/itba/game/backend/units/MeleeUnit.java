@@ -84,7 +84,11 @@ public class MeleeUnit extends Unit {
 
 	public static void setAIAvailable(boolean aIAvailable) {
 		AIAvailable = aIAvailable;
-	}	
+	}
+	
+	/**
+	 * Attacks an attackable objective at short range
+	 */
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
 			this.objective.receiveDamage(this.damage);

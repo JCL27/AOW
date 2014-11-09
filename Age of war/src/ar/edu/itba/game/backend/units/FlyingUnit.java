@@ -64,6 +64,10 @@ public class FlyingUnit extends Unit{
 		}
 	}
 	
+	/**
+	 * Fires a projectile towards an attackable objective.
+	 * (Only targets ground units)
+	 */
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
 			float velX;

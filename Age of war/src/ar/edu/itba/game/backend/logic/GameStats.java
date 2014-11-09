@@ -1,9 +1,5 @@
 package ar.edu.itba.game.backend.logic;
 
-/**
- * @author mati
- *
- */
 public class GameStats {
 	
 	/**

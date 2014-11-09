@@ -69,6 +69,10 @@ public class AntiaircraftUnit extends Unit{
 		WorldManager.getInstance().getElements().add(this.element);
 	}
 	
+	/**
+	 * Fires a projectile towards an attackable objective.
+	 * (Can target both ground and flying units)
+	 */
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
 			float velX = 0;

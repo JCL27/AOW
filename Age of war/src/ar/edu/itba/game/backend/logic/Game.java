@@ -10,13 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-
-
-
-
-
-
-
 import ar.edu.itba.game.backend.units.AntiaircraftUnit;
 import ar.edu.itba.game.backend.units.FlyingUnit;
 import ar.edu.itba.game.backend.units.MeleeUnit;
@@ -35,9 +28,11 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -51,7 +46,7 @@ public class Game implements ApplicationListener {
 	public static final float GRAVITY = 0.1f;
 	public static final int GROUND_HEIGHT = 300;
 	public static final int FLYING_HEIGHT = 300;
-
+	private static final int ERROR_DISPLAY_TIME = 200;
 	public static GameState gameState = GameState.MENU;
 
 	private OrthographicCamera cam;
@@ -62,22 +57,23 @@ public class Game implements ApplicationListener {
 	private boolean menuDisplayed = false;
 	private static boolean firstTimeMenu = true;
 	private static boolean onGame = false;
-
+	private static BitmapFont errorFont;
+	private static int errorDisplayTime = 140;
+	
 	public void create() {
-
 		Texture.setEnforcePotImages(false);
-
 		Gdx.input.setInputProcessor(new MyInputProcessor());
 		SB = new SpriteBatch();
-
 		b2dr = new Box2DDebugRenderer();
-
 		this.world = new World(new Vector2(0,0),true);
 
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		UIManager.getInstance().setSpriteBatch(SB);
+		errorFont = new BitmapFont(false);
+		errorFont.setColor(Color.RED);
+		errorFont.setScale(1.5f,1.5f);
 
 	}
 
@@ -113,7 +109,10 @@ public class Game implements ApplicationListener {
 	public void pause() {
 
 	}
-
+	
+	/**
+	 * Refreshes the game 
+	 */
 	@Override
 	public void render() {		
 
@@ -152,6 +151,7 @@ public class Game implements ApplicationListener {
 		}else{
 			SB.begin();
 			if(!firstTimeMenu){
+				System.out.println("On Game");
 				UIManager.getInstance().drawBases();
 				UIManager.getInstance().drawTextures();
 				UIManager.getInstance().drawButtons();
@@ -163,20 +163,22 @@ public class Game implements ApplicationListener {
 			if(!menuDisplayed)
 				UIManager.getInstance().drawMenu();
 			UIManager.getInstance().drawButtons();
+			
+			if(UIManager.getInstance().getFileError() && errorDisplayTime>0){
+				UIManager.getInstance().DrawFileError(errorFont);
+				errorDisplayTime--;
+			}
+			else if(UIManager.getInstance().getFileError()){
+				UIManager.getInstance().setFileError(false);
+				errorDisplayTime = ERROR_DISPLAY_TIME;
+			}
+			
 			SB.end();
 		}
-
-
-
 		b2dr.render(world, cam.combined);
-
-
 	}
 
 	public static void saveGame(){
-
-		//System.out.println("guarda");
-
 		try {
 			FileOutputStream fileO = new FileOutputStream("WM.ser");
 			ObjectOutputStream objO = new ObjectOutputStream(fileO);
@@ -211,14 +213,9 @@ public class Game implements ApplicationListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
-		//System.out.println(WorldManager.getInstance().toString());
-
 	}
-
+	
 	public static void loadGame(){
-
 		try {
 			WorldManager.disposeWM();
 			FileInputStream fileO = new FileInputStream("WM.ser");
@@ -253,56 +250,21 @@ public class Game implements ApplicationListener {
 			onGame = true;
 			Game.gameState = GameState.GAME;
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			UIManager.getInstance().setFileError(true);
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			UIManager.getInstance().setFileError(true);
+		} 
+		catch (ClassNotFoundException e){
+			UIManager.getInstance().setFileError(true);
 		}
-//		try{
-//			String csvFilename = "levels.csv";
-//			CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
-//			String[] row = null;
-//			row = csvReader.readNext();
-//			AntiaircraftUnit.setLevels(row);
-//			row = csvReader.readNext();
-//			FlyingUnit.setLevels(row);
-//			row = csvReader.readNext();
-//			MeleeUnit.setLevels(row);
-//			row = csvReader.readNext();
-//			RangedUnit.setLevels(row);
-//			row = csvReader.readNext();
-//			AntiaircraftUnit.setResearch(row);
-//			row = csvReader.readNext();
-//			FlyingUnit.setResearch(row);
-//			csvReader.close();
-//			
-//			UIManager.getInstance().reset();
-//			UIManager.getInstance().initializeDraws();
-//			Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
-//			Factory.getInstance().reAssignObservers();
-//			AI.reset();
-//			Upgrades.reset();
-//			onGame = true;
-//		}catch(FileNotFoundException e){
-//			e.printStackTrace();
-//		}catch(IOException e){
-//			e.printStackTrace();
-//		}
-//
-//		UIManager.getInstance().reset();
-//		UIManager.getInstance().initializeDraws();
-//		Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
-//		Factory.getInstance().reAssignObservers();
-//		AI.reset();
-//		Upgrades.reset();
-//		onGame = true;
 	}
-
+	
+	/**
+	 * Adds gold per second
+	 */
 	private void oneSecondLoop(){
 		if(secondCount--<=0){
 			secondCount = (int) (1/Gdx.graphics.getDeltaTime());
-			//System.out.println("renders/seg: " + 1/Gdx.graphics.getDeltaTime());
 			WorldManager.getInstance().getPlayer().addGold(10);
 			WorldManager.getInstance().getPlayerAI().addGold(15);
 		}

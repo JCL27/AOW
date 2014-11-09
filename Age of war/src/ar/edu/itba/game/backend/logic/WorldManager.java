@@ -8,9 +8,6 @@ import ar.edu.itba.game.backend.units.Unit;
 
 public class WorldManager implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4035477768723084005L;
 	public static float MINDISTANCE = 25;
 
@@ -46,7 +43,10 @@ public class WorldManager implements Serializable{
 		for(Projectile pjt:playerAI.getProjectiles())
 			pjt.notifyObservers();
 	}
-
+	
+	/**
+	 * Updates the elements positions according to their movement speed
+	 */
 	public void updateElements(){
 		for(Element elem: this.elements){
 			elem.setX(elem.getX()+elem.getVelX());
@@ -55,7 +55,10 @@ public class WorldManager implements Serializable{
 				elem.setVelY(elem.getVelY()- Game.GRAVITY);
 		}
 	}
-
+	
+	/**
+	 * Updates the Queue where the units are created
+	 */
 	public void updateUnitsQueue(){
 		this.player.updateQueue();
 		this.playerAI.updateQueue();
@@ -101,7 +104,7 @@ public class WorldManager implements Serializable{
 			disposeProjectile(pjt);
 		}
 	}
-
+	
 	public void updateAttackObjectives(){
 		for(Unit unit:player.getUnits()){
 			unit.updateAttackObjective();
@@ -147,9 +150,6 @@ public class WorldManager implements Serializable{
 	}
 
 	public void killUnit(Unit thisUnit){
-		//thisUnit.removeElement();
-
-
 		this.elements.remove(thisUnit.getElement());
 		if(thisUnit.getSide()==Side.LEFT){
 			playerAI.addGold(thisUnit.getGold());
@@ -163,9 +163,11 @@ public class WorldManager implements Serializable{
 		}
 		thisUnit.notifyDelete();
 	}
-
+	
+	/**
+	 * Given an attacker returns the nearest enemy attackable 
+	 */
 	public Attackable isInRange(CanAttack attacker){
-		//System.out.println(attacker.getClass().getSimpleName() + " " + attacker.getSide() + " attack range: " + attacker.getAttackRange());
 		int range = attacker.getAttackRange();
 		if (attacker.getSide() == Side.LEFT){
 			for(Unit unit:playerAI.getUnits()){
@@ -192,7 +194,7 @@ public class WorldManager implements Serializable{
 		}
 		return null;
 	}
-
+	
 	public boolean canAdvance(Unit thisUnit){
 		if (!measureDistance(player, thisUnit, MINDISTANCE))
 			return false;
@@ -200,7 +202,10 @@ public class WorldManager implements Serializable{
 			return false;
 		return true;
 	}
-
+	
+	/**
+	 * Measures distance between units in the same terrain
+	 */
 	private boolean measureDistance(Player player, Unit thisUnit, double minDistance){
 		double distance;
 		for(Unit unit: player.getUnits()){
