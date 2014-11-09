@@ -1,4 +1,4 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,19 +12,24 @@ import java.util.ArrayList;
 
 
 
-import Draws.Textures;
-import Observers.BaseObserver;
-import Observers.PlayerObserver;
-import Observers.ProjectileObserver;
-import Observers.TowerObserver;
-import Observers.UnitObserver;
-import Units.AntiaircraftUnit;
-import Units.FlyingUnit;
-import Units.MeleeUnit;
-import Units.RangedUnit;
-import Upgrades.Upgrades;
-import UserInterface.MyInputProcessor;
-import UserInterface.UIManager;
+
+
+
+
+
+import ar.edu.itba.game.backend.units.AntiaircraftUnit;
+import ar.edu.itba.game.backend.units.FlyingUnit;
+import ar.edu.itba.game.backend.units.MeleeUnit;
+import ar.edu.itba.game.backend.units.RangedUnit;
+import ar.edu.itba.game.backend.upgrades.Upgrades;
+import ar.edu.itba.game.frontend.draws.Textures;
+import ar.edu.itba.game.frontend.observers.BaseObserver;
+import ar.edu.itba.game.frontend.observers.PlayerObserver;
+import ar.edu.itba.game.frontend.observers.ProjectileObserver;
+import ar.edu.itba.game.frontend.observers.TowerObserver;
+import ar.edu.itba.game.frontend.observers.UnitObserver;
+import ar.edu.itba.game.frontend.userinterface.MyInputProcessor;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 import au.com.bytecode.opencsv.CSVReader;
 import au.com.bytecode.opencsv.CSVWriter;
 

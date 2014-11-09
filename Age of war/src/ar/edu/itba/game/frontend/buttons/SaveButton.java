@@ -1,10 +1,10 @@
-package Buttons;
+package ar.edu.itba.game.frontend.buttons;
 
-import Draws.SaveDraw;
-import UserInterface.GameUIState;
-import UserInterface.UIManager;
-import ar.edu.itba.game.Game;
-import ar.edu.itba.game.GameState;
+import ar.edu.itba.game.backend.logic.Game;
+import ar.edu.itba.game.backend.logic.GameState;
+import ar.edu.itba.game.frontend.draws.SaveDraw;
+import ar.edu.itba.game.frontend.userinterface.GameUIState;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 public class SaveButton extends Button {
 

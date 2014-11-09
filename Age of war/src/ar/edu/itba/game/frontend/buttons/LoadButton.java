@@ -1,10 +1,10 @@
-package Buttons;
+package ar.edu.itba.game.frontend.buttons;
 
-import Draws.LoadDraw;
-import UserInterface.GameUIState;
-import UserInterface.UIManager;
-import ar.edu.itba.game.Game;
-import ar.edu.itba.game.GameState;
+import ar.edu.itba.game.backend.logic.Game;
+import ar.edu.itba.game.backend.logic.GameState;
+import ar.edu.itba.game.frontend.draws.LoadDraw;
+import ar.edu.itba.game.frontend.userinterface.GameUIState;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 public class LoadButton extends Button {
 

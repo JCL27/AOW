@@ -1,10 +1,10 @@
-package UserInterface;
+package ar.edu.itba.game.frontend.userinterface;
 
 import java.util.ArrayList;
 
-import Buttons.Button;
-import ar.edu.itba.game.Game;
-import ar.edu.itba.game.GameStats;
+import ar.edu.itba.game.backend.logic.Game;
+import ar.edu.itba.game.backend.logic.GameStats;
+import ar.edu.itba.game.frontend.buttons.Button;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;

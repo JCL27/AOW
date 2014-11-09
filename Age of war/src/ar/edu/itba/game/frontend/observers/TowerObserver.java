@@ -1,9 +1,9 @@
-package Observers;
+package ar.edu.itba.game.frontend.observers;
 
-import Draws.BasicTowerDraw;
-import UserInterface.UIManager;
-import ar.edu.itba.game.Side;
-import ar.edu.itba.game.Tower;
+import ar.edu.itba.game.backend.logic.Side;
+import ar.edu.itba.game.backend.logic.Tower;
+import ar.edu.itba.game.frontend.draws.BasicTowerDraw;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 public class TowerObserver{
 

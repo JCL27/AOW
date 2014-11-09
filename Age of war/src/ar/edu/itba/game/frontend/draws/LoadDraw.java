@@ -1,4 +1,4 @@
-package Draws;
+package ar.edu.itba.game.frontend.draws;
 
 
 public class LoadDraw extends Drawable{

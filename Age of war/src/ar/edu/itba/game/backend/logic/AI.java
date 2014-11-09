@@ -1,17 +1,17 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 import java.util.Random;
 
-import Units.AntiaircraftUnit;
-import Units.FlyingUnit;
-import Units.MeleeUnit;
-import Units.RangedUnit;
-import Upgrades.AntiaircraftUnitResearch;
-import Upgrades.FlyingUnitResearch;
-import Upgrades.TowerAttackRangeUpgrade;
-import Upgrades.TowerAttackSpeedUpgrade;
-import Upgrades.TowerDamageUpgrade;
-import Upgrades.UnitUpgrade;
+import ar.edu.itba.game.backend.units.AntiaircraftUnit;
+import ar.edu.itba.game.backend.units.FlyingUnit;
+import ar.edu.itba.game.backend.units.MeleeUnit;
+import ar.edu.itba.game.backend.units.RangedUnit;
+import ar.edu.itba.game.backend.upgrades.AntiaircraftUnitResearch;
+import ar.edu.itba.game.backend.upgrades.FlyingUnitResearch;
+import ar.edu.itba.game.backend.upgrades.TowerAttackRangeUpgrade;
+import ar.edu.itba.game.backend.upgrades.TowerAttackSpeedUpgrade;
+import ar.edu.itba.game.backend.upgrades.TowerDamageUpgrade;
+import ar.edu.itba.game.backend.upgrades.UnitUpgrade;
 
 public class AI {
 	private static AI instance = null;
@@ -138,7 +138,7 @@ public class AI {
 			break;
 		case(4):
 			if(!AntiaircraftUnit.isAIAvailable()){
-				if(Upgrades.Upgrades.getInstance().isAvailable(AntiaircraftUnitResearch.class, this.player)){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(AntiaircraftUnitResearch.class, this.player)){
 					if(player.getExp()> GameStats.ANTIAIRCRAFT_UNIT_RESEARCH_COST){
 						player.research(AntiaircraftUnitResearch.class);
 						upgradeResearched = true;
@@ -152,7 +152,7 @@ public class AI {
 		break;
 		case(5):
 			if(!FlyingUnit.isAIAvailable()){
-				if(Upgrades.Upgrades.getInstance().isAvailable(FlyingUnitResearch.class, this.player)){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(FlyingUnitResearch.class, this.player)){
 					if(player.getExp()> GameStats.FLYING_UNIT_RESEARCH_COST){
 						player.research(FlyingUnitResearch.class);
 						upgradeResearched = true;
@@ -166,7 +166,7 @@ public class AI {
 			break;
 		case(6):
 			if(player.getTower()!=null){
-				if(Upgrades.Upgrades.getInstance().isAvailable(TowerDamageUpgrade.class, this.player)){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(TowerDamageUpgrade.class, this.player)){
 					if(player.getExp()> GameStats.TOWER_DAMAGE_UPGRADE_COST){
 						player.research(TowerDamageUpgrade.class);
 						upgradeResearched = true;
@@ -180,7 +180,7 @@ public class AI {
 			break;
 		case(7):
 			if(player.getTower()!=null){
-				if(Upgrades.Upgrades.getInstance().isAvailable(TowerAttackSpeedUpgrade.class, this.player)){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(TowerAttackSpeedUpgrade.class, this.player)){
 					if(player.getExp()> GameStats.TOWER_ATTACK_SPEED_UPGRADE_COST){
 						player.research(TowerAttackSpeedUpgrade.class);
 						upgradeResearched = true;
@@ -194,7 +194,7 @@ public class AI {
 			break;
 		case(8):
 			if(player.getTower()!=null){
-				if(Upgrades.Upgrades.getInstance().isAvailable(TowerAttackRangeUpgrade.class, this.player)){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(TowerAttackRangeUpgrade.class, this.player)){
 					if(player.getExp()> GameStats.TOWER_ATTACK_RANGE_UPGRADE_COST){
 						player.research(TowerAttackRangeUpgrade.class);
 						upgradeResearched = true;

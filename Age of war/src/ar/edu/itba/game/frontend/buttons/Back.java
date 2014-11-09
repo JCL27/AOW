@@ -1,9 +1,9 @@
-package Buttons;
+package ar.edu.itba.game.frontend.buttons;
+
+import ar.edu.itba.game.frontend.draws.ArrowDraw;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import Draws.ArrowDraw;
-import UserInterface.UIManager;
 
 public class Back extends Button{
 

@@ -1,14 +1,14 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import Observers.PlayerObserver;
-import Units.Unit;
-import exceptions.NotEnoughExpException;
-import exceptions.NotEnoughGoldException;
-import exceptions.UnavailableUpgradeException;
+import ar.edu.itba.game.backend.exceptions.NotEnoughExpException;
+import ar.edu.itba.game.backend.exceptions.NotEnoughGoldException;
+import ar.edu.itba.game.backend.exceptions.UnavailableUpgradeException;
+import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.frontend.observers.PlayerObserver;
 
 public class Player implements Serializable{
 
@@ -54,7 +54,7 @@ public class Player implements Serializable{
 	public void research(Class class1, Class class2){
 		System.out.println("player: exp: "+ this.experience);
 		try {
-			Upgrades.Upgrades.getInstance().applyUpgrade(class1.getSimpleName(), this, class2);
+			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().applyUpgrade(class1.getSimpleName(), this, class2);
 		} catch (UnavailableUpgradeException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -164,9 +164,9 @@ public class Player implements Serializable{
 	
 	public void sellTower(){
 		if(this.tower != null){
-			Upgrades.Upgrades.getInstance().setUnavailable("TowerDamageUpgrade", this);
-			Upgrades.Upgrades.getInstance().setUnavailable("TowerAttackSpeedUpgrade", this);
-			Upgrades.Upgrades.getInstance().setUnavailable("TowerAttackRangeUpgrade", this);
+			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setUnavailable("TowerDamageUpgrade", this);
+			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setUnavailable("TowerAttackSpeedUpgrade", this);
+			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setUnavailable("TowerAttackRangeUpgrade", this);
 			this.tower.Sell();
 		}	
 	}

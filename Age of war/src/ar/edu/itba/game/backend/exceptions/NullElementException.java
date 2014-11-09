@@ -1,4 +1,4 @@
-package exceptions;
+package ar.edu.itba.game.backend.exceptions;
 
 public class NullElementException extends Exception {
 

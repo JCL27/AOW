@@ -1,9 +1,9 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 import java.io.Serializable;
 import java.util.Observable;
 
-import Observers.BaseObserver;
+import ar.edu.itba.game.frontend.observers.BaseObserver;
 
 public class Base extends Observable implements Attackable, Serializable {
 

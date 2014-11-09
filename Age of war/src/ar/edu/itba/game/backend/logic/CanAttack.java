@@ -1,4 +1,4 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 public interface CanAttack {
 	public void attack(Attackable objective);

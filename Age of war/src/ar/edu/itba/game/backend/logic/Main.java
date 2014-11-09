@@ -1,4 +1,4 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;

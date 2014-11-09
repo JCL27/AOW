@@ -1,11 +1,16 @@
-package DrawableObjects;
+package ar.edu.itba.game.frontend.drawableobjects;
 
 import java.util.ArrayList;
 
-import Draws.BlackSquareDraw;
-import Draws.Drawable;
-import Draws.GreenSquareDraw;
+import ar.edu.itba.game.frontend.draws.BlackSquareDraw;
+import ar.edu.itba.game.frontend.draws.Drawable;
+import ar.edu.itba.game.frontend.draws.GreenSquareDraw;
 
+/**
+ * 
+ * This class consists of two rectangles, one for the background, and one to indicate the current value of something
+ *
+ */
 public class Bar implements DrawableObject{
 	private int max;
 	private int current;
@@ -24,6 +29,9 @@ public class Bar implements DrawableObject{
 		this.draws.add(green);
 	}
 	
+	/**
+	 * Updates the draw that represents the bar with the current value
+	 */
 	public void setCurrent(int current, float xPos, float yPos){
 		this.current = current;
 		this.green.setScreenWidth(this.screenWidth * this.current / this.max);

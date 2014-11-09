@@ -1,4 +1,4 @@
-package Draws;
+package ar.edu.itba.game.frontend.draws;
 
 import com.badlogic.gdx.graphics.Texture;
 

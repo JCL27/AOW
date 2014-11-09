@@ -1,12 +1,12 @@
-package Upgrades;
+package ar.edu.itba.game.backend.upgrades;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import ar.edu.itba.game.Player;
-import ar.edu.itba.game.WorldManager;
-import exceptions.NotEnoughExpException;
-import exceptions.UnavailableUpgradeException;
+import ar.edu.itba.game.backend.exceptions.NotEnoughExpException;
+import ar.edu.itba.game.backend.exceptions.UnavailableUpgradeException;
+import ar.edu.itba.game.backend.logic.Player;
+import ar.edu.itba.game.backend.logic.WorldManager;
 
 public class Upgrades {
 	
@@ -18,6 +18,10 @@ public class Upgrades {
 	private HashMap<String, Upgrade> upgradeListPlayer = new HashMap<String, Upgrade>();
 	private HashMap<String, Upgrade> upgradeListPlayerAI = new HashMap<String, Upgrade>();
 	
+	/**
+	 * Add an instance of every upgrade to two HashMaps, one for the human player, and one for the AI
+	 * Every entry have its value's simple name as a key
+	 */
 	private Upgrades(){
 		this.upgradeListPlayer.put("UnitUpgrade", new UnitUpgrade(player));
 		this.upgradeListPlayerAI.put("UnitUpgrade", new UnitUpgrade(playerAI));
@@ -52,6 +56,10 @@ public class Upgrades {
 		}
 	}
 	
+	/**
+	 * returns a upgrade list from witch the AI can choose to decide what to upgrade
+	 * @return
+	 */
 	public ArrayList<Upgrade> getAIAvailableUpgrades(){
 		ArrayList<Upgrade> availables = new ArrayList<Upgrade>();
 		for(Upgrade upgrade:upgradeListPlayerAI.values()){

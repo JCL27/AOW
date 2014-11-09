@@ -1,11 +1,11 @@
-package Upgrades;
+package ar.edu.itba.game.backend.upgrades;
 
 import java.util.ArrayList;
 
-import Units.Unit;
-import ar.edu.itba.game.Player;
-import exceptions.NotEnoughExpException;
-import exceptions.UnavailableUpgradeException;
+import ar.edu.itba.game.backend.exceptions.NotEnoughExpException;
+import ar.edu.itba.game.backend.exceptions.UnavailableUpgradeException;
+import ar.edu.itba.game.backend.logic.Player;
+import ar.edu.itba.game.backend.units.Unit;
 
 public abstract class Upgrade {
 	protected ArrayList<Upgrade> needs;
@@ -23,6 +23,14 @@ public abstract class Upgrade {
 		this.player = player;
 	}
 	
+	
+	/**
+	 * Checks if the player can afford the upgrade, and then calls the 
+	 * method that applies
+	 * @param classType
+	 * @throws UnavailableUpgradeException
+	 * @throws NotEnoughExpException
+	 */
 	public void chargeAndApply(Class<Unit> classType) throws UnavailableUpgradeException, NotEnoughExpException {
 		if (this.isAvailable() == false)
 			throw new UnavailableUpgradeException();
@@ -44,6 +52,10 @@ public abstract class Upgrade {
 		System.out.println("Upgrade: " + player.getExp());
 	}
 	
+	/**
+	 * Checks witch upgrade depends directly from this in the upgrade tree,
+	 * and if it doesn't need any other upgrade to be enabled, set it enabled
+	 */
 	public void checkNewUpgrades(){
 		for(Upgrade upgrade: this.allows){
 			if(upgrade.available == false){
@@ -57,6 +69,11 @@ public abstract class Upgrade {
 		}
 	}
 	
+	
+	/**
+	 * Checks if the upgrade can be applied, if it is multiupgradable, it doesn't check if it is already applied
+	 * @return
+	 */
 	public boolean isAvailable(){
 		if(multiUpgradable){
 			return available;

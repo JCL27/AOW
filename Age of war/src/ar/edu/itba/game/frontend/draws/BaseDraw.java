@@ -1,6 +1,6 @@
-package Draws;
+package ar.edu.itba.game.frontend.draws;
 
-import ar.edu.itba.game.Side;
+import ar.edu.itba.game.backend.logic.Side;
 
 import com.badlogic.gdx.graphics.Texture;
 

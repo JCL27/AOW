@@ -1,9 +1,9 @@
-package Observers;
+package ar.edu.itba.game.frontend.observers;
 
-import Draws.BasicProjectileDraw;
-import Draws.Drawable;
-import UserInterface.UIManager;
-import ar.edu.itba.game.Projectile;
+import ar.edu.itba.game.backend.logic.Projectile;
+import ar.edu.itba.game.frontend.draws.BasicProjectileDraw;
+import ar.edu.itba.game.frontend.draws.Drawable;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 public class ProjectileObserver{
 

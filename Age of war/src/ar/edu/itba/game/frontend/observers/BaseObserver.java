@@ -1,11 +1,11 @@
-package Observers;
+package ar.edu.itba.game.frontend.observers;
 
-import DrawableObjects.BaseDrawableObject;
-import UserInterface.UIManager;
-import ar.edu.itba.game.Base;
-import ar.edu.itba.game.Game;
-import ar.edu.itba.game.GameStats;
-import ar.edu.itba.game.Side;
+import ar.edu.itba.game.backend.logic.Base;
+import ar.edu.itba.game.backend.logic.Game;
+import ar.edu.itba.game.backend.logic.GameStats;
+import ar.edu.itba.game.backend.logic.Side;
+import ar.edu.itba.game.frontend.drawableobjects.BaseDrawableObject;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 public class BaseObserver{
 

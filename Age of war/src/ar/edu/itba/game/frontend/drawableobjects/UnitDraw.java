@@ -1,12 +1,12 @@
-package DrawableObjects;
+package ar.edu.itba.game.frontend.drawableobjects;
 
 import java.util.ArrayList;
 
-import Draws.Drawable;
-import Draws.FlyingUnitDraw;
-import Draws.MeleeUnitDraw;
-import Draws.RangedUnitDraw;
-import Units.Unit;
+import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.frontend.draws.Drawable;
+import ar.edu.itba.game.frontend.draws.FlyingUnitDraw;
+import ar.edu.itba.game.frontend.draws.MeleeUnitDraw;
+import ar.edu.itba.game.frontend.draws.RangedUnitDraw;
 
 public class UnitDraw implements DrawableObject {
 	private Drawable draw;

@@ -1,10 +1,10 @@
-package Buttons;
+package ar.edu.itba.game.frontend.buttons;
 
-import Draws.MainButtonDraw;
-import ar.edu.itba.game.Game;
-import ar.edu.itba.game.GameState;
+import ar.edu.itba.game.backend.logic.Game;
+import ar.edu.itba.game.backend.logic.GameState;
+import ar.edu.itba.game.frontend.draws.MainButtonDraw;
 
-public class MenuButton extends Buttons.Button {
+public class MenuButton extends ar.edu.itba.game.frontend.buttons.Button {
 
 	public MenuButton(float X, float Y){
 		this.draw = new MainButtonDraw(X, Y, 50, 120);

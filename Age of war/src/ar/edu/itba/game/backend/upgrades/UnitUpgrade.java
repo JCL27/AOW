@@ -1,11 +1,11 @@
-package Upgrades;
+package ar.edu.itba.game.backend.upgrades;
 
 import java.lang.reflect.InvocationTargetException;
 
-import Units.Unit;
-import ar.edu.itba.game.GameStats;
-import ar.edu.itba.game.Player;
-import ar.edu.itba.game.WorldManager;
+import ar.edu.itba.game.backend.logic.GameStats;
+import ar.edu.itba.game.backend.logic.Player;
+import ar.edu.itba.game.backend.logic.WorldManager;
+import ar.edu.itba.game.backend.units.Unit;
 
 public class UnitUpgrade extends Upgrade {
 	
@@ -15,6 +15,11 @@ public class UnitUpgrade extends Upgrade {
 		this.cost = GameStats.UNIT_UPGRADE_COST;
 		this.multiUpgradable = true;
 	}
+	
+	/**
+	 * Upgrades the unit specified by "classType", adding 1 to the current level, afecting the
+	 * multiplier of its upgrade rate
+	 */
 
 	@Override
 	public void applyUpgrade(Class<Unit> classType) {

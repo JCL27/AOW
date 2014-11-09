@@ -1,14 +1,14 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import Observers.BaseObserver;
-import Observers.PlayerObserver;
-import Observers.ProjectileObserver;
-import Observers.TowerObserver;
-import Observers.UnitObserver;
-import Units.Unit;
+import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.frontend.observers.BaseObserver;
+import ar.edu.itba.game.frontend.observers.PlayerObserver;
+import ar.edu.itba.game.frontend.observers.ProjectileObserver;
+import ar.edu.itba.game.frontend.observers.TowerObserver;
+import ar.edu.itba.game.frontend.observers.UnitObserver;
 
 public class Factory {
 

@@ -1,11 +1,11 @@
-package Buttons;
+package ar.edu.itba.game.frontend.buttons;
+
+import ar.edu.itba.game.frontend.draws.Drawable;
+import ar.edu.itba.game.frontend.userinterface.Clickable;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import Draws.Drawable;
-import UserInterface.Clickable;
 
 public abstract class Button implements Clickable {
 

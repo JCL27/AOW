@@ -1,13 +1,13 @@
-package Buttons;
+package ar.edu.itba.game.frontend.buttons;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import Draws.Icon;
-import Draws.Textures;
-import Upgrades.TowerAttackRangeUpgrade;
-import ar.edu.itba.game.GameStats;
-import ar.edu.itba.game.Player;
-import ar.edu.itba.game.WorldManager;
+import ar.edu.itba.game.backend.logic.GameStats;
+import ar.edu.itba.game.backend.logic.Player;
+import ar.edu.itba.game.backend.logic.WorldManager;
+import ar.edu.itba.game.backend.upgrades.TowerAttackRangeUpgrade;
+import ar.edu.itba.game.frontend.draws.Icon;
+import ar.edu.itba.game.frontend.draws.Textures;
 
 public class TowerAttackRangeUpgradeButton extends Button {
 	

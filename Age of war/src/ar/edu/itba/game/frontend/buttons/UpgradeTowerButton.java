@@ -1,11 +1,11 @@
-package Buttons;
+package ar.edu.itba.game.frontend.buttons;
+
+import ar.edu.itba.game.frontend.draws.Icon;
+import ar.edu.itba.game.frontend.draws.Textures;
+import ar.edu.itba.game.frontend.userinterface.GameUIState;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import Draws.Icon;
-import Draws.Textures;
-import UserInterface.GameUIState;
-import UserInterface.UIManager;
 
 public class UpgradeTowerButton extends Button{
 	public UpgradeTowerButton(float X, float Y) {

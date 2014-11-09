@@ -1,12 +1,16 @@
-package DrawableObjects;
+package ar.edu.itba.game.frontend.drawableobjects;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import Draws.Drawable;
-import Units.Unit;
-import ar.edu.itba.game.Side;
+import ar.edu.itba.game.backend.logic.Side;
+import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.frontend.draws.Drawable;
 
+/**
+ * Represents the queue of units that are waiting to be created
+ *
+ */
 public class Queue implements DrawableObject {
 	private ArrayList<QueueElement> elemsVec = new ArrayList<QueueElement>();
 	private ArrayList<Drawable> draws = new ArrayList<Drawable>();
@@ -36,7 +40,10 @@ public class Queue implements DrawableObject {
 		this.elemsVec.add(elem);
 		this.draws.addAll(elem.getDraws());
 	}
-	
+	/**
+	 * removes any element of the queue, for the lack of time, we decided to only remove the first always
+	 * @param index
+	 */
 	public void removeElement(int index){
 		if(index > 4){
 			throw new ArrayIndexOutOfBoundsException();

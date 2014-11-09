@@ -1,13 +1,13 @@
-package Observers;
+package ar.edu.itba.game.frontend.observers;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
-import DrawableObjects.Queue;
-import Units.Unit;
-import UserInterface.UIManager;
-import ar.edu.itba.game.Player;
-import ar.edu.itba.game.Side;
+import ar.edu.itba.game.backend.logic.Player;
+import ar.edu.itba.game.backend.logic.Side;
+import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.frontend.drawableobjects.Queue;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 public class PlayerObserver{
 	

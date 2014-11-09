@@ -1,6 +1,6 @@
-package Buttons;
+package ar.edu.itba.game.frontend.buttons;
 
-import Draws.ExitDraw;
+import ar.edu.itba.game.frontend.draws.ExitDraw;
 
 import com.badlogic.gdx.Gdx;
 

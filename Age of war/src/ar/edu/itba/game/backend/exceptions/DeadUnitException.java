@@ -1,6 +1,6 @@
-package exceptions;
+package ar.edu.itba.game.backend.exceptions;
 
-import Units.Unit;
+import ar.edu.itba.game.backend.units.Unit;
 
 public class DeadUnitException extends Exception {
 	

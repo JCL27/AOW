@@ -1,9 +1,9 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 import java.awt.geom.Point2D;
 import java.io.Serializable;
 
-import Observers.ProjectileObserver;
+import ar.edu.itba.game.frontend.observers.ProjectileObserver;
 
 public class Projectile implements Serializable{
 	/**

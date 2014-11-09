@@ -1,11 +1,15 @@
-package DrawableObjects;
+package ar.edu.itba.game.frontend.drawableobjects;
 
 import java.util.ArrayList;
 
-import Draws.Drawable;
-import Draws.Icon;
-import Draws.Textures;
-
+import ar.edu.itba.game.frontend.draws.Drawable;
+import ar.edu.itba.game.frontend.draws.Icon;
+import ar.edu.itba.game.frontend.draws.Textures;
+/**
+ * Represents one element of the queue, consists of a Bar and a drawable that represents the symbol of the unit that
+ * is in queue
+ *
+ */
 public class QueueElement implements DrawableObject {
 	private Drawable icon;
 	private Bar bar;

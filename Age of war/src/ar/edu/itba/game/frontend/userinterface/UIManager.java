@@ -1,36 +1,36 @@
-package UserInterface;
+package ar.edu.itba.game.frontend.userinterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
-import Buttons.Button;
-import Buttons.ContinueButton;
-import Buttons.ExitButton;
-import Buttons.LoadButton;
-import Buttons.NewGameButton;
-import Buttons.SaveButton;
-import DrawableObjects.BaseDrawableObject;
-import DrawableObjects.DrawableObject;
-import DrawableObjects.Queue;
-import DrawableObjects.UnitDraw;
-import Draws.BasicTowerDraw;
-import Draws.Drawable;
-import Draws.GrassDraw;
-import Draws.GroundDraw;
-import Draws.Textures;
-import Draws.youLostDraw;
-import Draws.youWonDraw;
-import Units.AntiaircraftUnit;
-import Units.FlyingUnit;
-import Units.MeleeUnit;
-import Units.RangedUnit;
-import Units.Unit;
-import ar.edu.itba.game.Game;
-import ar.edu.itba.game.GameStats;
-import ar.edu.itba.game.Projectile;
-import ar.edu.itba.game.Side;
-import ar.edu.itba.game.WorldManager;
+import ar.edu.itba.game.backend.logic.Game;
+import ar.edu.itba.game.backend.logic.GameStats;
+import ar.edu.itba.game.backend.logic.Projectile;
+import ar.edu.itba.game.backend.logic.Side;
+import ar.edu.itba.game.backend.logic.WorldManager;
+import ar.edu.itba.game.backend.units.AntiaircraftUnit;
+import ar.edu.itba.game.backend.units.FlyingUnit;
+import ar.edu.itba.game.backend.units.MeleeUnit;
+import ar.edu.itba.game.backend.units.RangedUnit;
+import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.frontend.buttons.Button;
+import ar.edu.itba.game.frontend.buttons.ContinueButton;
+import ar.edu.itba.game.frontend.buttons.ExitButton;
+import ar.edu.itba.game.frontend.buttons.LoadButton;
+import ar.edu.itba.game.frontend.buttons.NewGameButton;
+import ar.edu.itba.game.frontend.buttons.SaveButton;
+import ar.edu.itba.game.frontend.drawableobjects.BaseDrawableObject;
+import ar.edu.itba.game.frontend.drawableobjects.DrawableObject;
+import ar.edu.itba.game.frontend.drawableobjects.Queue;
+import ar.edu.itba.game.frontend.drawableobjects.UnitDraw;
+import ar.edu.itba.game.frontend.draws.BasicTowerDraw;
+import ar.edu.itba.game.frontend.draws.Drawable;
+import ar.edu.itba.game.frontend.draws.GrassDraw;
+import ar.edu.itba.game.frontend.draws.GroundDraw;
+import ar.edu.itba.game.frontend.draws.Textures;
+import ar.edu.itba.game.frontend.draws.youLostDraw;
+import ar.edu.itba.game.frontend.draws.youWonDraw;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -233,40 +233,40 @@ public class UIManager {
 		this.buttons.clear();
 		switch(State.peek()){
 		case DEFAULT:
-			this.buttons.add(new Buttons.CreateUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.Tower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.UpgradeUnitButton(this.BUTTON_INITIAL_X + count++ *this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.UpgradeTowerButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.MenuButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.Tower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeUnitButton(this.BUTTON_INITIAL_X + count++ *this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeTowerButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.MenuButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case CREATE_UNIT:
-			this.buttons.add(new Buttons.CreateRangedUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.CreateFlyingUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.CreateAntiaircraftUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.CreateMeleeUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateRangedUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateFlyingUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateAntiaircraftUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateMeleeUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case TOWER:
-			this.buttons.add(new Buttons.CreateBasicTower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.DisposeTower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateBasicTower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.DisposeTower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case UPGRADE_UNIT:
-			this.buttons.add(new Buttons.UpgradeMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.UpgradeRangedUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.UpgradeFlyingUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.UpgradeAntiaircraftUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.ResearchAntiaircraftUnitsButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.ResearchFlyingUnitsButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeRangedUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeFlyingUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeAntiaircraftUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.ResearchAntiaircraftUnitsButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.ResearchFlyingUnitsButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 
 			break;
 		case UPGRADE_TOWER:
-			this.buttons.add(new Buttons.TowerDamageUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.TowerAttackSpeedUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new Buttons.TowerAttackRangeUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.TowerDamageUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.TowerAttackSpeedUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.TowerAttackRangeUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		}
 
 		if(!State.peek().equals(GameUIState.DEFAULT)){
-			this.buttons.add(new Buttons.Back(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.Back(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 		}
 	}
 

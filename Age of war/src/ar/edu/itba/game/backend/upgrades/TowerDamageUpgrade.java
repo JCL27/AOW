@@ -1,8 +1,8 @@
-package Upgrades;
+package ar.edu.itba.game.backend.upgrades;
 
-import ar.edu.itba.game.GameStats;
-import ar.edu.itba.game.Player;
-import exceptions.AlreadyAppliedUpgradeException;
+import ar.edu.itba.game.backend.exceptions.AlreadyAppliedUpgradeException;
+import ar.edu.itba.game.backend.logic.GameStats;
+import ar.edu.itba.game.backend.logic.Player;
 
 public class TowerDamageUpgrade extends Upgrade {
 
@@ -10,7 +10,11 @@ public class TowerDamageUpgrade extends Upgrade {
 		super(player);
 		this.cost = GameStats.TOWER_DAMAGE_UPGRADE_COST;
 	}
-
+	
+	/**
+	 * Upgrades the tower's damage
+	 */
+	
 	@Override
 	public void applyUpgrade(Class classType) {
 		try {

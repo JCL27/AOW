@@ -1,9 +1,9 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 import java.io.Serializable;
 
-import Observers.TowerObserver;
-import exceptions.AlreadyAppliedUpgradeException;
+import ar.edu.itba.game.backend.exceptions.AlreadyAppliedUpgradeException;
+import ar.edu.itba.game.frontend.observers.TowerObserver;
 
 public class Tower implements CanAttack, Serializable{
 	
@@ -80,9 +80,9 @@ public class Tower implements CanAttack, Serializable{
 		
 		this.observer = observer;
 		
-		Upgrades.Upgrades.getInstance().setAvailable("TowerDamageUpgrade", this.player);
-		Upgrades.Upgrades.getInstance().setAvailable("TowerAttackSpeedUpgrade", this.player);
-		Upgrades.Upgrades.getInstance().setAvailable("TowerAttackRangeUpgrade", this.player);
+		ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setAvailable("TowerDamageUpgrade", this.player);
+		ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setAvailable("TowerAttackSpeedUpgrade", this.player);
+		ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setAvailable("TowerAttackRangeUpgrade", this.player);
 	}
 	///////////////////////////
 

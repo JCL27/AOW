@@ -1,10 +1,10 @@
-package ar.edu.itba.game;
+package ar.edu.itba.game.backend.logic;
 
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import Units.Unit;
+import ar.edu.itba.game.backend.units.Unit;
 
 public class WorldManager implements Serializable{
 

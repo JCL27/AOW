@@ -1,8 +1,8 @@
-package Observers;
+package ar.edu.itba.game.frontend.observers;
 
-import DrawableObjects.UnitDraw;
-import Units.Unit;
-import UserInterface.UIManager;
+import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.frontend.drawableobjects.UnitDraw;
+import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 public class UnitObserver{
 	
