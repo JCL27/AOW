@@ -23,6 +23,9 @@ public class Tower implements CanAttack, Serializable{
 	private boolean attackFlying;
 	private transient TowerObserver observer;
 	
+	/**
+	 * States whether the tower upgrades are applied
+	 */
 	private boolean upgradedDamage = false;
 	private boolean upgradedAttackRange = false;
 	private boolean upgradedAttackSpeed = false;
@@ -45,7 +48,6 @@ public class Tower implements CanAttack, Serializable{
 		if(this.objective != null){
 			this.attack(this.objective);
 		}
-		//System.out.println("Torre: " + this.player + " Objetivo: " + this.objective);
 	}
 	
 	public void Sell(){
@@ -56,7 +58,6 @@ public class Tower implements CanAttack, Serializable{
 	public Element getElement(){
 		return this.element;
 	}
-	/////////////////////
 
 	public Tower(Player player, TowerObserver observer){
 		this.player = player;
@@ -71,11 +72,11 @@ public class Tower implements CanAttack, Serializable{
 		
 		if (this.player.equals(WorldManager.getInstance().getPlayer())){
 			this.side = Side.LEFT;
-			this.element = new Element(50, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, 200, 100);
+			this.element = new Element(50, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, GameStats.TOWER_SCREEN_WIDTH,GameStats.TOWER_SCREEN_HEIGHT);
 		} 
 		else{
 			this.side = Side.RIGHT;
-			this.element = new Element(1000, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, 100, 100);
+			this.element = new Element(1000, GameStats.TOWER_HEIGHT + Game.GROUND_HEIGHT, GameStats.TOWER_SCREEN_WIDTH,GameStats.TOWER_SCREEN_HEIGHT);
 		}
 		
 		this.observer = observer;
@@ -84,7 +85,6 @@ public class Tower implements CanAttack, Serializable{
 		ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setAvailable("TowerAttackSpeedUpgrade", this.player);
 		ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setAvailable("TowerAttackRangeUpgrade", this.player);
 	}
-	///////////////////////////
 
 	@Override
 	public void attack(Attackable objective) {
@@ -184,6 +184,9 @@ public class Tower implements CanAttack, Serializable{
 		return this.attackFlying;
 	}
 	
+	/**
+	 * Calls TowerObserver to dispose the tower draw
+	 */
 	public void notifyDelete() {
 		this.observer.dispose(this);	
 	}

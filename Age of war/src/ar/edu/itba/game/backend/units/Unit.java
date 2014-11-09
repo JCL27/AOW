@@ -199,9 +199,6 @@ public abstract class Unit implements CanAttack, Attackable, Serializable{
 				velX = (float)velY;
 			this.player.getProjectiles().add(Factory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
-			
-			//System.out.println("attack!");
-
 			this.cooldown = (int)(1000/this.attackSpeed);		
 
 		}

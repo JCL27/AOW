@@ -8,7 +8,9 @@ import ar.edu.itba.game.frontend.buttons.Button;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-
+/**
+ * Gets the coordinates of the mouse and checks mouse clicks
+ */
 public class MyInputProcessor implements InputProcessor{
 	
 	@Override
@@ -29,12 +31,21 @@ public class MyInputProcessor implements InputProcessor{
 		return false;
 	}
 	
+	/**
+	 * Checks whether the mouse is over a Label or a Button 
+	 */
 	@Override
 	public boolean mouseMoved(int arg0, int arg1) {
 		
+		/**
+		 * Scale the X and Y positions according to the Game Height and Width 
+		 */
 		float scaledX = arg0 * (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth();
 		float scaledY = Game.HEIGHT * Game.SCALE - arg1 * (Game.HEIGHT * Game.SCALE)/ Gdx.graphics.getHeight();
 		
+		/**
+		 * Set displayable labels visibility
+		 */
 		if (scaledY>(GameStats.LABEL_UNITS_Y - 10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
 				scaledX>GameStats.LABEL_RANGED_X && scaledX<(GameStats.LABEL_RANGED_X + GameStats.BACKGROUND_RIGHT) ){
 			UIManager.getInstance().setRangedLabelvisible(true);
@@ -58,6 +69,9 @@ public class MyInputProcessor implements InputProcessor{
 			UIManager.getInstance().setAntiaircraftLabelvisible(false);
 		}	
 		
+		/**
+		 * Set button's descriptions visibility
+		 */
 		for(Button button : UIManager.getInstance().getButtons()){
 			if(button.isClicked(scaledX, scaledY)){
 					button.setMessageVisibility(true);
@@ -73,7 +87,10 @@ public class MyInputProcessor implements InputProcessor{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	/**
+	 * Checks if a button is clicked and executes click over that button
+	 */
 	@Override
 	public boolean touchDown(int arg0, int arg1, int arg2, int arg3) {
 		ArrayList<Button> buttons = UIManager.getInstance().getButtons();

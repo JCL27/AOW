@@ -11,14 +11,16 @@ import ar.edu.itba.game.backend.logic.WorldManager;
 import ar.edu.itba.game.frontend.observers.UnitObserver;
 
 public class RangedUnit extends Unit implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -3399027554023024600L;
 	private static Integer playerUnitLevel = 0;
-	private static boolean playerAvailable = true;
 	private static Integer AIUnitLevel = 0;
-	private static boolean AIAvailable = true;
+	
+	/**
+	 * States whether the unit is available for purchase
+	 */
+	private static Boolean playerAvailable = true;
+	private static Boolean AIAvailable = true;
 	
 	public RangedUnit(Player player, UnitObserver observer){
 		super(player, observer);

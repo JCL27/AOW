@@ -15,7 +15,8 @@ public abstract class Textures{
 	public static Texture ARROW = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/Arrow.png"));
 	public static Texture RED_BASE = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/RedBase.png"));
 	public static Texture BLUE_BASE = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/BlueBase.png"));
-	public static Texture BASIC_TOWER = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/EraserCannon.png"));
+	public static Texture TOWER_RED = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/BioGun.png"));
+	public static Texture TOWER_BLUE = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/EraserCannon.png"));
 	public static Texture GRASS = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/pastito.png"));
 	public static Texture MAIN_BUTTON = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/menuButton.png"));
 	public static Texture SAVE_BUTTON = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/saveButton.png"));

@@ -2,19 +2,19 @@ package ar.edu.itba.game.frontend.draws;
 
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
-
+import ar.edu.itba.game.frontend.draws.Textures;
 import com.badlogic.gdx.graphics.Texture;
+
+
 
 public class BasicTowerDraw extends Drawable{
 	
-	private Texture leftTexture = Textures.BASIC_TOWER;
-	private Texture rightTexture = Textures.BASIC_TOWER;
+	private Texture leftTexture = Textures.TOWER_BLUE;
+	private Texture rightTexture = Textures.TOWER_RED;
 	
 	public BasicTowerDraw(float xPos, float yPos, int screenHeight, int screenWidth, Player player) {
 		super(xPos, yPos, screenHeight, screenWidth);
 		this.player = player;
-		//this.screenHeight = leftTexture.getHeight()/scale;
-		//this.screenWidth = leftTexture.getWidth()/scale;
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 }
