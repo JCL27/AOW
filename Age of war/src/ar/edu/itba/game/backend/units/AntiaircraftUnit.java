@@ -12,14 +12,15 @@ import ar.edu.itba.game.frontend.observers.UnitObserver;
 
 public class AntiaircraftUnit extends Unit{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8389088340073951657L;
 	private static Integer playerUnitLevel = 0;
-	private static Boolean playerAvailable = false;
 	private static Integer AIUnitLevel = 0;
-	private static Boolean AIAvailable = false;
+	
+	/**
+	 * States whether the unit is available for purchase
+	 */
+	private static Boolean playerAvailable = true;
+	private static Boolean AIAvailable = true;
 	
 	public static boolean isPlayerAvailable() {
 		return playerAvailable;
@@ -68,6 +69,10 @@ public class AntiaircraftUnit extends Unit{
 		WorldManager.getInstance().getElements().add(this.element);
 	}
 	
+	/**
+	 * Fires a projectile towards an attackable objective.
+	 * (Can target both ground and flying units)
+	 */
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
 			float velX = 0;
@@ -95,11 +100,7 @@ public class AntiaircraftUnit extends Unit{
 			}
 			this.player.getProjectiles().add(Factory.getInstance().createProjectile(this.getElement().getMiddleX(),
 					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
-			
-			//System.out.println("attack!");
-
 			this.cooldown = (int)(1000/this.attackSpeed);		
-
 		}
 		else{
 			this.cooldown--;

@@ -10,13 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-
-
-
-
-
-
-
 import ar.edu.itba.game.backend.units.AntiaircraftUnit;
 import ar.edu.itba.game.backend.units.FlyingUnit;
 import ar.edu.itba.game.backend.units.MeleeUnit;
@@ -35,9 +28,11 @@ import au.com.bytecode.opencsv.CSVWriter;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -51,7 +46,7 @@ public class Game implements ApplicationListener {
 	public static final float GRAVITY = 0.1f;
 	public static final int GROUND_HEIGHT = 300;
 	public static final int FLYING_HEIGHT = 300;
-
+	private static final int ERROR_DISPLAY_TIME = 200;
 	public static GameState gameState = GameState.MENU;
 
 	private OrthographicCamera cam;
@@ -62,25 +57,26 @@ public class Game implements ApplicationListener {
 	private boolean menuDisplayed = false;
 	private static boolean firstTimeMenu = true;
 	private static boolean onGame = false;
+	private static BitmapFont errorFont;
+	private static int errorDisplayTime = 140;
 
 	/**
 	 * Set the initial values of the game, specially libgdx methods
 	 */
 	public void create() {
-
 		Texture.setEnforcePotImages(false);
-
 		Gdx.input.setInputProcessor(new MyInputProcessor());
 		SB = new SpriteBatch();
-
 		b2dr = new Box2DDebugRenderer();
-
 		this.world = new World(new Vector2(0,0),true);
 
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		UIManager.getInstance().setSpriteBatch(SB);
+		errorFont = new BitmapFont(false);
+		errorFont.setColor(Color.RED);
+		errorFont.setScale(1.5f,1.5f);
 
 	}
 	
@@ -120,6 +116,7 @@ public class Game implements ApplicationListener {
 	public void pause() {
 
 	}
+	
 	/**
 	 * This method is executed like a loop, calling methods from WorldManager to manage the logic of
 	 * the game and methods of UIManager to manage the interface
@@ -162,6 +159,7 @@ public class Game implements ApplicationListener {
 		}else{
 			SB.begin();
 			if(!firstTimeMenu){
+				System.out.println("On Game");
 				UIManager.getInstance().drawBases();
 				UIManager.getInstance().drawTextures();
 				UIManager.getInstance().drawButtons();
@@ -173,14 +171,19 @@ public class Game implements ApplicationListener {
 			if(!menuDisplayed)
 				UIManager.getInstance().drawMenu();
 			UIManager.getInstance().drawButtons();
+			
+			if(UIManager.getInstance().getFileError() && errorDisplayTime>0){
+				UIManager.getInstance().DrawFileError(errorFont);
+				errorDisplayTime--;
+			}
+			else if(UIManager.getInstance().getFileError()){
+				UIManager.getInstance().setFileError(false);
+				errorDisplayTime = ERROR_DISPLAY_TIME;
+			}
+			
 			SB.end();
 		}
-
-
-
 		b2dr.render(world, cam.combined);
-
-
 	}
 	/**
 	 * Save the instances of the backend to a serialized file, and the static values to a csv file
@@ -221,15 +224,13 @@ public class Game implements ApplicationListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
-		//System.out.println(WorldManager.getInstance().toString());
-
 	}
 	
+
 	/**
 	 * Drop the fronend elements, get the instances of the backend from a serialized file, and the static values from a csv file
 	 */
+
 	public static void loadGame(){
 		try {
 			Object obj;
@@ -260,11 +261,12 @@ public class Game implements ApplicationListener {
 			Game.gameState = GameState.GAME;
 			
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			UIManager.getInstance().setFileError(true);
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e){
-			e.printStackTrace();
+			UIManager.getInstance().setFileError(true);
+		} 
+		catch (ClassNotFoundException e){
+			UIManager.getInstance().setFileError(true);
 		}
 		
 		UIManager.getInstance().reset();
@@ -279,11 +281,10 @@ public class Game implements ApplicationListener {
 	
 	/**
 	 * This method measures 1 second, and add gold to the players every second
-	 */
+	*/
 	private void oneSecondLoop(){
 		if(secondCount--<=0){
 			secondCount = (int) (1/Gdx.graphics.getDeltaTime());
-			//System.out.println("renders/seg: " + 1/Gdx.graphics.getDeltaTime());
 			WorldManager.getInstance().getPlayer().addGold(10);
 			WorldManager.getInstance().getPlayerAI().addGold(15);
 		}

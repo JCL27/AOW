@@ -99,7 +99,9 @@ public class UIManager {
 	private boolean flyingLabelvisible = false;
 	private boolean antiaircraftLabelvisible = false;
 	private boolean meleeLabelvisible = false;
-
+	
+	private boolean fileError = false;
+	
 	public static UIManager getInstance() {
 		if(instance == null) {
 			instance = new UIManager();
@@ -114,8 +116,7 @@ public class UIManager {
 	private UIManager(){
 		this.looser = null;
 	}
-	
-	
+
 	public void reset(){
 		this.DOs.clear();
 		this.drawables.clear();
@@ -182,7 +183,6 @@ public class UIManager {
 		this.antiaircraftUnitLabel = new Label("", this.antiaircraftLabelStyle);
 		this.flyingUnitLabel = new Label("", this.flyingLabelStyle);
 
-		//The background is drawn with the origin set in the give position.
 		this.goldLabel.setPosition(GameStats.GOLD_LABEL_X, GameStats.GOLD_LABEL_Y);
 		this.xpLabel.setPosition(GameStats.EXP_LABEL_X, GameStats.EXP_LABEL_Y);
 		this.rangedUnitLabel.setPosition(GameStats.LABEL_RANGED_X, GameStats.LABEL_UNITS_Y);
@@ -267,7 +267,6 @@ public class UIManager {
 			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeAntiaircraftUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new ar.edu.itba.game.frontend.buttons.ResearchAntiaircraftUnitsButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new ar.edu.itba.game.frontend.buttons.ResearchFlyingUnitsButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-
 			break;
 		case UPGRADE_TOWER:
 			this.buttons.add(new ar.edu.itba.game.frontend.buttons.TowerDamageUpgradeButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
@@ -304,8 +303,7 @@ public class UIManager {
 		for(Drawable draw:this.drawables){
 			this.drawTexture(draw);
 		}
-		drawButtonsMessage();
-		
+		this.drawButtonsMessage();
 		this.setDefaultLabels();
 		this.goldLabel.draw(SB, 1);
 		this.xpLabel.draw(SB, 1);
@@ -367,7 +365,6 @@ public class UIManager {
 		}
 		else
 			this.antiaircraftUnitLabel.draw(this.SB, 1);
-
 	}
 
 	private void drawTexture(Drawable draw){
@@ -402,7 +399,6 @@ public class UIManager {
 		for(DrawableObject DO: this.unitsDraws.values()){
 			this.drawObject(DO);
 		}
-
 	}
 
 	public BasicTowerDraw getPlayerTower() {
@@ -418,7 +414,7 @@ public class UIManager {
 			this.drawTexture(draw);
 		}
 	}
-
+	
 	public Queue getPlayerQueue() {
 		return playerQueue;
 	}
@@ -462,9 +458,27 @@ public class UIManager {
 	public void setMeleeLabelvisible(boolean meleeLabelvisible) {
 		this.meleeLabelvisible = meleeLabelvisible;
 	}
+
+	
+	
+	public void setFileError(boolean error){
+		this.fileError = error;
+	}
+	
+	public boolean getFileError(){
+		return this.fileError;
+	}
+	
+	public void DrawFileError(BitmapFont errorFont){
+		errorFont.draw(SB, "Error: File Not Found", 750, 300);
+		
+	}
+
+	
 	/**
 	 * Draw the main menu and the loose/win draw if the game has ended
 	 */
+
 	public void drawMenu() {
 
 		buttons.clear();
@@ -474,12 +488,10 @@ public class UIManager {
 			buttons.add(new SaveButton(430, 375));
 			buttons.add(new LoadButton(430, 250));
 			buttons.add(new ExitButton(480, 125));
-
 		}else{
 			
 			if(!Game.isFisrtTimeMenu()){
 				if(this.looser==Side.LEFT){
-					System.out.println("UIManger: " + Game.isFisrtTimeMenu());
 					this.drawTexture(new youLostDraw(380, 550, 150, 400));
 				}else{
 					this.drawTexture(new youWonDraw(380, 550, 150, 400));
@@ -488,7 +500,6 @@ public class UIManager {
 			buttons.add(new NewGameButton(430, 425));
 			buttons.add(new LoadButton(430, 250));
 			buttons.add(new ExitButton(480, 75));
-
 		}
 	}
 

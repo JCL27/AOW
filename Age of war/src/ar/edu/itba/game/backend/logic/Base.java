@@ -7,9 +7,6 @@ import ar.edu.itba.game.frontend.observers.BaseObserver;
 
 public class Base extends Observable implements Attackable, Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4883608043561346759L;
 
 	static int HEIGHT = 282;
@@ -38,8 +35,11 @@ public class Base extends Observable implements Attackable, Serializable {
 	public int getHP() {
 		return HP;
 	}
-
+	
 	//TODO: ADD THROWS ENDGAMEEXCEPTION A LA INTERFAZ
+	/**
+	 * Reduces the base hp and ends the game in case the base hp runs out
+	 */
 	@Override
 	public void receiveDamage(int damage){
 		this.HP -=damage;
@@ -48,7 +48,6 @@ public class Base extends Observable implements Attackable, Serializable {
 			this.observer.setLooser(this.side);
 			WorldManager.getInstance().endGame();
 		}
-
 	}
 
 	public int getMaxHP() {
@@ -57,13 +56,11 @@ public class Base extends Observable implements Attackable, Serializable {
 
 	@Override
 	public Element getElement() {
-		// TODO Auto-generated method stub
 		return this.element;
 	}
 
 	@Override
 	public boolean doesFly() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

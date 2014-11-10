@@ -18,6 +18,9 @@ public abstract class Button implements Clickable {
 		font.setColor(Color.RED);
 	}
 	
+	/**
+	 * Checks if the given coordinates are within the bounds of the button draw
+	 */
 	public boolean isClicked(float X, float Y){
 		if(X> this.draw.getxPos() && Y>this.draw.getyPos() && X<(this.draw.getxPos()+this.draw.getScreenWidth())
 				&& Y<((this.draw.getyPos()+this.draw.getScreenHeight()))){
@@ -31,7 +34,10 @@ public abstract class Button implements Clickable {
 			this.Click();
 		}
 	}
-
+	
+	/**
+	 * Returns whether the button is available for clicking
+	 */
 	public boolean checkAvailability(){
 		return true;
 	}
@@ -44,6 +50,9 @@ public abstract class Button implements Clickable {
 		return this.messageVisible;
 	}
 	
+	/** 
+	 * Draws the button description text on the screen 
+	 */
 	public void showMessage(SpriteBatch SB){}
 
 	@Override

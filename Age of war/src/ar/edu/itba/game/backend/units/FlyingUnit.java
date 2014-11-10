@@ -13,14 +13,15 @@ import ar.edu.itba.game.frontend.observers.UnitObserver;
 
 public class FlyingUnit extends Unit{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7357772180229981544L;
 	private static Integer playerUnitLevel = 0;
-	private static Boolean playerAvailable = false;
 	private static Integer AIUnitLevel = 0;
-	private static Boolean AIAvailable = false;
+	
+	/**
+	 * States whether the unit is available for purchase
+	 */
+	private static Boolean playerAvailable = true;
+	private static Boolean AIAvailable = true;
 	
 	public FlyingUnit(Player player, UnitObserver observer) throws UnavailableUnitException{
 		super(player, observer);
@@ -63,6 +64,10 @@ public class FlyingUnit extends Unit{
 		}
 	}
 	
+	/**
+	 * Fires a projectile towards an attackable objective.
+	 * (Only targets ground units)
+	 */
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
 			float velX;
@@ -73,7 +78,6 @@ public class FlyingUnit extends Unit{
 			float Y = this.getElement().getY()-30;
 
 			velX = (float) Math.sqrt(-Game.GRAVITY * (Xf - X) * (Xf - X) / ((Yf - Y)*2)); 
-			//System.out.println("velocidad " + velX);			
 			if(this.getSide()==Side.RIGHT)
 				velX = -velX;
 			this.player.getProjectiles().add(Factory.getInstance().createProjectile(this.getElement().getMiddleX(),

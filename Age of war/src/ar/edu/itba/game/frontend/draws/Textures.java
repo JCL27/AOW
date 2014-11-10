@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
  *
  */
 public abstract class Textures{
+
 	public static final Texture BLUE_BALL = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/ball.png"));
 	public static final Texture RED_BALL = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/redBall.png"));
 	public static final Texture BUTTON = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/green button.png"));
@@ -27,6 +28,9 @@ public abstract class Textures{
 	public static final Texture EXIT_BUTTON = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/exitButton.png"));
 	public static final Texture NEW_GAME_BUTTON = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/newGameButton.png"));
 	public static final Texture CONTINUE_BUTTON = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/continue.png"));
+	public static final Texture TOWER_RED = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/BioGun.png"));
+	public static final Texture TOWER_BLUE = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/EraserCannon.png"));
+
 	
 	public static final Texture YOU_LOST = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/youLost.png"));
 	public static final Texture YOU_WON = new Texture(Gdx.files.classpath("ar/edu/itba/game/frontend/resources/youWon.png"));

@@ -2,12 +2,11 @@ package ar.edu.itba.game.backend.logic;
 
 import java.awt.geom.Point2D;
 import java.io.Serializable;
-
+/**
+ * An Element contains a position, velocity that can be affected by gravity and the dimension of the collision box 
+ */
 public class Element implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -842106608382607798L;
 	private float X;
 	private float Y;
@@ -37,7 +36,10 @@ public class Element implements Serializable{
 		this.velY = 0;
 		this.gravity = false;
 	}
-
+	
+	/**
+	 * Checks if the given position is within the element bounds
+	 */
 	public boolean isContained(double X, double Y){
 		if((this.X < X) && ((this.X + this.getWidth() > X) && (this.Y < Y) && (this.Y + this.getHeight())>Y)){
 			return true;

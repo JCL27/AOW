@@ -2,7 +2,9 @@ package ar.edu.itba.game.backend.units;
 
 import java.io.Serializable;
 
+import ar.edu.itba.game.backend.logic.Attackable;
 import ar.edu.itba.game.backend.logic.Element;
+import ar.edu.itba.game.backend.logic.Factory;
 import ar.edu.itba.game.backend.logic.Game;
 import ar.edu.itba.game.backend.logic.GameStats;
 import ar.edu.itba.game.backend.logic.Player;
@@ -11,14 +13,16 @@ import ar.edu.itba.game.backend.logic.WorldManager;
 import ar.edu.itba.game.frontend.observers.UnitObserver;
 
 public class RangedUnit extends Unit implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -3399027554023024600L;
 	private static Integer playerUnitLevel = 0;
-	private static boolean playerAvailable = true;
 	private static Integer AIUnitLevel = 0;
-	private static boolean AIAvailable = true;
+	
+	/**
+	 * States whether the unit is available for purchase
+	 */
+	private static Boolean playerAvailable = true;
+	private static Boolean AIAvailable = true;
 	
 	public RangedUnit(Player player, UnitObserver observer){
 		super(player, observer);
@@ -50,6 +54,30 @@ public class RangedUnit extends Unit implements Serializable{
 		WorldManager.getInstance().getElements().add(this.element);
 		
 	}
+	
+	/**
+	 * Fires a projectile towards an attackable objective.
+	 * (Only targets ground units)
+	 */
+	public void attack(Attackable objective){
+		if(this.cooldown == 0){
+			float velX;
+			double velY = Math.sqrt(Math.abs(this.getElement().getMiddleX() - objective.getElement().getMiddleX()) *
+					Game.GRAVITY / 2);
+			if(this.getSide()==Side.RIGHT)
+				velX = (float)-velY;
+			else
+				velX = (float)velY;
+			this.player.getProjectiles().add(Factory.getInstance().createProjectile(this.getElement().getMiddleX(),
+					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
+			this.cooldown = (int)(1000/this.attackSpeed);		
+
+		}
+		else{
+			this.cooldown--;
+		}
+	}
+	
 	public static void playerLevelUp() {
 		playerUnitLevel++;
 		

@@ -187,28 +187,6 @@ public abstract class Unit implements CanAttack, Attackable, Serializable{
 	public Type getType(){
 		return this.type;
 	}
-
-	public void attack(Attackable objective){
-		if(this.cooldown == 0){
-			float velX;
-			double velY = Math.sqrt(Math.abs(this.getElement().getMiddleX() - objective.getElement().getMiddleX()) *
-					Game.GRAVITY / 2);
-			if(this.getSide()==Side.RIGHT)
-				velX = (float)-velY;
-			else
-				velX = (float)velY;
-			this.player.getProjectiles().add(Factory.getInstance().createProjectile(this.getElement().getMiddleX(),
-					this.getElement().getMiddleY(), velX , (float)velY , true, this.damage));
-			
-			//System.out.println("attack!");
-
-			this.cooldown = (int)(1000/this.attackSpeed);		
-
-		}
-		else{
-			this.cooldown--;
-		}
-	}
 	
 	@Override
 	public void receiveDamage(int damage){
@@ -222,6 +200,9 @@ public abstract class Unit implements CanAttack, Attackable, Serializable{
 		this.element = null;
 	}
 	
+	/**
+	 * If this unit attack objective is dead or left behind then changes the current attack objective
+	 */
 	public void updateAttackObjective(){
 		if (this.objective == null || !WorldManager.getInstance().getElements().contains(this.objective.getElement())
 				|| isBehind(objective)){
@@ -233,6 +214,9 @@ public abstract class Unit implements CanAttack, Attackable, Serializable{
 		}
 	}
 	
+	/**
+	 * Checks if the given objective is behind this unit
+	 */
 	public boolean isBehind(Attackable objective){
 		if(this.dir == Side.LEFT && (objective.getElement().getMiddleX() - this.getElement().getMiddleX() < 0)){
 			return true;
@@ -322,11 +306,14 @@ public abstract class Unit implements CanAttack, Attackable, Serializable{
 	public int getAttackRange() {
 		return this.attackRange;
 	}
-
+	
 	public void notifyObservers(){
 		this.observer.update(this);
 	}
 	
+	/**
+	 * Calls observer to dispose this unit draw
+	 */
 	public void notifyDelete() {
 		this.observer.dispose(this);	
 	}

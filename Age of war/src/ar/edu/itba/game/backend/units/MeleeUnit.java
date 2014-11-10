@@ -8,16 +8,17 @@ import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.Side;
 import ar.edu.itba.game.backend.logic.WorldManager;
 import ar.edu.itba.game.frontend.observers.UnitObserver;
- //TODO: ADD UPGRADES
+
 public class MeleeUnit extends Unit {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6458482342043685784L;
 	private static Integer playerUnitLevel = 0;
-	private static boolean playerAvailable = true;
 	private static Integer AIUnitLevel = 0;
-	private static boolean AIAvailable = true;
+	
+	/**
+	 * States whether the unit is available for purchase
+	 */
+	private static Boolean playerAvailable = true;
+	private static Boolean AIAvailable = true;
 	
 	public MeleeUnit(Player player, UnitObserver observer){
 		super(player, observer);
@@ -83,7 +84,11 @@ public class MeleeUnit extends Unit {
 
 	public static void setAIAvailable(boolean aIAvailable) {
 		AIAvailable = aIAvailable;
-	}	
+	}
+	
+	/**
+	 * Attacks an attackable objective at short range
+	 */
 	public void attack(Attackable objective){
 		if(this.cooldown == 0){
 			this.objective.receiveDamage(this.damage);

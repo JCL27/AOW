@@ -6,9 +6,7 @@ import java.io.Serializable;
 import ar.edu.itba.game.frontend.observers.ProjectileObserver;
 
 public class Projectile implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 3388226133504707762L;
 	private Element element;
 	private int damage;
@@ -41,10 +39,17 @@ public class Projectile implements Serializable{
 		this.observer = observer;
 	}
 
+	/**
+	 * Updates the projectile draw position
+	 */
+
 	public void notifyObservers(){
 		this.observer.update(this);
 	}
-
+	
+	/**
+	 * Calls Projectile Observer to dispose this projectile draw
+	 */
 	public void notifyDelete() {
 		this.observer.dispose(this);	
 	}
