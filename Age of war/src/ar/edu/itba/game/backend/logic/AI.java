@@ -15,28 +15,33 @@ import ar.edu.itba.game.backend.upgrades.UnitUpgrade;
 
 public class AI {
 	private static AI instance = null;
-	
+
 	private Player player;
 	private boolean objectiveAccomplished = true;
 	private boolean upgradeResearched = true;
-	
+
 	private Random rand = new Random();
 	private int choice;
 	private int upgradeChoice;
-	
+
 	private AI() {
 		this.player = WorldManager.getInstance().getPlayerAI();
 	}
-	
-	public static AI getInstance() {
-      if(instance == null) {
-         instance = new AI();
-      }
-      return instance;
-   }
 
+	public static AI getInstance() {
+		if(instance == null) {
+			instance = new AI();
+		}
+		return instance;
+	}
+
+	/**
+	 * Decides which unit to buy and which upgrade to research
+	 * When it has less than two units in queue or on the field, it creates a melee and a ranged unit
+	 * after that, it has a random chance to create any unit, with a higher chance of creating a melee or a ranged 
+	 */
 	public void desitionMaker(){
-		
+
 		if((player.getUnits().size() + player.getUnitsQueue().size()) < 2){
 			if(player.getGold()>MeleeUnit.getCost(player)){
 				player.buyUnit(MeleeUnit.class);
@@ -57,7 +62,7 @@ public class AI {
 					player.buyUnit(MeleeUnit.class);
 					objectiveAccomplished = true;
 				}	
-				break;
+			break;
 			case(3):
 			case(4):
 			case(5):
@@ -65,7 +70,7 @@ public class AI {
 					player.buyUnit(RangedUnit.class);
 					objectiveAccomplished = true;
 				}	
-				break;
+			break;
 			case(6):
 				if(AntiaircraftUnit.isAIAvailable()){
 					if(player.getGold()>AntiaircraftUnit.getCost(player)){
@@ -75,7 +80,7 @@ public class AI {
 				}else{
 					objectiveAccomplished = true;
 				}
-				break;
+			break;
 			case(7):
 				if(FlyingUnit.isAIAvailable()){
 					if(player.getGold()>FlyingUnit.getCost(player)){
@@ -85,7 +90,7 @@ public class AI {
 				}else{
 					objectiveAccomplished = true;
 				}
-				break;
+			break;
 			case(8):
 				if(player.getTower()==null){
 					if(player.getGold()>GameStats.TOWER_COST){
@@ -95,7 +100,7 @@ public class AI {
 				}else{
 					objectiveAccomplished = true;
 				}
-				break;
+			break;
 			}
 		}
 		if(upgradeResearched == true){
@@ -108,13 +113,13 @@ public class AI {
 				player.research(UnitUpgrade.class, MeleeUnit.class);
 				upgradeResearched = true;
 			}	
-			break;
+		break;
 		case(1):
 			if(player.getExp()> GameStats.UNIT_UPGRADE_COST){
 				player.research(UnitUpgrade.class, RangedUnit.class);
 				upgradeResearched = true;
 			}	
-			break;
+		break;
 		case(2):
 			if(FlyingUnit.isAIAvailable()){
 				if(player.getExp()> GameStats.UNIT_UPGRADE_COST){
@@ -124,8 +129,8 @@ public class AI {
 			}else{
 				upgradeResearched = true;
 			}
-			break;
-			
+		break;
+
 		case(3):
 			if(AntiaircraftUnit.isAIAvailable()){
 				if(player.getExp()> GameStats.UNIT_UPGRADE_COST){
@@ -135,7 +140,7 @@ public class AI {
 			}else{
 				upgradeResearched = true;
 			}	
-			break;
+		break;
 		case(4):
 			if(!AntiaircraftUnit.isAIAvailable()){
 				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(AntiaircraftUnitResearch.class, this.player)){
@@ -163,7 +168,7 @@ public class AI {
 			}else{
 				upgradeResearched = true;
 			}
-			break;
+		break;
 		case(6):
 			if(player.getTower()!=null){
 				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(TowerDamageUpgrade.class, this.player)){
@@ -177,7 +182,7 @@ public class AI {
 			}else{
 				upgradeResearched = true;
 			}
-			break;
+		break;
 		case(7):
 			if(player.getTower()!=null){
 				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(TowerAttackSpeedUpgrade.class, this.player)){
@@ -191,7 +196,7 @@ public class AI {
 			}else{
 				upgradeResearched = true;
 			}
-			break;
+		break;
 		case(8):
 			if(player.getTower()!=null){
 				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(TowerAttackRangeUpgrade.class, this.player)){
@@ -205,10 +210,10 @@ public class AI {
 			}else{
 				upgradeResearched = true;
 			}
-			break;
-		
+		break;
+
 		}
-		
+
 	}
 
 	public static void reset() {

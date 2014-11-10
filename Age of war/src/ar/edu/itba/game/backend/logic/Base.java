@@ -14,13 +14,13 @@ public class Base extends Observable implements Attackable, Serializable {
 
 	static int HEIGHT = 282;
 	static int WIDTH = 180;
-	
+
 	private int maxHP;
 	private int HP;
 	private Element element;
 	private Side side;
 	private transient BaseObserver observer;
-	
+
 	public Base(Side side, BaseObserver	baseObserver){
 		int X;
 		this.side = side;
@@ -34,7 +34,7 @@ public class Base extends Observable implements Attackable, Serializable {
 		this.HP = GameStats.BASE_MAX_HP;
 		this.observer = baseObserver;
 	}
-	
+
 	public int getHP() {
 		return HP;
 	}
@@ -42,15 +42,15 @@ public class Base extends Observable implements Attackable, Serializable {
 	//TODO: ADD THROWS ENDGAMEEXCEPTION A LA INTERFAZ
 	@Override
 	public void receiveDamage(int damage){
-			this.HP -=damage;
-			this.observer.update(this);
-			if(this.HP <= 0){
-				this.observer.setLooser(this.side);
-				WorldManager.getInstance().endGame();
-			}
-			
+		this.HP -=damage;
+		this.observer.update(this);
+		if(this.HP <= 0){
+			this.observer.setLooser(this.side);
+			WorldManager.getInstance().endGame();
+		}
+
 	}
-	
+
 	public int getMaxHP() {
 		return maxHP;
 	}
@@ -72,7 +72,7 @@ public class Base extends Observable implements Attackable, Serializable {
 			return this.element.getX() -38;
 		return this.element.getX() - 3 * 38;
 	}
-	
+
 	public float getY() {
 		return this.element.getY() - 2;
 	}
@@ -80,7 +80,7 @@ public class Base extends Observable implements Attackable, Serializable {
 	public int getHeight() {
 		return this.element.getHeight();
 	}
-	
+
 	public int getWidth() {
 		return this.element.getWidth();
 	}
@@ -93,6 +93,6 @@ public class Base extends Observable implements Attackable, Serializable {
 		this.observer = baseObserver;
 		this.observer.update(this);
 	}
-	
-	
+
+
 }

@@ -71,7 +71,6 @@ public class WorldManager implements Serializable{
 				for(Unit unit:playerAI.getUnits()){
 					if(unit.getElement().isContained(pjt.getCollisionPoint())){
 						cols.add(new Collision(pjt, unit));
-						//System.out.println("Added1");
 					}
 				}
 			}
@@ -86,7 +85,6 @@ public class WorldManager implements Serializable{
 				for(Unit unit:player.getUnits()){
 					if(unit.getElement().isContained(pjt.getCollisionPoint().x, pjt.getCollisionPoint().y)){
 						cols.add(new Collision(pjt, unit));
-						//System.out.println("Added2");
 					}
 				}
 			}
@@ -110,11 +108,9 @@ public class WorldManager implements Serializable{
 			unit.updateAttackObjective();
 		}
 		if(player.getTower() != null){
-			//System.out.println("Updateo Player");
 			player.getTower().updateAttackObjective();
 		}	
 		if(playerAI.getTower() != null){
-			//System.out.println("Updateo playerAI");
 			playerAI.getTower().updateAttackObjective();	
 		}	
 	}
@@ -147,9 +143,6 @@ public class WorldManager implements Serializable{
 	}
 
 	public void killUnit(Unit thisUnit){
-		//thisUnit.removeElement();
-
-
 		this.elements.remove(thisUnit.getElement());
 		if(thisUnit.getSide()==Side.LEFT){
 			playerAI.addGold(thisUnit.getGold());
@@ -165,7 +158,6 @@ public class WorldManager implements Serializable{
 	}
 
 	public Attackable isInRange(CanAttack attacker){
-		//System.out.println(attacker.getClass().getSimpleName() + " " + attacker.getSide() + " attack range: " + attacker.getAttackRange());
 		int range = attacker.getAttackRange();
 		if (attacker.getSide() == Side.LEFT){
 			for(Unit unit:playerAI.getUnits()){

@@ -10,9 +10,12 @@ import ar.edu.itba.game.backend.exceptions.UnavailableUpgradeException;
 import ar.edu.itba.game.backend.units.Unit;
 import ar.edu.itba.game.frontend.observers.PlayerObserver;
 
+/**
+ * Player has got units, projectiles, a tower, a base, gold and experience
+ *
+ */
 public class Player implements Serializable{
 
-	
 	private static final long serialVersionUID = -3361130881364588943L;
 	private Integer gold;
 	private Integer experience;
@@ -26,7 +29,7 @@ public class Player implements Serializable{
 	private transient PlayerObserver observer;
 	private Class unitToQueue = null;
 	private Side side;
-	
+
 	public Player (Side side, PlayerObserver playerObserver){
 		this.gold = GameStats.INITIAL_GOLD;
 		this.experience = 0;
@@ -37,37 +40,45 @@ public class Player implements Serializable{
 		this.observer = playerObserver;
 		this.side = side;
 	}
-	
+
 	public ArrayList<Projectile> getProjectiles(){
 		return this.projectiles;
 	}
-	
+
 	public ArrayList<Unit> getUnits(){
 		return units;
 	}
-	
+
 	public void research(Class upgradeType){
-		
+
 		this.research(upgradeType, null);
 	}
-	
+
+	/**
+	 * Researches an upgrade passed by parameter, and applies it to the second class passed by parameter
+	 * if the upgrade allows that
+	 * @param class1
+	 * @param class2
+	 */
 	public void research(Class class1, Class class2){
-		System.out.println("player: exp: "+ this.experience);
 		try {
 			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().applyUpgrade(class1.getSimpleName(), this, class2);
 		} catch (UnavailableUpgradeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NotEnoughExpException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Side getSide() {
 		return side;
 	}
 
+	/**
+	 * Check if the player is able to buy the unit (using reflection), and adds it to the queue, unless it reach the limit
+	 * @param unitClass
+	 * @return
+	 */
 	public boolean buyUnit(Class unitClass){
 		Integer unitCost = null;
 		boolean created = true;
@@ -100,14 +111,16 @@ public class Player implements Serializable{
 		}
 		return created;
 	}
-	
+
+
 	public void createUnit(Class unitClass){
 		Unit unit = Factory.getInstance().createUnit(unitClass, this);
 		if(unit!=null){
 			this.units.add(unit);
 		}
 	}
-	
+
+
 	public boolean buyTower(){
 		boolean created = true;
 		try {
@@ -119,21 +132,21 @@ public class Player implements Serializable{
 		}
 		return created;
 	}
-	
+
 	public void createTower(){
 		this.tower = Factory.getInstance().createTower(this);
 	}
-	
+
 	public void addGold(int gold){
 		this.gold += gold;
 	}
-	
+
 	public void charge(int gold) throws NotEnoughGoldException{
 		if(this.gold < gold)
 			throw new NotEnoughGoldException();
 		this.gold -= gold;
 	}
-	
+
 	public void useExp(int exp) throws NotEnoughExpException{
 		if (this.experience < exp){
 			System.out.println("player: "+ exp +  " " + this.experience);
@@ -141,11 +154,11 @@ public class Player implements Serializable{
 		}
 		this.experience -= exp;
 	}
-	
+
 	public void addExp(int exp){
 		this.experience += exp;
 	}
-	
+
 	public ArrayList<Class<Unit>> getUnitsQueue() {
 		return unitsQueue;
 	}
@@ -153,15 +166,15 @@ public class Player implements Serializable{
 	public Integer getGold(){
 		return this.gold;
 	}
-	
+
 	public Integer getExp(){
 		return this.experience;
 	}
-	
+
 	public Tower getTower(){
 		return this.tower;
 	}
-	
+
 	public void sellTower(){
 		if(this.tower != null){
 			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setUnavailable("TowerDamageUpgrade", this);
@@ -170,11 +183,11 @@ public class Player implements Serializable{
 			this.tower.Sell();
 		}	
 	}
-	
+
 	public Base getBase(){
 		return this.base;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Player [gold=" + gold + ", experience=" + experience
@@ -184,7 +197,10 @@ public class Player implements Serializable{
 	public void disposeTower() {
 		this.tower = null;
 	}
-	
+
+	/**
+	 * Manages the queue, reducing the remaining time in each render, and instancing the unit when it reaches 0
+	 */
 	public void updateQueue(){
 		if(!this.getUnitsQueue().isEmpty()){
 
@@ -217,8 +233,13 @@ public class Player implements Serializable{
 		return playerUnitCreationTime;
 	}
 
+	/**
+	 * Set the observer and updates the observer
+	 * @param playerObserver
+	 */
 	public void setObserver(PlayerObserver playerObserver) {
 		this.observer = playerObserver;
-		this.observer.loadQueue(this, this.unitsQueue, this.playerUnitCreationTime);
+		if(this.observer!=null)
+			this.observer.loadQueue(this, this.unitsQueue, this.playerUnitCreationTime);
 	}
 }

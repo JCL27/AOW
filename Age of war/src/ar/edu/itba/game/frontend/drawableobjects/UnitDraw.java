@@ -7,12 +7,22 @@ import ar.edu.itba.game.frontend.draws.Drawable;
 import ar.edu.itba.game.frontend.draws.FlyingUnitDraw;
 import ar.edu.itba.game.frontend.draws.MeleeUnitDraw;
 import ar.edu.itba.game.frontend.draws.RangedUnitDraw;
-
+/**
+ * Represents a Unit and it's HP Bar
+ * @author JuanCruz
+ *
+ */
 public class UnitDraw implements DrawableObject {
 	private Drawable draw;
 	private Bar bar;
 	private ArrayList<Drawable> draws = new ArrayList<Drawable>();
 	
+	/**
+	 * Assigns an image to the unit's draw and sets the Bar
+	 * @param xPos
+	 * @param yPos
+	 * @param unit
+	 */
 	public UnitDraw(float xPos, float yPos, Unit unit){
 		switch(unit.getClass().getSimpleName()){
 		case("MeleeUnit"):

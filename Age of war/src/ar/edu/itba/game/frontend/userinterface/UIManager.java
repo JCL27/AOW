@@ -41,7 +41,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 
-
+/**
+ * 
+ * This Class manages all the things related to draw elements into the screen
+ *
+ */
 public class UIManager {
 
 	private static UIManager instance = null;
@@ -111,15 +115,12 @@ public class UIManager {
 		this.looser = null;
 	}
 	
-
 	
 	public void reset(){
 		this.DOs.clear();
 		this.drawables.clear();
 		this.projectilesDraws.clear();
 		this.unitsDraws.clear();
-		//		this.AIQueue. = new Queue(Side.RIGHT);
-		//		this.playerQueue = new Queue(Side.LEFT);
 	}
 
 	public void setLooser(Side side){
@@ -127,6 +128,10 @@ public class UIManager {
 		this.looser = side;
 	}
 
+	/**
+	 * Set the initial values for the draws that have to be drawn at the start of the game
+	 * and set the values of the labels that are going to be used
+	 */
 	public void initializeDraws(){
 		Game.setFirstTimeMenu(false);
 
@@ -186,7 +191,9 @@ public class UIManager {
 		this.flyingUnitLabel.setPosition(GameStats.LABEL_FLYING_X, GameStats.LABEL_UNITS_Y);
 
 	}
-
+	/**
+	 * Reset the labels backgrounds and refreshes the current gold, exp and units level
+	 */
 	private void setDefaultLabels(){
 		this.rangedLabelStyle.background = labelSkin.getDrawable("background");
 		this.meleeLabelStyle.background = labelSkin.getDrawable("background");
@@ -227,7 +234,11 @@ public class UIManager {
 			button.checkAvailability();
 		}
 	}
-
+	
+	/**
+	 * Add to the buttons array the buttons that should be displayed at the moment depending on
+	 * the current UIGameState
+	 */
 	public void updateButtons(){
 		int count = 0;
 		this.buttons.clear();
@@ -288,7 +299,7 @@ public class UIManager {
 			this.drawTexture(draw);
 		}
 	}
-
+	
 	public void drawTextures(){
 		for(Drawable draw:this.drawables){
 			this.drawTexture(draw);
@@ -451,7 +462,9 @@ public class UIManager {
 	public void setMeleeLabelvisible(boolean meleeLabelvisible) {
 		this.meleeLabelvisible = meleeLabelvisible;
 	}
-
+	/**
+	 * Draw the main menu and the loose/win draw if the game has ended
+	 */
 	public void drawMenu() {
 
 		buttons.clear();

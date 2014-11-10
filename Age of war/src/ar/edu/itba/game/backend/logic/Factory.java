@@ -9,7 +9,11 @@ import ar.edu.itba.game.frontend.observers.PlayerObserver;
 import ar.edu.itba.game.frontend.observers.ProjectileObserver;
 import ar.edu.itba.game.frontend.observers.TowerObserver;
 import ar.edu.itba.game.frontend.observers.UnitObserver;
-
+/**
+ * Instance the units, projectiles, bases and players
+ * 
+ *
+ */
 public class Factory {
 
 	private static Factory instance = null;
@@ -30,6 +34,14 @@ public class Factory {
 	private Factory(){
 	}
 
+	/**
+	 * Get the observers by parameters, and store a reference to them (it isn't necessary)
+	 * @param baseObserver
+	 * @param unitObserver
+	 * @param playerObserver
+	 * @param towerObserver
+	 * @param projectileObserver
+	 */
 	public void setObservers(BaseObserver baseObserver, UnitObserver unitObserver, 
 			PlayerObserver playerObserver, TowerObserver towerObserver, ProjectileObserver projectileObserver){
 		this.unitObserver = unitObserver;
@@ -38,12 +50,26 @@ public class Factory {
 		this.playerObserver = playerObserver;
 		this.projectileObserver = projectileObserver;
 	}
-
+	/**
+	 * 
+	 * @param side
+	 * @return
+	 */
 	public Player createPlayer(Side side){
 		Player player = new Player(side, this.playerObserver);
 		return player;
 	}
 
+	/**
+	 * instance a projectile and pass the projectileobserver as a parameter
+	 * @param X
+	 * @param Y
+	 * @param velX
+	 * @param velY
+	 * @param gravity
+	 * @param damage
+	 * @return
+	 */
 	public Projectile createProjectile(float X, float Y, float velX, float velY, boolean gravity, int damage){
 		Projectile pjt = new Projectile(X, Y, velX, velY, gravity, damage, this.projectileObserver);
 		if(this.projectileObserver!=null)
@@ -51,6 +77,11 @@ public class Factory {
 		return pjt;
 	}
 
+	/**
+	 * instance a tower and pass the towerobserver as a parameter
+	 * @param player
+	 * @return
+	 */
 	public Tower createTower(Player player){
 		Tower tower = new Tower(player, this.towerObserver);
 		if (this.towerObserver!=null)
@@ -58,11 +89,22 @@ public class Factory {
 		return tower;
 	}
 
+	/**
+	 * instance a base and pass the baseobserver as a parameter
+	 * @param side
+	 * @return
+	 */
 	public Base createBase(Side side){
 		Base base = new Base(side, this.baseObserver);
 		return base;
 	}
 
+	/**
+	 * Receives a unitClass, instance a unit using reflection and assign unitobserver to it
+	 * @param unitClass
+	 * @param player
+	 * @return
+	 */
 	public Unit createUnit(Class unitClass, Player player){
 		Unit unit = null;
 		try {
@@ -86,6 +128,10 @@ public class Factory {
 		return unit;
 	}
 
+
+	/**
+	 * Reassign the observer to the currently instanced units, projectiles, players, bases and towers
+	 */
 	public void reAssignObservers(){
 
 		Player player = WorldManager.getInstance().getPlayer();

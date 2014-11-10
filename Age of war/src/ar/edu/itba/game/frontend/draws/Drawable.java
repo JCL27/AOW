@@ -4,6 +4,12 @@ import ar.edu.itba.game.backend.logic.Player;
 
 import com.badlogic.gdx.graphics.Texture;
 
+/**
+ * Basically, drawable is a class that saves one or more Textures and sets methods to manage the textures
+ * more practically
+ * 
+ *
+ */
 public abstract class Drawable {
 	protected static int scale;
 	protected Texture leftTexture;
@@ -17,7 +23,7 @@ public abstract class Drawable {
 	
 	protected int screenWidth;
 	protected int screenHeight;
-	
+
 	public Drawable(float xPos, float yPos, int screenHeight, int screenWidth,
 			Texture enabledTexture, Texture disabledTexture){
 		this.xPos = xPos;
@@ -28,7 +34,6 @@ public abstract class Drawable {
 		this.disabledTexture = disabledTexture;
 		this.leftTexture = enabledTexture;
 	}
-	
 	
 	public Drawable(float xPos2, float yPos2, int screenHeight, int screenWidth){
 		this.xPos = xPos2;

@@ -5,7 +5,7 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 
 public class Main{
-	
+
 	public static void main(String args[]) {
 
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
@@ -17,6 +17,6 @@ public class Main{
 		cfg.resizable = false;
 		new LwjglApplication(new Game(), cfg);
 	}
-	
-	
+
+
 }

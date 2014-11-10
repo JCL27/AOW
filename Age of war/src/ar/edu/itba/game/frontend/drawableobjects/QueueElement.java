@@ -14,9 +14,16 @@ public class QueueElement implements DrawableObject {
 	private Drawable icon;
 	private Bar bar;
 	private float xPos;
-	private float yPos;
 	private ArrayList<Drawable> draws = new ArrayList<Drawable>();
 	
+	/**
+	 * Assign the correct image to the icon depending on witch class was passed as parameter
+	 * and creates a Bar to track the remaining time to be created
+	 * @param xPos
+	 * @param yPos
+	 * @param unitClass
+	 * @param creationTime
+	 */
 	public QueueElement(float xPos, float yPos, Class unitClass, int creationTime){
 		String str = unitClass.getSimpleName();
 		switch(str){
@@ -35,7 +42,6 @@ public class QueueElement implements DrawableObject {
 		}
 		bar = new Bar(creationTime, 1, 15, icon.getScreenWidth() ,(int)xPos, (int)yPos + icon.getScreenHeight());
 		this.xPos = xPos;
-		this.yPos = yPos;
 		draws.addAll(bar.getDraws());
 		draws.add(this.icon);
 	}
@@ -50,7 +56,9 @@ public class QueueElement implements DrawableObject {
 			draw.setxPos(xPos);
 		}
 	}
-
+	/**
+	 * Sets current remaining time
+	 */
 	public void setCurrent(int current){
 		bar.setCurrent(current);
 	}

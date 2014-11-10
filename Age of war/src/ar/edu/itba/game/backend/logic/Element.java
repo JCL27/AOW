@@ -16,8 +16,8 @@ public class Element implements Serializable{
 	private boolean gravity;
 	private int Height;
 	private int Width;
-	
-	
+
+
 	public Element(float X, float Y, float velX, float velY, int Height, int Width ,boolean gravity){
 		this.X = X;
 		this.Y = Y;
@@ -27,7 +27,7 @@ public class Element implements Serializable{
 		this.velY = velY;
 		this.gravity = gravity;
 	}
-	
+
 	public Element(float X, float Y, int Width, int Height){
 		this.X = X;
 		this.Y = Y;
@@ -44,7 +44,7 @@ public class Element implements Serializable{
 		}
 		return false;	
 	}
-	
+
 	public boolean isContained(Point2D.Double point){
 		if((this.X < point.x) && ((this.X + this.getWidth() > point.x) &&
 				(this.Y < point.y) && (this.Y + this.getHeight())>point.y)){
@@ -56,8 +56,8 @@ public class Element implements Serializable{
 	public int getHeight(){
 		return this.Height;
 	}
-	
-	
+
+
 	public int getWidth(){
 		return this.Width;
 	}
@@ -102,11 +102,11 @@ public class Element implements Serializable{
 	public void setGravity(boolean gravity) {
 		this.gravity = gravity;
 	}
-	
+
 	public float getMiddleX(){
 		return this.getX() + (this.getWidth()/2);
 	}
-	
+
 	public float getMiddleY(){
 		return this.getY() + (this.getHeight()/2);
 	}
@@ -157,8 +157,8 @@ public class Element implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
 
-	
+
+
+
 }

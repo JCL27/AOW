@@ -63,6 +63,9 @@ public class Game implements ApplicationListener {
 	private static boolean firstTimeMenu = true;
 	private static boolean onGame = false;
 
+	/**
+	 * Set the initial values of the game, specially libgdx methods
+	 */
 	public void create() {
 
 		Texture.setEnforcePotImages(false);
@@ -80,9 +83,13 @@ public class Game implements ApplicationListener {
 		UIManager.getInstance().setSpriteBatch(SB);
 
 	}
-
+	
+	/**
+	 * Drops the current WorldManager and resets the UIManager, after that it instances the back end again and generates
+	 * the front end from that, setting the observers before
+	 */
 	public static void newGame(){
-		
+
 		WorldManager.disposeWM();
 		UIManager.getInstance().reset();
 		Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
@@ -113,7 +120,10 @@ public class Game implements ApplicationListener {
 	public void pause() {
 
 	}
-
+	/**
+	 * This method is executed like a loop, calling methods from WorldManager to manage the logic of
+	 * the game and methods of UIManager to manage the interface
+	 */
 	@Override
 	public void render() {		
 
@@ -172,10 +182,10 @@ public class Game implements ApplicationListener {
 
 
 	}
-
+	/**
+	 * Save the instances of the backend to a serialized file, and the static values to a csv file
+	 */
 	public static void saveGame(){
-
-		//System.out.println("guarda");
 
 		try {
 			FileOutputStream fileO = new FileOutputStream("WM.ser");
@@ -216,17 +226,20 @@ public class Game implements ApplicationListener {
 		//System.out.println(WorldManager.getInstance().toString());
 
 	}
-
+	
+	/**
+	 * Drop the fronend elements, get the instances of the backend from a serialized file, and the static values from a csv file
+	 */
 	public static void loadGame(){
-
 		try {
-			WorldManager.disposeWM();
+			Object obj;
 			FileInputStream fileO = new FileInputStream("WM.ser");
 			ObjectInputStream objO = new ObjectInputStream(fileO);
-			WorldManager.setInstance((WorldManager)objO.readObject());
+			obj = objO.readObject();
+			WorldManager.setInstance((WorldManager)obj);
 			objO.close();
 			fileO.close();
-			
+
 			String csvFilename = "levels.csv";
 			CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
 			String[] row = null;
@@ -243,15 +256,9 @@ public class Game implements ApplicationListener {
 			row = csvReader.readNext();
 			FlyingUnit.setResearch(row);
 			csvReader.close();
-			
-			UIManager.getInstance().reset();
-			UIManager.getInstance().initializeDraws();
-			Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
-			Factory.getInstance().reAssignObservers();
-			AI.reset();
-			Upgrades.reset();
 			onGame = true;
 			Game.gameState = GameState.GAME;
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -259,46 +266,20 @@ public class Game implements ApplicationListener {
 		} catch (ClassNotFoundException e){
 			e.printStackTrace();
 		}
-//		try{
-//			String csvFilename = "levels.csv";
-//			CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
-//			String[] row = null;
-//			row = csvReader.readNext();
-//			AntiaircraftUnit.setLevels(row);
-//			row = csvReader.readNext();
-//			FlyingUnit.setLevels(row);
-//			row = csvReader.readNext();
-//			MeleeUnit.setLevels(row);
-//			row = csvReader.readNext();
-//			RangedUnit.setLevels(row);
-//			row = csvReader.readNext();
-//			AntiaircraftUnit.setResearch(row);
-//			row = csvReader.readNext();
-//			FlyingUnit.setResearch(row);
-//			csvReader.close();
-//			
-//			UIManager.getInstance().reset();
-//			UIManager.getInstance().initializeDraws();
-//			Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
-//			Factory.getInstance().reAssignObservers();
-//			AI.reset();
-//			Upgrades.reset();
-//			onGame = true;
-//		}catch(FileNotFoundException e){
-//			e.printStackTrace();
-//		}catch(IOException e){
-//			e.printStackTrace();
-//		}
-//
-//		UIManager.getInstance().reset();
-//		UIManager.getInstance().initializeDraws();
-//		Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(), new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
-//		Factory.getInstance().reAssignObservers();
-//		AI.reset();
-//		Upgrades.reset();
-//		onGame = true;
+		
+		UIManager.getInstance().reset();
+		UIManager.getInstance().initializeDraws();
+		Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(),
+				new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+		Factory.getInstance().reAssignObservers();
+		AI.reset();
+		Upgrades.reset();
+		
 	}
-
+	
+	/**
+	 * This method measures 1 second, and add gold to the players every second
+	 */
 	private void oneSecondLoop(){
 		if(secondCount--<=0){
 			secondCount = (int) (1/Gdx.graphics.getDeltaTime());
