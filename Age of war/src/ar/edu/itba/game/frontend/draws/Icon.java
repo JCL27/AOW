@@ -3,7 +3,6 @@ package ar.edu.itba.game.frontend.draws;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Icon extends Drawable {
-
 	
 	public Icon(float xPos2, float yPos2, Texture texture) {
 		super(xPos2, yPos2, 50, 50);

@@ -153,12 +153,11 @@ public class GameStats {
 	/**
 	 * Labels
 	 */
-	
-	public final static int BACKGROUND_LEFT = 10;
-	public final static int BACKGROUND_RIGHT = 145;
-	public final static int BACKGROUND_BOTTOM = 10;
-	public final static int BACKGROUND_TOP = 10;
-	public final static int HIDDEN_BACKGROUND_BOTTOM = 120;
+	public final static int BACKGROUND_LEFT_SIZE = 10;
+	public final static int BACKGROUND_RIGHT_SIZE = 145;
+	public final static int BACKGROUND_BOTTOM_SIZE = 10;
+	public final static int BACKGROUND_TOP_SIZE = 10;
+	public final static int HIDDEN_BACKGROUND_BOTTOM_SIZE = 120;
 
 	public final static int LABEL_SEPARATION = 15;
 	

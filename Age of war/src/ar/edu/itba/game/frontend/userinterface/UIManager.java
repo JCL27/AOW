@@ -71,7 +71,9 @@ public class UIManager {
 	private Side looser;
 
 
-	//Labels
+	/**
+	 * Labels
+	 */
 	private Label goldLabel;
 	private Label xpLabel;
 	private Label rangedUnitLabel;
@@ -79,7 +81,9 @@ public class UIManager {
 	private Label antiaircraftUnitLabel;
 	private Label flyingUnitLabel;
 
-	//Labels Styles
+	/**
+	 * Labels Styles
+	 */
 	private LabelStyle goldLabelStyle;
 	private LabelStyle xpLabelStyle;
 	private LabelStyle rangedLabelStyle;
@@ -87,14 +91,18 @@ public class UIManager {
 	private LabelStyle antiaircraftLabelStyle;
 	private LabelStyle flyingLabelStyle;
 
-	//Text font and Background for the Labels
+	/**
+	 * Text font and Background for the Labels
+	 */
 	private NinePatch labelBackground;
 	private NinePatch hiddenLabelBackground;
 	private BitmapFont font;
 	private Skin labelSkin;
 	private Skin hiddenLabelSkin;
 
-	//States whether the Units Stats Labels are visible or not
+	/**
+	 * States whether the Units Stats Labels are visible or not
+	 */
 	private boolean rangedLabelvisible = false;
 	private boolean flyingLabelvisible = false;
 	private boolean antiaircraftLabelvisible = false;
@@ -149,17 +157,21 @@ public class UIManager {
 		this.font = new BitmapFont(false);
 		font.setColor(Color.GREEN);
 
-		//NinePatch: Sets rectangle of given sides.
-		this.labelBackground = new NinePatch(Textures.GROUND, GameStats.BACKGROUND_LEFT, GameStats.BACKGROUND_RIGHT, 
-				GameStats.BACKGROUND_BOTTOM, GameStats.BACKGROUND_TOP);
-		this.hiddenLabelBackground = new NinePatch(Textures.GROUND, GameStats.BACKGROUND_LEFT, GameStats.BACKGROUND_RIGHT, 
-				GameStats.HIDDEN_BACKGROUND_BOTTOM, GameStats.BACKGROUND_TOP);
+		/**
+		 * NinePatch: Sets rectangle with the size of the given sides.
+		 */
+		this.labelBackground = new NinePatch(Textures.GROUND, GameStats.BACKGROUND_LEFT_SIZE, GameStats.BACKGROUND_RIGHT_SIZE, 
+				GameStats.BACKGROUND_BOTTOM_SIZE, GameStats.BACKGROUND_TOP_SIZE);
+		this.hiddenLabelBackground = new NinePatch(Textures.GROUND, GameStats.BACKGROUND_LEFT_SIZE, GameStats.BACKGROUND_RIGHT_SIZE, 
+				GameStats.HIDDEN_BACKGROUND_BOTTOM_SIZE, GameStats.BACKGROUND_TOP_SIZE);
 		this.labelSkin = new Skin();
 		this.hiddenLabelSkin = new Skin();
 		this.labelSkin.add("background", labelBackground);
 		this.hiddenLabelSkin.add("background", hiddenLabelBackground);
 
-		//Set Styles for labels
+		/**
+		 * Set Styles for labels
+		 */
 		this.goldLabelStyle = new LabelStyle(font, Color.YELLOW);
 		this.xpLabelStyle = new LabelStyle(font, Color.GREEN);
 		this.rangedLabelStyle = new LabelStyle(font, Color.GREEN);
@@ -167,14 +179,12 @@ public class UIManager {
 		this.antiaircraftLabelStyle = new LabelStyle(font, Color.GREEN);
 		this.flyingLabelStyle = new LabelStyle(font, Color.GREEN);
 
-		//Add the background to the labelStyles
-		//ACOMODAR!!!
+		/**
+		 * Add the background to the labelStyles
+		 */
 		this.goldLabelStyle.background = labelSkin.getDrawable("background");
 		this.xpLabelStyle.background = labelSkin.getDrawable("background");
-		this.rangedLabelStyle.background = labelSkin.getDrawable("background");
-		this.meleeLabelStyle.background = labelSkin.getDrawable("background");
-		this.antiaircraftLabelStyle.background = labelSkin.getDrawable("background");
-		this.flyingLabelStyle.background = labelSkin.getDrawable("background");
+		setDefaultLabelsText();
 
 		this.goldLabel = new Label("" , this.goldLabelStyle);
 		this.xpLabel = new Label("", this.xpLabelStyle);
@@ -194,19 +204,20 @@ public class UIManager {
 	/**
 	 * Reset the labels backgrounds and refreshes the current gold, exp and units level
 	 */
-	private void setDefaultLabels(){
+	private void setDefaultLabelsText(){
 		this.rangedLabelStyle.background = labelSkin.getDrawable("background");
 		this.meleeLabelStyle.background = labelSkin.getDrawable("background");
 		this.antiaircraftLabelStyle.background = labelSkin.getDrawable("background");
 		this.flyingLabelStyle.background = labelSkin.getDrawable("background");
-
+	}
+	
+	private void setDefaultLabelsBackground(){
 		this.goldLabel.setText("Gold: " + WorldManager.getInstance().getPlayer().getGold().toString());
 		this.xpLabel.setText("XP: " + WorldManager.getInstance().getPlayer().getExp().toString());
 		this.rangedUnitLabel.setText("Ranged Level: " + RangedUnit.getPlayerUnitLevel());
 		this.meleeUnitLabel.setText("Melee Level: " + MeleeUnit.getPlayerUnitLevel());
 		this.antiaircraftUnitLabel.setText("AntiAircraft Level: " + AntiaircraftUnit.getPlayerUnitLevel());
-		this.flyingUnitLabel.setText("Flying Level: " + FlyingUnit.getPlayerUnitLevel());   
-
+		this.flyingUnitLabel.setText("Flying Level: " + FlyingUnit.getPlayerUnitLevel());
 	}
 
 	public void setPlayerBase(BaseDrawableObject playerBase) {
@@ -244,21 +255,21 @@ public class UIManager {
 		this.buttons.clear();
 		switch(State.peek()){
 		case DEFAULT:
-			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new ar.edu.itba.game.frontend.buttons.Tower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.TowerButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeUnitButton(this.BUTTON_INITIAL_X + count++ *this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeTowerButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			this.buttons.add(new ar.edu.itba.game.frontend.buttons.MenuButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case CREATE_UNIT:
-			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateRangedUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateFlyingUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateAntiaircraftUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateMeleeUnit(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateRangedUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateFlyingUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateAntiaircraftUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case TOWER:
-			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateBasicTower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
-			this.buttons.add(new ar.edu.itba.game.frontend.buttons.DisposeTower(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.CreateBasicTowerButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.DisposeTowerButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 			break;
 		case UPGRADE_UNIT:
 			this.buttons.add(new ar.edu.itba.game.frontend.buttons.UpgradeMeleeUnitButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
@@ -276,7 +287,7 @@ public class UIManager {
 		}
 
 		if(!State.peek().equals(GameUIState.DEFAULT)){
-			this.buttons.add(new ar.edu.itba.game.frontend.buttons.Back(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
+			this.buttons.add(new ar.edu.itba.game.frontend.buttons.ReturnButton(this.BUTTON_INITIAL_X + count++ * this.BUTTON_SEPARATION, this.BUTTON_HEIGHT));
 		}
 	}
 
@@ -304,7 +315,8 @@ public class UIManager {
 			this.drawTexture(draw);
 		}
 		this.drawButtonsMessage();
-		this.setDefaultLabels();
+		this.setDefaultLabelsText();
+		this.setDefaultLabelsBackground();
 		this.goldLabel.draw(SB, 1);
 		this.xpLabel.draw(SB, 1);
 

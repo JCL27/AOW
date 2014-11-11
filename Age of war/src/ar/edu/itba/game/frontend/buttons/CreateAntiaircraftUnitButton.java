@@ -8,11 +8,9 @@ import ar.edu.itba.game.backend.units.AntiaircraftUnit;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
 
-public class CreateAntiaircraftUnit extends Button {
-
-
+public class CreateAntiaircraftUnitButton extends Button {
 	
-	public CreateAntiaircraftUnit(float X, float Y) {
+	public CreateAntiaircraftUnitButton(float X, float Y) {
 		this.draw = new Icon(X, Y, 80, 80, Textures.ANTIAIRCRAFT_UNIT_ICON, Textures.DARK_ANTIAIRCRAFT_UNIT_ICON);
 	}	
 	

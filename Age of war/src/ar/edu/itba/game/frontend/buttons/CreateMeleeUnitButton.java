@@ -8,9 +8,9 @@ import ar.edu.itba.game.backend.units.MeleeUnit;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
 
-public class CreateMeleeUnit extends Button{
+public class CreateMeleeUnitButton extends Button{
 	
-		public CreateMeleeUnit(float X, float Y) {
+		public CreateMeleeUnitButton(float X, float Y) {
 			this.draw = new Icon(X, Y, 80, 80, Textures.MELEE_UNIT_ICON, Textures.DARK_MELEE_UNIT_ICON);
 		}
 		

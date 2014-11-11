@@ -5,9 +5,9 @@ import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Back extends Button{
+public class ReturnButton extends Button{
 
-	public Back(float X, float Y) {
+	public ReturnButton(float X, float Y) {
 		this.draw = new ArrowDraw(X, Y);
 	}
 	

@@ -10,7 +10,7 @@ public class WorldManager implements Serializable{
 
 	private static final long serialVersionUID = -4035477768723084005L;
 	public static float MINDISTANCE = 25;
-
+	
 	private Player player;
 	private Player playerAI;
 	private ArrayList<Element> elements = new ArrayList<Element>();

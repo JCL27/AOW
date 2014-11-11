@@ -8,9 +8,9 @@ import ar.edu.itba.game.backend.units.RangedUnit;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
 
-public class CreateRangedUnit extends Button {
+public class CreateRangedUnitButton extends Button {
 
-	public CreateRangedUnit(float X, float Y) {
+	public CreateRangedUnitButton(float X, float Y) {
 		this.draw = new Icon(X, Y, 80, 80, Textures.RANGED_UNIT_ICON, Textures.DARK_RANGED_UNIT_ICON);
 	}
 

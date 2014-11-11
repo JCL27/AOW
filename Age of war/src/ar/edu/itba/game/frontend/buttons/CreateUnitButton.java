@@ -7,19 +7,20 @@ import ar.edu.itba.game.frontend.userinterface.UIManager;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Tower extends Button{
 
-	public Tower(float X, float Y){
-		this.draw = new Icon(X, Y, 80, 80, Textures.TOWERS_ICON);
+public class CreateUnitButton extends Button {
+
+	public CreateUnitButton(float X, float Y){
+		this.draw = new Icon(X, Y, 80, 80, Textures.CREATE_UNITS_ICON);
 	}
 	
 	public void showMessage(SpriteBatch SB){
-		this.font.draw(SB, "Tower", this.draw.getxPos(), this.draw.getyPos());
-	}
-	@Override
-	public void Click() {
-		UIManager.getInstance().pushState(GameUIState.TOWER);
-		UIManager.getInstance().updateButtons();
+		this.font.draw(SB, "Units", this.draw.getxPos(), this.draw.getyPos());
 	}
 	
+	@Override
+	public void Click() {
+		UIManager.getInstance().pushState(GameUIState.CREATE_UNIT);
+		UIManager.getInstance().updateButtons();
+	}
 }

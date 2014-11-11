@@ -8,9 +8,9 @@ import ar.edu.itba.game.backend.units.FlyingUnit;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
 
-public class CreateFlyingUnit extends Button {
+public class CreateFlyingUnitButton extends Button {
 
-	public CreateFlyingUnit(float X, float Y) {
+	public CreateFlyingUnitButton(float X, float Y) {
 		this.draw = new Icon(X, Y, 80, 80, Textures.FLYING_UNIT_ICON, Textures.DARK_FLYING_UNIT_ICON);
 	}
 

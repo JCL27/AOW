@@ -47,19 +47,19 @@ public class MyInputProcessor implements InputProcessor{
 		 * Set displayable labels visibility
 		 */
 		if (scaledY>(GameStats.LABEL_UNITS_Y - 10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
-				scaledX>GameStats.LABEL_RANGED_X && scaledX<(GameStats.LABEL_RANGED_X + GameStats.BACKGROUND_RIGHT) ){
+				scaledX>GameStats.LABEL_RANGED_X && scaledX<(GameStats.LABEL_RANGED_X + GameStats.BACKGROUND_RIGHT_SIZE) ){
 			UIManager.getInstance().setRangedLabelvisible(true);
 		}
 		else if (scaledY>(GameStats.LABEL_UNITS_Y -10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
-				scaledX>GameStats.LABEL_MELEE_X && scaledX<(GameStats.LABEL_MELEE_X + GameStats.BACKGROUND_RIGHT)){
+				scaledX>GameStats.LABEL_MELEE_X && scaledX<(GameStats.LABEL_MELEE_X + GameStats.BACKGROUND_RIGHT_SIZE)){
 			UIManager.getInstance().setMeleeLabelvisible(true);
 		}
 		else if (scaledY>(GameStats.LABEL_UNITS_Y -10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
-				scaledX>GameStats.LABEL_ANTIAIRCRAFT_X && scaledX<(GameStats.LABEL_ANTIAIRCRAFT_X + GameStats.BACKGROUND_RIGHT)){
+				scaledX>GameStats.LABEL_ANTIAIRCRAFT_X && scaledX<(GameStats.LABEL_ANTIAIRCRAFT_X + GameStats.BACKGROUND_RIGHT_SIZE)){
 			UIManager.getInstance().setAntiaircraftLabelvisible(true);
 		}
 		else if (scaledY>(GameStats.LABEL_UNITS_Y -10) && scaledY<(GameStats.LABEL_UNITS_Y + 20) && 
-				scaledX>GameStats.LABEL_FLYING_X && scaledX<(GameStats.LABEL_FLYING_X + GameStats.BACKGROUND_RIGHT)){
+				scaledX>GameStats.LABEL_FLYING_X && scaledX<(GameStats.LABEL_FLYING_X + GameStats.BACKGROUND_RIGHT_SIZE)){
 			UIManager.getInstance().setFlyingLabelvisible(true);
 		}
 		else{
