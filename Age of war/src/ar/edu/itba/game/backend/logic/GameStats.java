@@ -149,6 +149,7 @@ public class GameStats {
 	public final static int FLYING_UNIT_RESEARCH_COST = 450;
 	
 	public final static int INITIAL_GOLD = 700;
+	public final static int INITIAL_EXP = 0;
 	
 	/**
 	 * Labels

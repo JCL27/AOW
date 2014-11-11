@@ -8,11 +8,13 @@ import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
 
 
-
+/**
+ * Contains the level for the units classes
+ * (The level for a given unit class is shared for all instances of that class)
+ */
 public class UnitsLevels implements Serializable{
-	/**
-	 * 
-	 */
+	
+	private static UnitsLevels instance;
 	private static final long serialVersionUID = -3119219853274042761L;
 	
 	private HashMap<UnitType, Integer> playerLevels = new HashMap<UnitType, Integer>();
@@ -59,8 +61,6 @@ public class UnitsLevels implements Serializable{
 	public void setAIAntiaircraftUnitAvailable(boolean aIAntiaircraftUnitAvailable) {
 		AIAntiaircraftUnitAvailable = aIAntiaircraftUnitAvailable;
 	}
-	
-	private static UnitsLevels instance;
 	
 	private UnitsLevels() {
 		initializeLevels();
@@ -121,14 +121,6 @@ public class UnitsLevels implements Serializable{
 					Math.sqrt(levels.get(type) * GameStats.FLYING_UNIT_COST_UPGRADE_RATE));
 		}
 		return -1;
-	}
-	
-	
-	
-	public void importLevels(){
-		
-	}
-	
-	
+	}	
 	
 }

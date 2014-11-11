@@ -39,7 +39,7 @@ public class Player implements Serializable{
 
 	public Player (Side side, PlayerObserver playerObserver){
 		this.gold = GameStats.INITIAL_GOLD;
-		this.experience = 5000;
+		this.experience = GameStats.INITIAL_EXP;
 		this.base = Factory.getInstance().createBase(side);
 		this.units = new ArrayList<Unit>();
 		this.projectiles = new ArrayList<Projectile>();
