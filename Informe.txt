@@ -14,3 +14,5 @@ Consideraciones:
 - Se limitó el sistema para guardar y cargar partidas de manera tal que solo se puede guardar un juego a la vez (Cada partida guardada suplanta a la anterior). Las mismas se guardan en el archivo WM.ser.
 - Por falta de tiempo, no se agrego ninguna animacion al ataque de la unidad melee.
 - Inicialmente las unidades se instanciaban y subian de nivel mediante el uso de reflection. Para evitar esto se creó la clase UnitLevel la cual se encarga de administrar los niveles de las unidades.
+
+OBSERVACION: Dependiendo del tamaño de la pantalla y el sistema operativo existe la posibilidad de que las etiquetas y botones se vean defasados. Para solucionar esto basta con maximizar la pantalla del juego.

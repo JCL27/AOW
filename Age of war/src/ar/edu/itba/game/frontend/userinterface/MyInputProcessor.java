@@ -93,7 +93,6 @@ public class MyInputProcessor implements InputProcessor{
 		float scaledX = arg0 * (Game.WIDTH * Game.SCALE)/Gdx.graphics.getWidth();
 		float scaledY = Game.HEIGHT * Game.SCALE - arg1 * (Game.HEIGHT * Game.SCALE)/ Gdx.graphics.getHeight();
 		Button buttonClicked = null;
-		//System.out.println("MyInput: " + scaledX + " " + scaledY);
 		for(Button button: buttons){
 			if(button.isClicked(scaledX, scaledY)){
 				buttonClicked = button;
