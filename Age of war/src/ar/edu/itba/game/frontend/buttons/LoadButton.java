@@ -1,7 +1,6 @@
 package ar.edu.itba.game.frontend.buttons;
 
 import ar.edu.itba.game.backend.logic.Game;
-import ar.edu.itba.game.backend.logic.GameState;
 import ar.edu.itba.game.frontend.draws.LoadDraw;
 import ar.edu.itba.game.frontend.userinterface.GameUIState;
 import ar.edu.itba.game.frontend.userinterface.UIManager;

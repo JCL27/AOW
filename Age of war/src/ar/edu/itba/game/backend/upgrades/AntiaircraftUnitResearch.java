@@ -3,8 +3,8 @@ package ar.edu.itba.game.backend.upgrades;
 import ar.edu.itba.game.backend.logic.GameStats;
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
-import ar.edu.itba.game.backend.units.AntiaircraftUnit;
-import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.backend.units.UnitType;
+import ar.edu.itba.game.backend.units.UnitsLevels;
 
 public class AntiaircraftUnitResearch extends Upgrade {
 
@@ -19,11 +19,11 @@ public class AntiaircraftUnitResearch extends Upgrade {
 	 * Enables the player to buy antiaircraft units
 	 */
 	@Override
-	public void applyUpgrade(Class<Unit> classType) {
+	public void applyUpgrade(UnitType type) {
 		if(this.player.equals(WorldManager.getInstance().getPlayer()))
-			AntiaircraftUnit.setPlayerAvailable(true);
+			UnitsLevels.getInstance().setPlayerAntiaircraftUnitAvailable(true);
 		else
-			AntiaircraftUnit.setAIAvailable(true);
+			UnitsLevels.getInstance().setAIAntiaircraftUnitAvailable(true);
 	}
 
 }

@@ -3,6 +3,7 @@ package ar.edu.itba.game.backend.logic;
 import java.io.Serializable;
 
 import ar.edu.itba.game.backend.exceptions.AlreadyAppliedUpgradeException;
+import ar.edu.itba.game.backend.upgrades.UpgradeType;
 import ar.edu.itba.game.backend.upgrades.Upgrades;
 import ar.edu.itba.game.frontend.observers.TowerObserver;
 
@@ -54,9 +55,6 @@ public class Tower implements CanAttack, Serializable{
 
 	public void Sell(){
 		this.player.addGold(this.cost/2);
-		Upgrades.getInstance().setAvailable("TowerDamageUpgrade", this.player);
-		Upgrades.getInstance().setAvailable("TowerAttackSpeedUpgrade", this.player);
-		Upgrades.getInstance().setAvailable("TowerAttackRangeUpgrade", this.player);
 		WorldManager.getInstance().disposeTower(this);
 	}
 
@@ -86,9 +84,12 @@ public class Tower implements CanAttack, Serializable{
 
 		this.observer = observer;
 
-		ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setAvailable("TowerDamageUpgrade", this.player);
-		ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setAvailable("TowerAttackSpeedUpgrade", this.player);
-		ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setAvailable("TowerAttackRangeUpgrade", this.player);
+		Upgrades.getInstance().setAvailable(UpgradeType.TOWER_DAMAGE_UPGRADE, this.player);
+		Upgrades.getInstance().setAvailable(UpgradeType.TOWER_ATTACK_SPEED_UPGRADE, this.player);
+		Upgrades.getInstance().setAvailable(UpgradeType.TOWER_ATTACK_RANGE_UPGRADE, this.player);
+		Upgrades.getInstance().setUnapplied(UpgradeType.TOWER_DAMAGE_UPGRADE, this.player);
+		Upgrades.getInstance().setUnapplied(UpgradeType.TOWER_ATTACK_SPEED_UPGRADE, this.player);
+		Upgrades.getInstance().setUnapplied(UpgradeType.TOWER_ATTACK_RANGE_UPGRADE, this.player);
 	}
 
 	@Override

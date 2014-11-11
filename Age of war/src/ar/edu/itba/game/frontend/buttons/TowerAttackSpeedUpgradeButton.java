@@ -1,13 +1,13 @@
 package ar.edu.itba.game.frontend.buttons;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import ar.edu.itba.game.backend.logic.GameStats;
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
-import ar.edu.itba.game.backend.upgrades.TowerAttackSpeedUpgrade;
+import ar.edu.itba.game.backend.upgrades.UpgradeType;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TowerAttackSpeedUpgradeButton extends Button {
 	
@@ -32,6 +32,6 @@ public class TowerAttackSpeedUpgradeButton extends Button {
 
 	@Override
 	public void Click() {
-		WorldManager.getInstance().getPlayer().research(TowerAttackSpeedUpgrade.class);
+		WorldManager.getInstance().getPlayer().research(UpgradeType.TOWER_ATTACK_SPEED_UPGRADE);
 	}
 }

@@ -1,14 +1,14 @@
 package ar.edu.itba.game.frontend.buttons;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import ar.edu.itba.game.backend.logic.GameStats;
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
-import ar.edu.itba.game.backend.units.FlyingUnit;
-import ar.edu.itba.game.backend.upgrades.FlyingUnitResearch;
+import ar.edu.itba.game.backend.units.UnitsLevels;
+import ar.edu.itba.game.backend.upgrades.UpgradeType;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ResearchFlyingUnitsButton  extends Button{
 	public ResearchFlyingUnitsButton(float X, float Y) {
@@ -17,7 +17,7 @@ public class ResearchFlyingUnitsButton  extends Button{
 	
 	public boolean checkAvailability(){
 		Player player = WorldManager.getInstance().getPlayer();
-		if(player.getExp()<GameStats.FLYING_UNIT_RESEARCH_COST || FlyingUnit.isPlayerAvailable()){
+		if(player.getExp()<GameStats.FLYING_UNIT_RESEARCH_COST || UnitsLevels.getInstance().isAIFlyingUnitAvailable()){
 			this.getDraw().setDisabled();
 			return false;
 		}
@@ -32,7 +32,7 @@ public class ResearchFlyingUnitsButton  extends Button{
 	@Override
 	public void Click() {
 		System.out.println("investiga fly");
-		WorldManager.getInstance().getPlayer().research(FlyingUnitResearch.class);
+		WorldManager.getInstance().getPlayer().research(UpgradeType.FLYING_UNIT_RESEARCH);
 
 
 	}

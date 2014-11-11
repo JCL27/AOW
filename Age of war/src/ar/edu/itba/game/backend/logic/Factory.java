@@ -1,9 +1,12 @@
 package ar.edu.itba.game.backend.logic;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
+import ar.edu.itba.game.backend.exceptions.UnavailableUnitException;
+import ar.edu.itba.game.backend.units.AntiaircraftUnit;
+import ar.edu.itba.game.backend.units.FlyingUnit;
+import ar.edu.itba.game.backend.units.MeleeUnit;
+import ar.edu.itba.game.backend.units.RangedUnit;
 import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.backend.units.UnitType;
 import ar.edu.itba.game.frontend.observers.BaseObserver;
 import ar.edu.itba.game.frontend.observers.PlayerObserver;
 import ar.edu.itba.game.frontend.observers.ProjectileObserver;
@@ -101,27 +104,29 @@ public class Factory {
 
 	/**
 	 * Receives a unitClass, instance a unit using reflection and assign unitobserver to it
-	 * @param unitClass
+	 * @param type
 	 * @param player
 	 * @return
 	 */
-	public Unit createUnit(Class unitClass, Player player){
+	public Unit createUnit(UnitType type, Player player){
 		Unit unit = null;
-		try {
-			Constructor cons = unitClass.getConstructor(new Class[] { Player.class, UnitObserver.class});
-			unit = (Unit) cons.newInstance(new Object[] {player, this.unitObserver});
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
+		switch(type){
+		case MELEE_UNIT:
+			unit = new MeleeUnit(player, this.unitObserver);
+			break;
+		case RANGED_UNIT:
+			unit = new RangedUnit(player, this.unitObserver);
+			break;
+		case ANTIAIRCRAFT_UNIT:
+			unit = new AntiaircraftUnit(player, this.unitObserver);
+			break;
+		case FLYING_UNIT:
+			try {
+				unit = new FlyingUnit(player, this.unitObserver);
+			} catch (UnavailableUnitException e) {
+				e.printStackTrace();
+			}
+			break;
 		}
 		if(this.unitObserver!=null)
 			this.unitObserver.addUnit(unit);

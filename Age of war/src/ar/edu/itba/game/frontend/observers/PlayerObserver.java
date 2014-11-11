@@ -1,11 +1,14 @@
 package ar.edu.itba.game.frontend.observers;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.Side;
-import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.backend.units.AntiaircraftUnit;
+import ar.edu.itba.game.backend.units.FlyingUnit;
+import ar.edu.itba.game.backend.units.MeleeUnit;
+import ar.edu.itba.game.backend.units.RangedUnit;
+import ar.edu.itba.game.backend.units.UnitType;
 import ar.edu.itba.game.frontend.drawableobjects.Queue;
 import ar.edu.itba.game.frontend.userinterface.UIManager;
 
@@ -23,23 +26,29 @@ public class PlayerObserver{
 	/**
 	 * Add a new queue element at the end of the queue
 	 * @param player
-	 * @param unitClass
+	 * @param type
 	 */
-	public void addElementToQueue(Player player, Class unitClass){
-		int creationTime;
+	public void addElementToQueue(Player player, UnitType type){
+		int creationTime = 0;
 		Side side = player.getSide();
-		try {
-			creationTime = (int) unitClass.getMethod("getCreationTime").invoke(null);
-			if(side.equals(Side.LEFT))
-				UIManager.getInstance().getPlayerQueue().addElement(unitClass, creationTime);
-			else
-				UIManager.getInstance().getAIQueue().addElement(unitClass, creationTime);
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
-			e.printStackTrace();
+		switch(type){
+		case MELEE_UNIT:
+			creationTime = MeleeUnit.getCreationTime();
+			break;
+		case RANGED_UNIT:
+			creationTime = RangedUnit.getCreationTime();
+			break;
+		case FLYING_UNIT:
+			creationTime = FlyingUnit.getCreationTime();
+			break;
+		case ANTIAIRCRAFT_UNIT:
+			creationTime = AntiaircraftUnit.getCreationTime();
+			break;
 		}
-
+		if(side.equals(Side.LEFT))
+			UIManager.getInstance().getPlayerQueue().addElement(type, creationTime);
+		else
+			UIManager.getInstance().getAIQueue().addElement(type, creationTime);
 	}
 	
 	/**
@@ -71,7 +80,7 @@ public class PlayerObserver{
 	 * @param unitsQueue
 	 * @param playerUnitCreationTime
 	 */
-	public void loadQueue(Player player, ArrayList<Class<Unit>> unitsQueue,
+	public void loadQueue(Player player, ArrayList<UnitType> unitsQueue,
 			int playerUnitCreationTime) {
 		Queue queue;
 		if(player.getSide().equals(Side.LEFT)){

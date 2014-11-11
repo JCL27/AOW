@@ -1,13 +1,20 @@
 package ar.edu.itba.game.backend.logic;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import ar.edu.itba.game.backend.exceptions.NotEnoughExpException;
 import ar.edu.itba.game.backend.exceptions.NotEnoughGoldException;
 import ar.edu.itba.game.backend.exceptions.UnavailableUpgradeException;
+import ar.edu.itba.game.backend.units.AntiaircraftUnit;
+import ar.edu.itba.game.backend.units.FlyingUnit;
+import ar.edu.itba.game.backend.units.MeleeUnit;
+import ar.edu.itba.game.backend.units.RangedUnit;
 import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.backend.units.UnitType;
+import ar.edu.itba.game.backend.units.UnitsLevels;
+import ar.edu.itba.game.backend.upgrades.UpgradeType;
+import ar.edu.itba.game.backend.upgrades.Upgrades;
 import ar.edu.itba.game.frontend.observers.PlayerObserver;
 
 /**
@@ -23,20 +30,20 @@ public class Player implements Serializable{
 	private ArrayList<Projectile> projectiles;
 	private Tower tower;
 	private Base base;
-	private ArrayList<Class<Unit>> unitsQueue;
+	private ArrayList<UnitType> unitsQueue;
 	private boolean playerCreatingUnit = false;
 	private int playerUnitCreationTime = 0;
 	private transient PlayerObserver observer;
-	private Class unitToQueue = null;
+	private UnitType unitToQueue = null;
 	private Side side;
 
 	public Player (Side side, PlayerObserver playerObserver){
 		this.gold = GameStats.INITIAL_GOLD;
-		this.experience = 0;
+		this.experience = 5000;
 		this.base = Factory.getInstance().createBase(side);
 		this.units = new ArrayList<Unit>();
 		this.projectiles = new ArrayList<Projectile>();
-		this.unitsQueue = new ArrayList<Class<Unit>>();
+		this.unitsQueue = new ArrayList<UnitType>();
 		this.observer = playerObserver;
 		this.side = side;
 	}
@@ -49,20 +56,20 @@ public class Player implements Serializable{
 		return units;
 	}
 
-	public void research(Class upgradeType){
+	public void research(UpgradeType upgrade){
 
-		this.research(upgradeType, null);
+		this.research(upgrade, null);
 	}
 
 	/**
 	 * Researches an upgrade passed by parameter, and applies it to the second class passed by parameter
 	 * if the upgrade allows that
 	 * @param class1
-	 * @param class2
+	 * @param type
 	 */
-	public void research(Class class1, Class class2){
+	public void research(UpgradeType upgrade, UnitType type){
 		try {
-			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().applyUpgrade(class1.getSimpleName(), this, class2);
+			Upgrades.getInstance().applyUpgrade(upgrade, this, type);
 		} catch (UnavailableUpgradeException e) {
 			e.printStackTrace();
 		} catch (NotEnoughExpException e) {
@@ -79,32 +86,29 @@ public class Player implements Serializable{
 	 * @param unitClass
 	 * @return
 	 */
-	public boolean buyUnit(Class unitClass){
+	public boolean buyUnit(UnitType type){
 		Integer unitCost = null;
 		boolean created = true;
-		boolean available = false;
-		try {
-			if(this.equals(WorldManager.getInstance().getPlayer()))
-				available = (boolean) unitClass.getMethod("isPlayerAvailable").invoke(unitClass);
-			else
-				available = (boolean) unitClass.getMethod("isAIAvailable").invoke(unitClass);
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e1) {
-			e1.printStackTrace();
+		boolean available = true;
+		if(this.equals(WorldManager.getInstance().getPlayer())){
+			if(type.equals(UnitType.ANTIAIRCRAFT_UNIT))
+				available = UnitsLevels.getInstance().isPlayerAntiaircraftUnitAvailable();
+			else if(type.equals(UnitType.FLYING_UNIT))
+				available = UnitsLevels.getInstance().isPlayerFlyingUnitAvailable();
+		}else{
+			if(type.equals(UnitType.ANTIAIRCRAFT_UNIT))
+				available = UnitsLevels.getInstance().isAIAntiaircraftUnitAvailable();
+			else if(type.equals(UnitType.FLYING_UNIT))
+				available = UnitsLevels.getInstance().isAIFlyingUnitAvailable();
 		}
 		if(available && this.unitsQueue.size()<5){
-			try {
-				unitCost = (Integer)unitClass.getMethod("getCost", Player.class).invoke(null, this);
-			} catch (IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | NoSuchMethodException| SecurityException e) {
-				e.printStackTrace();
-			}
+			unitCost = UnitsLevels.getInstance().getCost(this, type);
+
 			try{
 				this.charge(unitCost);
-				this.unitsQueue.add(unitClass);
+				this.unitsQueue.add(type);
 				if(this.observer!=null)
-					this.observer.addElementToQueue(this, unitClass);
+					this.observer.addElementToQueue(this, type);
 			}catch(NotEnoughGoldException e){
 				created = false;
 				e.printStackTrace();	
@@ -114,8 +118,8 @@ public class Player implements Serializable{
 	}
 
 
-	public void createUnit(Class unitClass){
-		Unit unit = Factory.getInstance().createUnit(unitClass, this);
+	public void createUnit(UnitType type){
+		Unit unit = Factory.getInstance().createUnit(type, this);
 		if(unit!=null){
 			this.units.add(unit);
 		}
@@ -160,7 +164,7 @@ public class Player implements Serializable{
 		this.experience += exp;
 	}
 
-	public ArrayList<Class<Unit>> getUnitsQueue() {
+	public ArrayList<UnitType> getUnitsQueue() {
 		return unitsQueue;
 	}
 
@@ -178,9 +182,9 @@ public class Player implements Serializable{
 
 	public void sellTower(){
 		if(this.tower != null){
-			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setUnavailable("TowerDamageUpgrade", this);
-			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setUnavailable("TowerAttackSpeedUpgrade", this);
-			ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().setUnavailable("TowerAttackRangeUpgrade", this);
+			Upgrades.getInstance().setUnavailable(UpgradeType.TOWER_DAMAGE_UPGRADE, this);
+			Upgrades.getInstance().setUnavailable(UpgradeType.TOWER_ATTACK_SPEED_UPGRADE, this);
+			Upgrades.getInstance().setUnavailable(UpgradeType.TOWER_ATTACK_RANGE_UPGRADE, this);
 			this.tower.Sell();
 		}	
 	}
@@ -216,19 +220,27 @@ public class Player implements Serializable{
 				if(this.observer!=null)
 					this.observer.updateCurrentTime(this, this.playerUnitCreationTime);
 			}else{
-				try {
-					this.unitToQueue = this.getUnitsQueue().get(0);
-					this.playerUnitCreationTime = (int) unitToQueue.getMethod("getCreationTime").invoke(null);
-					this.playerCreatingUnit = true;
-				} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
-						| SecurityException e) {
-					e.printStackTrace();
+				this.unitToQueue = this.getUnitsQueue().get(0);
+				switch(unitToQueue){
+				case MELEE_UNIT:
+					this.playerUnitCreationTime = MeleeUnit.getCreationTime();
+					break;
+				case RANGED_UNIT:
+					this.playerUnitCreationTime = RangedUnit.getCreationTime();
+					break;
+				case FLYING_UNIT:
+					this.playerUnitCreationTime = FlyingUnit.getCreationTime();
+					break;
+				case ANTIAIRCRAFT_UNIT:
+					this.playerUnitCreationTime = AntiaircraftUnit.getCreationTime();
+					break;
 				}
+				this.playerCreatingUnit = true;
 			}
 		}
 	}
 
-	public Class getUnitToQueue() {
+	public UnitType getUnitToQueue() {
 		return unitToQueue;
 	}
 

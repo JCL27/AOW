@@ -1,14 +1,14 @@
 package ar.edu.itba.game.frontend.buttons;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import ar.edu.itba.game.backend.logic.GameStats;
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
-import ar.edu.itba.game.backend.units.RangedUnit;
-import ar.edu.itba.game.backend.upgrades.UnitUpgrade;
+import ar.edu.itba.game.backend.units.UnitType;
+import ar.edu.itba.game.backend.upgrades.UpgradeType;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class UpgradeRangedUnitButton  extends Button{
 	public UpgradeRangedUnitButton(float X, float Y) {
@@ -29,10 +29,8 @@ public class UpgradeRangedUnitButton  extends Button{
 		this.font.draw(SB, "Upgrade Ranged", this.draw.getxPos(), this.draw.getyPos());
 	}
 
-
-
 	@Override
 	public void Click() {
-		WorldManager.getInstance().getPlayer().research(UnitUpgrade.class, RangedUnit.class);
+		WorldManager.getInstance().getPlayer().research(UpgradeType.UNIT_UPGRADE, UnitType.RANGED_UNIT);
 	}
 }

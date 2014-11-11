@@ -2,16 +2,9 @@ package ar.edu.itba.game.backend.logic;
 
 import java.util.Random;
 
-import ar.edu.itba.game.backend.units.AntiaircraftUnit;
-import ar.edu.itba.game.backend.units.FlyingUnit;
-import ar.edu.itba.game.backend.units.MeleeUnit;
-import ar.edu.itba.game.backend.units.RangedUnit;
-import ar.edu.itba.game.backend.upgrades.AntiaircraftUnitResearch;
-import ar.edu.itba.game.backend.upgrades.FlyingUnitResearch;
-import ar.edu.itba.game.backend.upgrades.TowerAttackRangeUpgrade;
-import ar.edu.itba.game.backend.upgrades.TowerAttackSpeedUpgrade;
-import ar.edu.itba.game.backend.upgrades.TowerDamageUpgrade;
-import ar.edu.itba.game.backend.upgrades.UnitUpgrade;
+import ar.edu.itba.game.backend.units.UnitType;
+import ar.edu.itba.game.backend.units.UnitsLevels;
+import ar.edu.itba.game.backend.upgrades.UpgradeType;
 
 public class AI {
 	private static AI instance = null;
@@ -43,11 +36,11 @@ public class AI {
 	public void desitionMaker(){
 
 		if((player.getUnits().size() + player.getUnitsQueue().size()) < 2){
-			if(player.getGold()>MeleeUnit.getCost(player)){
-				player.buyUnit(MeleeUnit.class);
+			if(player.getGold()>UnitsLevels.getInstance().getCost(player, UnitType.MELEE_UNIT)){
+				player.buyUnit(UnitType.MELEE_UNIT);
 			}
-			if(player.getGold()>RangedUnit.getCost(player)){
-				player.buyUnit(RangedUnit.class);
+			if(player.getGold()>UnitsLevels.getInstance().getCost(player, UnitType.RANGED_UNIT)){
+				player.buyUnit(UnitType.RANGED_UNIT);
 			}	
 		}else{
 			if(objectiveAccomplished == true){
@@ -58,23 +51,23 @@ public class AI {
 			case(0):
 			case(1):
 			case(2):
-				if(player.getGold()>MeleeUnit.getCost(player)){
-					player.buyUnit(MeleeUnit.class);
+				if(player.getGold()>UnitsLevels.getInstance().getCost(player, UnitType.MELEE_UNIT)){
+					player.buyUnit(UnitType.MELEE_UNIT);
 					objectiveAccomplished = true;
 				}	
 			break;
 			case(3):
 			case(4):
 			case(5):
-				if(player.getGold()>RangedUnit.getCost(player)){
-					player.buyUnit(RangedUnit.class);
+				if(player.getGold()>UnitsLevels.getInstance().getCost(player, UnitType.RANGED_UNIT)){
+					player.buyUnit(UnitType.RANGED_UNIT);
 					objectiveAccomplished = true;
 				}	
 			break;
 			case(6):
-				if(AntiaircraftUnit.isAIAvailable()){
-					if(player.getGold()>AntiaircraftUnit.getCost(player)){
-						player.buyUnit(AntiaircraftUnit.class);
+				if(UnitsLevels.getInstance().isAIAntiaircraftUnitAvailable()){
+					if(player.getGold()>UnitsLevels.getInstance().getCost(player, UnitType.ANTIAIRCRAFT_UNIT)){
+						player.buyUnit(UnitType.ANTIAIRCRAFT_UNIT);
 						objectiveAccomplished = true;
 					}
 				}else{
@@ -82,9 +75,9 @@ public class AI {
 				}
 			break;
 			case(7):
-				if(FlyingUnit.isAIAvailable()){
-					if(player.getGold()>FlyingUnit.getCost(player)){
-						player.buyUnit(FlyingUnit.class);
+				if(UnitsLevels.getInstance().isAIFlyingUnitAvailable()){
+					if(player.getGold()>UnitsLevels.getInstance().getCost(player, UnitType.FLYING_UNIT)){
+						player.buyUnit(UnitType.FLYING_UNIT);
 						objectiveAccomplished = true;
 					}
 				}else{
@@ -110,20 +103,20 @@ public class AI {
 		switch(upgradeChoice){
 		case(0):
 			if(player.getExp()> GameStats.UNIT_UPGRADE_COST){
-				player.research(UnitUpgrade.class, MeleeUnit.class);
+				player.research(UpgradeType.UNIT_UPGRADE, UnitType.MELEE_UNIT);
 				upgradeResearched = true;
 			}	
 		break;
 		case(1):
 			if(player.getExp()> GameStats.UNIT_UPGRADE_COST){
-				player.research(UnitUpgrade.class, RangedUnit.class);
+				player.research(UpgradeType.UNIT_UPGRADE, UnitType.RANGED_UNIT);
 				upgradeResearched = true;
 			}	
 		break;
 		case(2):
-			if(FlyingUnit.isAIAvailable()){
+			if(UnitsLevels.getInstance().isAIFlyingUnitAvailable()){
 				if(player.getExp()> GameStats.UNIT_UPGRADE_COST){
-					player.research(UnitUpgrade.class, FlyingUnit.class);
+					player.research(UpgradeType.UNIT_UPGRADE, UnitType.FLYING_UNIT);
 					upgradeResearched = true;
 				}
 			}else{
@@ -132,9 +125,9 @@ public class AI {
 		break;
 
 		case(3):
-			if(AntiaircraftUnit.isAIAvailable()){
+			if(UnitsLevels.getInstance().isAIAntiaircraftUnitAvailable()){
 				if(player.getExp()> GameStats.UNIT_UPGRADE_COST){
-					player.research(UnitUpgrade.class, AntiaircraftUnit.class);
+					player.research(UpgradeType.UNIT_UPGRADE, UnitType.ANTIAIRCRAFT_UNIT);
 					upgradeResearched = true;
 				}
 			}else{
@@ -142,10 +135,10 @@ public class AI {
 			}	
 		break;
 		case(4):
-			if(!AntiaircraftUnit.isAIAvailable()){
-				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(AntiaircraftUnitResearch.class, this.player)){
+			if(!UnitsLevels.getInstance().isAIAntiaircraftUnitAvailable()){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(UpgradeType.ANTIAIRCRAFT_UNIT_RESEARCH, this.player)){
 					if(player.getExp()> GameStats.ANTIAIRCRAFT_UNIT_RESEARCH_COST){
-						player.research(AntiaircraftUnitResearch.class);
+						player.research(UpgradeType.ANTIAIRCRAFT_UNIT_RESEARCH);
 						upgradeResearched = true;
 					}
 				}else{
@@ -156,10 +149,10 @@ public class AI {
 			}
 		break;
 		case(5):
-			if(!FlyingUnit.isAIAvailable()){
-				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(FlyingUnitResearch.class, this.player)){
+			if(!UnitsLevels.getInstance().isAIFlyingUnitAvailable()){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(UpgradeType.FLYING_UNIT_RESEARCH, this.player)){
 					if(player.getExp()> GameStats.FLYING_UNIT_RESEARCH_COST){
-						player.research(FlyingUnitResearch.class);
+						player.research(UpgradeType.FLYING_UNIT_RESEARCH);
 						upgradeResearched = true;
 					}
 				}else{
@@ -171,9 +164,9 @@ public class AI {
 		break;
 		case(6):
 			if(player.getTower()!=null){
-				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(TowerDamageUpgrade.class, this.player)){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(UpgradeType.TOWER_DAMAGE_UPGRADE, this.player)){
 					if(player.getExp()> GameStats.TOWER_DAMAGE_UPGRADE_COST){
-						player.research(TowerDamageUpgrade.class);
+						player.research(UpgradeType.TOWER_DAMAGE_UPGRADE);
 						upgradeResearched = true;
 					}
 				}else{
@@ -185,9 +178,9 @@ public class AI {
 		break;
 		case(7):
 			if(player.getTower()!=null){
-				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(TowerAttackSpeedUpgrade.class, this.player)){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(UpgradeType.TOWER_ATTACK_SPEED_UPGRADE, this.player)){
 					if(player.getExp()> GameStats.TOWER_ATTACK_SPEED_UPGRADE_COST){
-						player.research(TowerAttackSpeedUpgrade.class);
+						player.research(UpgradeType.TOWER_ATTACK_SPEED_UPGRADE);
 						upgradeResearched = true;
 					}
 				}else{
@@ -199,9 +192,9 @@ public class AI {
 		break;
 		case(8):
 			if(player.getTower()!=null){
-				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(TowerAttackRangeUpgrade.class, this.player)){
+				if(ar.edu.itba.game.backend.upgrades.Upgrades.getInstance().isAvailable(UpgradeType.TOWER_ATTACK_RANGE_UPGRADE, this.player)){
 					if(player.getExp()> GameStats.TOWER_ATTACK_RANGE_UPGRADE_COST){
-						player.research(TowerAttackRangeUpgrade.class);
+						player.research(UpgradeType.TOWER_ATTACK_RANGE_UPGRADE);
 						upgradeResearched = true;
 					}
 				}else{

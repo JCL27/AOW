@@ -1,14 +1,14 @@
 package ar.edu.itba.game.frontend.buttons;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import ar.edu.itba.game.backend.logic.GameStats;
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
-import ar.edu.itba.game.backend.units.AntiaircraftUnit;
-import ar.edu.itba.game.backend.upgrades.UnitUpgrade;
+import ar.edu.itba.game.backend.units.UnitType;
+import ar.edu.itba.game.backend.upgrades.UpgradeType;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class UpgradeAntiaircraftUnitButton extends Button {
 	public UpgradeAntiaircraftUnitButton(float X, float Y) {
@@ -31,6 +31,6 @@ public class UpgradeAntiaircraftUnitButton extends Button {
 
 	@Override
 	public void Click() {
-		WorldManager.getInstance().getPlayer().research(UnitUpgrade.class, AntiaircraftUnit.class);
+		WorldManager.getInstance().getPlayer().research(UpgradeType.UNIT_UPGRADE, UnitType.ANTIAIRCRAFT_UNIT);
 	}
 }

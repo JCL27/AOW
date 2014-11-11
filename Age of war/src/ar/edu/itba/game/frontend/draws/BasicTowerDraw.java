@@ -2,7 +2,7 @@ package ar.edu.itba.game.frontend.draws;
 
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
-import ar.edu.itba.game.frontend.draws.Textures;
+
 import com.badlogic.gdx.graphics.Texture;
 
 

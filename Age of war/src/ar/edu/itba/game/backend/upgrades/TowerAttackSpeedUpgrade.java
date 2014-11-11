@@ -3,6 +3,7 @@ package ar.edu.itba.game.backend.upgrades;
 import ar.edu.itba.game.backend.exceptions.AlreadyAppliedUpgradeException;
 import ar.edu.itba.game.backend.logic.GameStats;
 import ar.edu.itba.game.backend.logic.Player;
+import ar.edu.itba.game.backend.units.UnitType;
 
 public class TowerAttackSpeedUpgrade extends Upgrade {
 
@@ -16,7 +17,7 @@ public class TowerAttackSpeedUpgrade extends Upgrade {
 	 */
 	
 	@Override
-	public void applyUpgrade(Class classType) {
+	public void applyUpgrade(UnitType type) {
 		try {
 			player.getTower().upgradeAttackSpeed();
 		} catch (AlreadyAppliedUpgradeException e) {

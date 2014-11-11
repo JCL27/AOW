@@ -2,6 +2,7 @@ package ar.edu.itba.game.frontend.drawableobjects;
 
 import java.util.ArrayList;
 
+import ar.edu.itba.game.backend.units.UnitType;
 import ar.edu.itba.game.frontend.draws.Drawable;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
@@ -21,24 +22,23 @@ public class QueueElement implements DrawableObject {
 	 * and creates a Bar to track the remaining time to be created
 	 * @param xPos
 	 * @param yPos
-	 * @param unitClass
+	 * @param type
 	 * @param creationTime
 	 */
-	public QueueElement(float xPos, float yPos, Class unitClass, int creationTime){
-		String str = unitClass.getSimpleName();
-		switch(str){
-		case("MeleeUnit"):
+	public QueueElement(float xPos, float yPos, UnitType type, int creationTime){
+		switch(type){
+		case MELEE_UNIT:
 			this.icon = new Icon(xPos, yPos, Textures.MELEE_UNIT_ICON);
 			break;
-		case("RangedUnit"):
+		case RANGED_UNIT:
 			this.icon = new Icon(xPos, yPos, Textures.RANGED_UNIT_ICON);			
-		break;
-		case("AntiaircraftUnit"):
-			this.icon = new Icon(xPos, yPos, Textures.ANTIAIRCRAFT_UNIT_ICON);			
-		break;
-		case("FlyingUnit"):
+			break;
+		case FLYING_UNIT:
 			this.icon = new Icon(xPos, yPos, Textures.FLYING_UNIT_ICON);			
-		break;
+			break;
+		case ANTIAIRCRAFT_UNIT:
+			this.icon = new Icon(xPos, yPos, Textures.ANTIAIRCRAFT_UNIT_ICON);			
+			break;
 		}
 		bar = new Bar(creationTime, 1, 15, icon.getScreenWidth() ,(int)xPos, (int)yPos + icon.getScreenHeight());
 		this.xPos = xPos;

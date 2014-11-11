@@ -6,14 +6,13 @@ import java.util.Stack;
 
 import ar.edu.itba.game.backend.logic.Game;
 import ar.edu.itba.game.backend.logic.GameStats;
+import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.Projectile;
 import ar.edu.itba.game.backend.logic.Side;
 import ar.edu.itba.game.backend.logic.WorldManager;
-import ar.edu.itba.game.backend.units.AntiaircraftUnit;
-import ar.edu.itba.game.backend.units.FlyingUnit;
-import ar.edu.itba.game.backend.units.MeleeUnit;
-import ar.edu.itba.game.backend.units.RangedUnit;
 import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.backend.units.UnitType;
+import ar.edu.itba.game.backend.units.UnitsLevels;
 import ar.edu.itba.game.frontend.buttons.Button;
 import ar.edu.itba.game.frontend.buttons.ContinueButton;
 import ar.edu.itba.game.frontend.buttons.ExitButton;
@@ -133,7 +132,6 @@ public class UIManager {
 	}
 
 	public void setLooser(Side side){
-		System.out.println("UIManager: " + side);
 		this.looser = side;
 	}
 
@@ -204,6 +202,7 @@ public class UIManager {
 	/**
 	 * Reset the labels backgrounds and refreshes the current gold, exp and units level
 	 */
+
 	private void setDefaultLabelsText(){
 		this.rangedLabelStyle.background = labelSkin.getDrawable("background");
 		this.meleeLabelStyle.background = labelSkin.getDrawable("background");
@@ -212,12 +211,14 @@ public class UIManager {
 	}
 	
 	private void setDefaultLabelsBackground(){
-		this.goldLabel.setText("Gold: " + WorldManager.getInstance().getPlayer().getGold().toString());
-		this.xpLabel.setText("XP: " + WorldManager.getInstance().getPlayer().getExp().toString());
-		this.rangedUnitLabel.setText("Ranged Level: " + RangedUnit.getPlayerUnitLevel());
-		this.meleeUnitLabel.setText("Melee Level: " + MeleeUnit.getPlayerUnitLevel());
-		this.antiaircraftUnitLabel.setText("AntiAircraft Level: " + AntiaircraftUnit.getPlayerUnitLevel());
-		this.flyingUnitLabel.setText("Flying Level: " + FlyingUnit.getPlayerUnitLevel());
+		Player player = WorldManager.getInstance().getPlayer();
+		
+		this.goldLabel.setText("Gold: " + player.getGold().toString());
+		this.xpLabel.setText("XP: " + player.getExp().toString());
+		this.rangedUnitLabel.setText("Ranged Level: " + UnitsLevels.getInstance().getLevel(player, UnitType.RANGED_UNIT));
+		this.meleeUnitLabel.setText("Melee Level: " + UnitsLevels.getInstance().getLevel(player, UnitType.MELEE_UNIT));
+		this.antiaircraftUnitLabel.setText("AntiAircraft Level: " + UnitsLevels.getInstance().getLevel(player, UnitType.ANTIAIRCRAFT_UNIT));
+		this.flyingUnitLabel.setText("Flying Level: " + UnitsLevels.getInstance().getLevel(player, UnitType.FLYING_UNIT));   
 	}
 
 	public void setPlayerBase(BaseDrawableObject playerBase) {
@@ -311,6 +312,8 @@ public class UIManager {
 	}
 	
 	public void drawTextures(){
+		Player player = WorldManager.getInstance().getPlayer();
+
 		for(Drawable draw:this.drawables){
 			this.drawTexture(draw);
 		}
@@ -321,7 +324,7 @@ public class UIManager {
 		this.xpLabel.draw(SB, 1);
 
 		if(this.flyingLabelvisible){
-			int level = RangedUnit.getPlayerUnitLevel();
+			int level = UnitsLevels.getInstance().getLevel(player, UnitType.FLYING_UNIT);
 			this.flyingUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
 			this.flyingUnitLabel.draw(SB, 1);
 			font.draw(SB, "HP: " + (int)(GameStats.FLYING_UNIT_MAX_HP + Math.sqrt(level * GameStats.FLYING_UNIT_MAX_HP_UPGRADE_RATE)), GameStats.LABEL_FLYING_X + 10, GameStats.LABEL_UNITS_Y -5);
@@ -336,7 +339,7 @@ public class UIManager {
 			this.flyingUnitLabel.draw(SB, 1);
 
 		if(this.meleeLabelvisible){
-			int level = MeleeUnit.getPlayerUnitLevel();
+			int level = UnitsLevels.getInstance().getLevel(player, UnitType.MELEE_UNIT);
 			this.meleeUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
 			this.meleeUnitLabel.draw(SB, 1);
 			font.draw(SB, "HP: " + (int)(GameStats.MELEE_UNIT_MAX_HP + Math.sqrt(level * GameStats.MELEE_UNIT_MAX_HP_UPGRADE_RATE)), GameStats.LABEL_MELEE_X + 10, GameStats.LABEL_UNITS_Y -5);
@@ -350,7 +353,7 @@ public class UIManager {
 			this.meleeUnitLabel.draw(SB, 1);
 
 		if(this.rangedLabelvisible){
-			int level = RangedUnit.getPlayerUnitLevel();
+			int level = UnitsLevels.getInstance().getLevel(player, UnitType.RANGED_UNIT);
 			this.rangedUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
 			this.rangedUnitLabel.draw(SB, 1);
 			font.draw(SB, "HP: " + (int)(GameStats.RANGED_UNIT_MAX_HP + Math.sqrt(level * GameStats.RANGED_UNIT_MAX_HP_UPGRADE_RATE)),GameStats.LABEL_RANGED_X + 10, GameStats.LABEL_UNITS_Y -5);
@@ -365,7 +368,7 @@ public class UIManager {
 
 
 		if(this.antiaircraftLabelvisible){
-			int level = RangedUnit.getPlayerUnitLevel();
+			int level = UnitsLevels.getInstance().getLevel(player, UnitType.ANTIAIRCRAFT_UNIT);
 			this.antiaircraftUnitLabel.getStyle().background = hiddenLabelSkin.getDrawable("background");
 			this.antiaircraftUnitLabel.draw(SB, 1);
 			font.draw(SB, "HP: " + (int)(GameStats.ANTIAIRCRAFT_UNIT_MAX_HP + Math.sqrt(level * GameStats.ANTIAIRCRAFT_UNIT_MAX_HP_UPGRADE_RATE)), GameStats.LABEL_ANTIAIRCRAFT_X + 10, GameStats.LABEL_UNITS_Y -5);

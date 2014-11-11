@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.backend.units.UnitsLevels;
 
 public class WorldManager implements Serializable{
 
@@ -16,9 +17,10 @@ public class WorldManager implements Serializable{
 	private ArrayList<Element> elements = new ArrayList<Element>();
 	private ArrayList<Unit> unitsToKill = new ArrayList<Unit>();
 	private Element ground;
+	private UnitsLevels levels = UnitsLevels.getInstance();
 
 	private static WorldManager instance = null;
-
+	
 	private WorldManager() {
 		player = Factory.getInstance().createPlayer(Side.LEFT);
 		playerAI = Factory.getInstance().createPlayer(Side.RIGHT);
@@ -32,6 +34,10 @@ public class WorldManager implements Serializable{
 		return instance;
 	}
 
+	public UnitsLevels getLevels(){
+		return this.levels;
+	}
+	
 	public void notifyObservers(){
 		for(Unit unit:player.getUnits()){
 			unit.notifyObservers();

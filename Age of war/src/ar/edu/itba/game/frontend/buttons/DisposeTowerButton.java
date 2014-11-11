@@ -1,13 +1,13 @@
 package ar.edu.itba.game.frontend.buttons;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class DisposeTowerButton extends Button{
+
 
 	public DisposeTowerButton(float X, float Y) {
 		this.draw = new Icon(X, Y, 80, 80, Textures.SELL_TOWER_ICON, Textures.DARK_SELL_TOWER_ICON);

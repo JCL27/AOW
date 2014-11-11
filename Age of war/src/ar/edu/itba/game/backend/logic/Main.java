@@ -17,6 +17,4 @@ public class Main{
 		cfg.resizable = false;
 		new LwjglApplication(new Game(), cfg);
 	}
-
-
 }

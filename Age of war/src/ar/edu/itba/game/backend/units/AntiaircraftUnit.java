@@ -13,31 +13,11 @@ import ar.edu.itba.game.frontend.observers.UnitObserver;
 public class AntiaircraftUnit extends Unit{
 	
 	private static final long serialVersionUID = 8389088340073951657L;
-	private static Integer playerUnitLevel = 0;
-	private static Integer AIUnitLevel = 0;
 	
 	/**
 	 * States whether the unit is available for purchase
 	 */
-	private static Boolean playerAvailable = true;
-	private static Boolean AIAvailable = true;
 	
-	public static boolean isPlayerAvailable() {
-		return playerAvailable;
-	}
-
-	public static void setPlayerAvailable(boolean playerAvailable) {
-		AntiaircraftUnit.playerAvailable = playerAvailable;
-	}
-
-	public static boolean isAIAvailable() {
-		return AIAvailable;
-	}
-
-	public static void setAIAvailable(boolean aIAvailable) {
-		AIAvailable = aIAvailable;
-	}
-
 	public AntiaircraftUnit(Player player, UnitObserver observer){
 		super(player, observer);
 		
@@ -45,23 +25,21 @@ public class AntiaircraftUnit extends Unit{
 		this.cost = GameStats.ANTIAIRCRAFT_UNIT_COST;
 		this.exp = GameStats.ANTIAIRCRAFT_UNIT_EXP;
 		
+		this.UnitLevel = UnitsLevels.getInstance().getLevel(this.player, UnitType.ANTIAIRCRAFT_UNIT);
+		
+		this.maxHp = (int) (GameStats.ANTIAIRCRAFT_UNIT_MAX_HP + Math.sqrt(UnitLevel * GameStats.ANTIAIRCRAFT_UNIT_MAX_HP_UPGRADE_RATE));
+		this.hp = this.maxHp;
+		this.attackSpeed = GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED + Math.sqrt(UnitLevel * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED_UPGRADE_RATE);
+		this.attackRange = (int) (GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE + Math.sqrt(UnitLevel * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE_UPGRADE_RATE));
+		this.damage = (int) (GameStats.ANTIAIRCRAFT_UNIT_DAMAGE + Math.sqrt(UnitLevel * GameStats.ANTIAIRCRAFT_UNIT_DAMAGE_UPGRADE_RATE));
+		this.movementSpeed = (int) (GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED + Math.sqrt(UnitLevel * GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED_UPGRADE_RATE));
+		
 		if (this.player.equals(WorldManager.getInstance().getPlayer())){
-			this.maxHp = (int) (GameStats.ANTIAIRCRAFT_UNIT_MAX_HP + Math.sqrt(playerUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_MAX_HP_UPGRADE_RATE));
-			this.hp = this.maxHp;
-			this.attackSpeed = GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED + Math.sqrt(playerUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED_UPGRADE_RATE);
-			this.attackRange = (int) (GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE + Math.sqrt(playerUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE_UPGRADE_RATE));
-			this.damage = (int) (GameStats.ANTIAIRCRAFT_UNIT_DAMAGE + Math.sqrt(playerUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_DAMAGE_UPGRADE_RATE));
 			this.element = new Element(100, Game.GROUND_HEIGHT, 3, 0, GameStats.ANTIAIRCRAFT_UNIT_COL_BOX_HEIGHT, GameStats.ANTIAIRCRAFT_UNIT_COL_BOX_WIDTH, false);
-			this.movementSpeed = (int) (GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED + Math.sqrt(playerUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED_UPGRADE_RATE));
 			this.dir = Side.LEFT;
 		}else{
-			this.maxHp = (int) (GameStats.ANTIAIRCRAFT_UNIT_MAX_HP + Math.sqrt(AIUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_MAX_HP_UPGRADE_RATE));
-			this.hp = this.maxHp;
-			this.attackSpeed = GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED + Math.sqrt(AIUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_SPEED_UPGRADE_RATE);
-			this.attackRange = (int) (GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE + Math.sqrt(AIUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_ATTACK_RANGE_UPGRADE_RATE));
-			this.damage = (int) (GameStats.ANTIAIRCRAFT_UNIT_DAMAGE + Math.sqrt(AIUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_DAMAGE_UPGRADE_RATE));
 			this.element = new Element(1000, Game.GROUND_HEIGHT, 3, 0, GameStats.ANTIAIRCRAFT_UNIT_COL_BOX_HEIGHT, GameStats.ANTIAIRCRAFT_UNIT_COL_BOX_WIDTH, false);
-			this.movementSpeed = (-1) * (int) (GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED + Math.sqrt(AIUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_MOVEMENT_SPEED_UPGRADE_RATE));
+			this.movementSpeed *= (-1);
 			this.dir = Side.RIGHT;
 		}
 		this.type = GameStats.ANTIAIRCRAFT_UNIT_TYPE;
@@ -105,45 +83,6 @@ public class AntiaircraftUnit extends Unit{
 		else{
 			this.cooldown--;
 		}
-	}
-
-
-	public static void playerLevelUp() {
-		playerUnitLevel++;
-	}
-
-	public static void AILevelUp() {
-		AIUnitLevel++;
-	}
-	
-	public static int getCost(Player player){
-		if(player == WorldManager.getInstance().getPlayerAI())
-			return (int) (GameStats.ANTIAIRCRAFT_UNIT_COST + Math.sqrt(AIUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE));
-		return (int) (GameStats.ANTIAIRCRAFT_UNIT_COST + Math.sqrt(playerUnitLevel * GameStats.ANTIAIRCRAFT_UNIT_COST_UPGRADE_RATE));
-	}
-	
-	public static String[] getLevels(){
-		String[] str = {playerUnitLevel.toString(), AIUnitLevel.toString()};
-		return str;
-	}
-	
-	public static String[] getResearch(){
-		String[] str = {playerAvailable.toString(), AIAvailable.toString()};
-		return str;
-	}
-	
-	public static void setLevels(String[] row){
-		playerUnitLevel = Integer.parseInt(row[0]);
-		AIUnitLevel = Integer.parseInt(row[1]);
-	}
-	
-	public static void setResearch(String[] row){
-		playerAvailable = Boolean.parseBoolean(row[0]);
-		AIAvailable = Boolean.parseBoolean(row[1]);
-	}
-	
-	public static Integer getPlayerUnitLevel(){ 
-		return playerUnitLevel;
 	}
 	
 	public static int getCreationTime() {

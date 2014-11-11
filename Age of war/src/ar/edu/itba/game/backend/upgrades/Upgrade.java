@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import ar.edu.itba.game.backend.exceptions.NotEnoughExpException;
 import ar.edu.itba.game.backend.exceptions.UnavailableUpgradeException;
 import ar.edu.itba.game.backend.logic.Player;
-import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.backend.units.UnitType;
 
 public abstract class Upgrade {
 	protected ArrayList<Upgrade> needs;
@@ -17,7 +17,7 @@ public abstract class Upgrade {
 	protected int cost;
 	protected Player player;
 	
-	public abstract void applyUpgrade(Class<Unit> classType);
+	public abstract void applyUpgrade(UnitType type);
 	
 	public Upgrade(Player player){
 		this.player = player;
@@ -31,26 +31,32 @@ public abstract class Upgrade {
 	 * @throws UnavailableUpgradeException
 	 * @throws NotEnoughExpException
 	 */
-	public void chargeAndApply(Class<Unit> classType) throws UnavailableUpgradeException, NotEnoughExpException {
+	public void chargeAndApply(UnitType type) throws UnavailableUpgradeException, NotEnoughExpException {
 		if (this.isAvailable() == false)
 			throw new UnavailableUpgradeException();
 		useExp();
-		applyUpgrade(classType);
+		applyUpgrade(type);
 		this.applied = true;
 	}
 	
 	public void setAvailable(){
 		this.available = true;
-		this.applied = false;
+	}
+	
+	public void setApplied(){
+		this.applied = true;
 	}
 	
 	public void setUnavailable(){
 		this.available = false;
 	}
 	
+	public void setUnapplied(){
+		this.applied = false;
+	}
+	
 	public void useExp() throws NotEnoughExpException{
 		this.player.useExp(this.cost);
-		System.out.println("Upgrade: " + player.getExp());
 	}
 	
 	/**

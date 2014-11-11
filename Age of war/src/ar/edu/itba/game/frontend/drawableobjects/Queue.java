@@ -1,10 +1,13 @@
 package ar.edu.itba.game.frontend.drawableobjects;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import ar.edu.itba.game.backend.logic.Side;
-import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.backend.units.AntiaircraftUnit;
+import ar.edu.itba.game.backend.units.FlyingUnit;
+import ar.edu.itba.game.backend.units.MeleeUnit;
+import ar.edu.itba.game.backend.units.RangedUnit;
+import ar.edu.itba.game.backend.units.UnitType;
 import ar.edu.itba.game.frontend.draws.Drawable;
 
 /**
@@ -35,8 +38,8 @@ public class Queue implements DrawableObject {
 		return this.draws;
 	}
 	
-	public void addElement(Class unitClass, int creationTime){
-		QueueElement elem = new QueueElement(this.xPos + SEPARATION * this.count++, this.yPos, unitClass, creationTime);
+	public void addElement(UnitType type, int creationTime){
+		QueueElement elem = new QueueElement(this.xPos + SEPARATION * this.count++, this.yPos, type, creationTime);
 		this.elemsVec.add(elem);
 		this.draws.addAll(elem.getDraws());
 	}
@@ -68,19 +71,29 @@ public class Queue implements DrawableObject {
 			this.elemsVec.get(0).setCurrent(current);
 	}
 
-	public void loadQueue(ArrayList<Class<Unit>> unitsQueue,
+	public void loadQueue(ArrayList<UnitType> unitsQueue,
 			int playerUnitCreationTime) {
+		int creationTime = 0;
 		this.elemsVec.clear();
 		this.draws.clear();
 		this.count = 0;
-		for(Class<Unit> unit:unitsQueue){
-			try {
-				int creationTime = (int) unit.getMethod("getCreationTime").invoke(null);
-				this.addElement(unit, creationTime);
-			} catch (IllegalAccessException | IllegalArgumentException| InvocationTargetException | NoSuchMethodException
-					| SecurityException e) {
-				e.printStackTrace();
-			}	
+		
+		for(UnitType unit:unitsQueue){
+			switch(unit){
+			case MELEE_UNIT:
+				creationTime = MeleeUnit.getCreationTime();
+				break;
+			case RANGED_UNIT:
+				creationTime = RangedUnit.getCreationTime();
+				break;
+			case FLYING_UNIT:
+				creationTime = FlyingUnit.getCreationTime();
+				break;
+			case ANTIAIRCRAFT_UNIT:
+				creationTime = AntiaircraftUnit.getCreationTime();
+				break;
+			}
+			this.addElement(unit, creationTime);
 		}
 		this.setCurrent(playerUnitCreationTime);
 		

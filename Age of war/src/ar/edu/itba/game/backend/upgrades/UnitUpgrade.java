@@ -1,11 +1,9 @@
 package ar.edu.itba.game.backend.upgrades;
 
-import java.lang.reflect.InvocationTargetException;
-
 import ar.edu.itba.game.backend.logic.GameStats;
 import ar.edu.itba.game.backend.logic.Player;
-import ar.edu.itba.game.backend.logic.WorldManager;
-import ar.edu.itba.game.backend.units.Unit;
+import ar.edu.itba.game.backend.units.UnitType;
+import ar.edu.itba.game.backend.units.UnitsLevels;
 
 public class UnitUpgrade extends Upgrade {
 	
@@ -22,18 +20,8 @@ public class UnitUpgrade extends Upgrade {
 	 */
 
 	@Override
-	public void applyUpgrade(Class<Unit> classType) {
-		try {
-			if(this.player.equals(WorldManager.getInstance().getPlayer())){
-				classType.getMethod("playerLevelUp").invoke(classType);
-			}else{
-				classType.getMethod("AILevelUp").invoke(classType);
-			}
-		} catch (IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException
-				| SecurityException e) {
-			e.printStackTrace();
-		}
+	public void applyUpgrade(UnitType type) {
+		UnitsLevels.getInstance().levelUp(this.player, type);
 	}
 	
 

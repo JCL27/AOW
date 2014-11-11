@@ -3,8 +3,6 @@ package ar.edu.itba.game.frontend.draws;
 import com.badlogic.gdx.graphics.Texture;
 
 public class MainButtonDraw extends Drawable {
-
-	private int scale = 2;
 	
 	private int screenHeight;
 	private int screenWidth;

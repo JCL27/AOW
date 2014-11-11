@@ -5,8 +5,6 @@ import java.io.Serializable;
 import ar.edu.itba.game.backend.logic.Attackable;
 import ar.edu.itba.game.backend.logic.CanAttack;
 import ar.edu.itba.game.backend.logic.Element;
-import ar.edu.itba.game.backend.logic.Factory;
-import ar.edu.itba.game.backend.logic.Game;
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.Side;
 import ar.edu.itba.game.backend.logic.Type;
@@ -29,6 +27,7 @@ public abstract class Unit implements CanAttack, Attackable, Serializable{
 	protected Player player;
 	protected Side dir;
 	protected Attackable objective;
+	protected Integer UnitLevel;
 	protected transient UnitObserver observer;
 	static int count = 1;
 	

@@ -3,17 +3,11 @@ package ar.edu.itba.game.backend.logic;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
-import ar.edu.itba.game.backend.units.AntiaircraftUnit;
-import ar.edu.itba.game.backend.units.FlyingUnit;
-import ar.edu.itba.game.backend.units.MeleeUnit;
-import ar.edu.itba.game.backend.units.RangedUnit;
+import ar.edu.itba.game.backend.units.UnitsLevels;
 import ar.edu.itba.game.backend.upgrades.Upgrades;
 import ar.edu.itba.game.frontend.draws.Textures;
 import ar.edu.itba.game.frontend.observers.BaseObserver;
@@ -23,8 +17,6 @@ import ar.edu.itba.game.frontend.observers.TowerObserver;
 import ar.edu.itba.game.frontend.observers.UnitObserver;
 import ar.edu.itba.game.frontend.userinterface.MyInputProcessor;
 import ar.edu.itba.game.frontend.userinterface.UIManager;
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.CSVWriter;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -92,17 +84,7 @@ public class Game implements ApplicationListener {
 		UIManager.getInstance().initializeDraws();
 		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayer().getBase().getElement());
 		WorldManager.getInstance().getElements().add(WorldManager.getInstance().getPlayerAI().getBase().getElement());
-		FlyingUnit.setAIAvailable(false);
-		FlyingUnit.setPlayerAvailable(false);
-		AntiaircraftUnit.setAIAvailable(false);
-		AntiaircraftUnit.setPlayerAvailable(false);
-		AntiaircraftUnit.setLevels(new String[]{"0","0"});
-		RangedUnit.setLevels(new String[]{"0","0"});
-		MeleeUnit.setLevels(new String[]{"0","0"});
-		FlyingUnit.setLevels(new String[]{"0","0"});
-		FlyingUnit.setResearch(new String[]{"0","0"});
-		AntiaircraftUnit.setResearch(new String[]{"0","0"});
-
+		UnitsLevels.getInstance().initializeLevels();
 		
 		Factory.getInstance().reAssignObservers();
 		AI.reset();
@@ -167,7 +149,6 @@ public class Game implements ApplicationListener {
 		}else{
 			SB.begin();
 			if(!firstTimeMenu){
-				System.out.println("On Game");
 				UIManager.getInstance().drawBases();
 				UIManager.getInstance().drawTextures();
 				UIManager.getInstance().drawButtons();
@@ -194,7 +175,7 @@ public class Game implements ApplicationListener {
 		b2dr.render(world, cam.combined);
 	}
 	/**
-	 * Save the instances of the backend to a serialized file, and the static values to a csv file
+	 * Save the instances of the backend to a serialized file
 	 */
 	public static void saveGame(){
 
@@ -209,34 +190,12 @@ public class Game implements ApplicationListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		String csv = "levels.csv";
-		CSVWriter writer;
-		try {
-			String[] levels;
-			ArrayList<String[]> data = new ArrayList<String[]>();
-			writer = new CSVWriter(new FileWriter(csv));
-			levels = AntiaircraftUnit.getLevels();
-			data.add(levels);
-			levels = FlyingUnit.getLevels();
-			data.add(levels);
-			levels = MeleeUnit.getLevels();
-			data.add(levels);
-			levels = RangedUnit.getLevels();
-			data.add(levels);
-			levels = AntiaircraftUnit.getResearch();
-			data.add(levels);
-			levels = FlyingUnit.getResearch();
-			data.add(levels);
-			writer.writeAll(data);
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 
 	/**
-	 * Drop the fronend elements, get the instances of the backend from a serialized file, and the static values from a csv file
+	 * Drop the frontend elements, get the instances of the backend from a serialized file
+	 * and generates the frontend from the back
 	 */
 
 	public static void loadGame(){
@@ -248,23 +207,7 @@ public class Game implements ApplicationListener {
 			WorldManager.setInstance((WorldManager)obj);
 			objO.close();
 			fileO.close();
-
-			String csvFilename = "levels.csv";
-			CSVReader csvReader = new CSVReader(new FileReader(csvFilename));
-			String[] row = null;
-			row = csvReader.readNext();
-			AntiaircraftUnit.setLevels(row);
-			row = csvReader.readNext();
-			FlyingUnit.setLevels(row);
-			row = csvReader.readNext();
-			MeleeUnit.setLevels(row);
-			row = csvReader.readNext();
-			RangedUnit.setLevels(row);
-			row = csvReader.readNext();
-			AntiaircraftUnit.setResearch(row);
-			row = csvReader.readNext();
-			FlyingUnit.setResearch(row);
-			csvReader.close();
+			UnitsLevels.setInstance(WorldManager.getInstance().getLevels());
 			UIManager.getInstance().reset();
 			UIManager.getInstance().initializeDraws();
 			Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(),
@@ -272,6 +215,7 @@ public class Game implements ApplicationListener {
 			Factory.getInstance().reAssignObservers();
 			AI.reset();
 			Upgrades.reset();
+			Upgrades.getInstance().initializeUpgrades();
 			onGame = true;
 			Game.gameState = GameState.GAME;
 			

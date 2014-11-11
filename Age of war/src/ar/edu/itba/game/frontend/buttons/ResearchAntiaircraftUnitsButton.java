@@ -1,14 +1,14 @@
 package ar.edu.itba.game.frontend.buttons;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 import ar.edu.itba.game.backend.logic.GameStats;
 import ar.edu.itba.game.backend.logic.Player;
 import ar.edu.itba.game.backend.logic.WorldManager;
-import ar.edu.itba.game.backend.units.AntiaircraftUnit;
-import ar.edu.itba.game.backend.upgrades.AntiaircraftUnitResearch;
+import ar.edu.itba.game.backend.units.UnitsLevels;
+import ar.edu.itba.game.backend.upgrades.UpgradeType;
 import ar.edu.itba.game.frontend.draws.Icon;
 import ar.edu.itba.game.frontend.draws.Textures;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 public class ResearchAntiaircraftUnitsButton  extends Button{
@@ -18,7 +18,7 @@ public class ResearchAntiaircraftUnitsButton  extends Button{
 	
 	public boolean checkAvailability(){
 		Player player = WorldManager.getInstance().getPlayer();
-		if(player.getExp()<GameStats.ANTIAIRCRAFT_UNIT_RESEARCH_COST || AntiaircraftUnit.isPlayerAvailable()){
+		if(player.getExp()<GameStats.ANTIAIRCRAFT_UNIT_RESEARCH_COST || UnitsLevels.getInstance().isPlayerAntiaircraftUnitAvailable()){
 			this.getDraw().setDisabled();
 			return false;
 		}
@@ -34,6 +34,6 @@ public class ResearchAntiaircraftUnitsButton  extends Button{
 	public void Click() {
 		System.out.println("investiga anti");
 
-		WorldManager.getInstance().getPlayer().research(AntiaircraftUnitResearch.class);
+		WorldManager.getInstance().getPlayer().research(UpgradeType.ANTIAIRCRAFT_UNIT_RESEARCH);
 	}
 }
