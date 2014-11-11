@@ -50,9 +50,9 @@ public class Upgrades {
 	
 	public void applyUpgrade(String name, Player player, Class classType) throws UnavailableUpgradeException, NotEnoughExpException{
 		if(this.player.equals(player)){
-			upgradeListPlayer.get(name).chargeAndApply(classType);
+			this.upgradeListPlayer.get(name).chargeAndApply(classType);
 		}else{
-			upgradeListPlayerAI.get(name).chargeAndApply(classType);
+			this.upgradeListPlayerAI.get(name).chargeAndApply(classType);
 		}
 	}
 	

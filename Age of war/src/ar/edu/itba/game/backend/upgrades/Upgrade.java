@@ -41,6 +41,7 @@ public abstract class Upgrade {
 	
 	public void setAvailable(){
 		this.available = true;
+		this.applied = false;
 	}
 	
 	public void setUnavailable(){
@@ -53,7 +54,7 @@ public abstract class Upgrade {
 	}
 	
 	/**
-	 * Checks witch upgrade depends directly from this in the upgrade tree,
+	 * Checks which upgrade depends directly from this in the upgrade tree,
 	 * and if it doesn't need any other upgrade to be enabled, set it enabled
 	 */
 	public void checkNewUpgrades(){

@@ -103,7 +103,8 @@ public class Player implements Serializable{
 			try{
 				this.charge(unitCost);
 				this.unitsQueue.add(unitClass);
-				this.observer.addElementToQueue(this, unitClass);
+				if(this.observer!=null)
+					this.observer.addElementToQueue(this, unitClass);
 			}catch(NotEnoughGoldException e){
 				created = false;
 				e.printStackTrace();	
@@ -208,10 +209,12 @@ public class Player implements Serializable{
 				this.getUnitsQueue().remove(0);
 				this.createUnit(unitToQueue);
 				this.playerCreatingUnit = false;
-				this.observer.removeElementFromQueue(this, 0);
+				if(this.observer!=null)
+					this.observer.removeElementFromQueue(this, 0);
 			}else if(this.playerCreatingUnit){
 				this.playerUnitCreationTime--;
-				this.observer.updateCurrentTime(this, this.playerUnitCreationTime);
+				if(this.observer!=null)
+					this.observer.updateCurrentTime(this, this.playerUnitCreationTime);
 			}else{
 				try {
 					this.unitToQueue = this.getUnitsQueue().get(0);

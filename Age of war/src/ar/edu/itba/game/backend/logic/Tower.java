@@ -3,6 +3,7 @@ package ar.edu.itba.game.backend.logic;
 import java.io.Serializable;
 
 import ar.edu.itba.game.backend.exceptions.AlreadyAppliedUpgradeException;
+import ar.edu.itba.game.backend.upgrades.Upgrades;
 import ar.edu.itba.game.frontend.observers.TowerObserver;
 
 public class Tower implements CanAttack, Serializable{
@@ -53,6 +54,9 @@ public class Tower implements CanAttack, Serializable{
 
 	public void Sell(){
 		this.player.addGold(this.cost/2);
+		Upgrades.getInstance().setAvailable("TowerDamageUpgrade", this.player);
+		Upgrades.getInstance().setAvailable("TowerAttackSpeedUpgrade", this.player);
+		Upgrades.getInstance().setAvailable("TowerAttackRangeUpgrade", this.player);
 		WorldManager.getInstance().disposeTower(this);
 	}
 
@@ -190,7 +194,8 @@ public class Tower implements CanAttack, Serializable{
 	 */
 
 	public void notifyDelete() {
-		this.observer.dispose(this);	
+		if(this.observer!=null)
+			this.observer.dispose(this);	
 	}
 	public void setObserver(TowerObserver towerObserver) {
 		this.observer = towerObserver;

@@ -96,6 +96,14 @@ public class Game implements ApplicationListener {
 		FlyingUnit.setPlayerAvailable(false);
 		AntiaircraftUnit.setAIAvailable(false);
 		AntiaircraftUnit.setPlayerAvailable(false);
+		AntiaircraftUnit.setLevels(new String[]{"0","0"});
+		RangedUnit.setLevels(new String[]{"0","0"});
+		MeleeUnit.setLevels(new String[]{"0","0"});
+		FlyingUnit.setLevels(new String[]{"0","0"});
+		FlyingUnit.setResearch(new String[]{"0","0"});
+		AntiaircraftUnit.setResearch(new String[]{"0","0"});
+
+		
 		Factory.getInstance().reAssignObservers();
 		AI.reset();
 		Upgrades.reset();
@@ -257,6 +265,13 @@ public class Game implements ApplicationListener {
 			row = csvReader.readNext();
 			FlyingUnit.setResearch(row);
 			csvReader.close();
+			UIManager.getInstance().reset();
+			UIManager.getInstance().initializeDraws();
+			Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(),
+					new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
+			Factory.getInstance().reAssignObservers();
+			AI.reset();
+			Upgrades.reset();
 			onGame = true;
 			Game.gameState = GameState.GAME;
 			
@@ -269,13 +284,7 @@ public class Game implements ApplicationListener {
 			UIManager.getInstance().setFileError(true);
 		}
 		
-		UIManager.getInstance().reset();
-		UIManager.getInstance().initializeDraws();
-		Factory.getInstance().setObservers(new BaseObserver(), new UnitObserver(),
-				new PlayerObserver(), new TowerObserver(), new ProjectileObserver());
-		Factory.getInstance().reAssignObservers();
-		AI.reset();
-		Upgrades.reset();
+		
 		
 	}
 	
